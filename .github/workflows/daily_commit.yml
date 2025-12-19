@@ -2,8 +2,9 @@ name: Daily Commit for LinkedIn Post
 
 on:
   schedule:
-    - cron: "0 8 * * 1-5"   # 8h UTC = 9h Paris, du lundi au vendredi
-  workflow_dispatch:
+    - cron: "0 7 * * 1-5"   # 7h UTC = 9h Paris en été (UTC+2)
+    - cron: "0 8 * * 1-5"   # 8h UTC = 9h Paris en hiver (UTC+1)
+  workflow_dispatch:        # Permet de lancer manuellement si besoin
 
 jobs:
   generate-post:
@@ -18,6 +19,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install dependencies
+        run: pip install pytz
+
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
@@ -28,6 +32,10 @@ jobs:
 
       - name: Commit and push
         run: |
-          git add post_du_jour.md
-          git commit -m "Post LinkedIn du $(date +'%Y-%m-%d')"
-          git push
+          if [ -f post_du_jour.md ]; then
+            git add post_du_jour.md
+            git commit -m "Post LinkedIn du $(date +'%Y-%m-%d')"
+            git push
+          else
+            echo "Pas de fichier généré (pas 9h Paris) → aucun commit."
+          fi
