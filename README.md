@@ -1,37 +1,48 @@
-# automated-email-linkedin
-Système automatisé gratuit qui envoie chaque jour de semaine à 9h un email via Outlook SMTP contenant texte et image. Zapier reçoit l’email et transmet le contenu à Buffer, qui publie automatiquement un post LinkedIn avec texte + image. Orchestration via GitHub Actions.
+# automated-linkedin-commit
+Système automatisé gratuit qui publie chaque jour de semaine à 9h un post LinkedIn (texte + image) en utilisant GitHub Actions, Zapier et Buffer. Le contenu est généré automatiquement dans un fichier, commit dans le dépôt, puis transmis à Buffer via Zapier pour diffusion sur LinkedIn.
 
-
-
-# Automated Email to LinkedIn System
+# Automated LinkedIn Commit System
 
 ## Description
 Ce projet met en place un système entièrement automatisé qui :
-- Envoie chaque jour de semaine (lundi à vendredi) à 9h un email contenant du texte et une image.
-- L’email est reçu par Zapier, qui déclenche un workflow.
-- Zapier transmet le contenu (texte + image) à Buffer.
+- Génère chaque jour de semaine (lundi à vendredi) à 9h un fichier `post_du_jour.md` contenant le texte du post LinkedIn et l’URL publique de l’image.
+- Commit automatiquement ce fichier dans le dépôt GitHub.
+- Déclenche un workflow Zapier à chaque commit.
+- Zapier lit le fichier et transmet le texte + l’image à Buffer.
 - Buffer publie automatiquement le post sur LinkedIn.
 
 ## Objectif
 Automatiser un processus complet de publication LinkedIn en utilisant uniquement des services gratuits :
-- **GitHub Actions** pour exécuter le script chaque jour.
-- **Outlook SMTP** pour envoyer l’email.
-- **Zapier** pour recevoir l’email et déclencher l’action.
+- **GitHub Actions** pour générer le contenu et créer un commit quotidien.
+- **Zapier** pour détecter les commits et extraire le contenu du fichier.
 - **Buffer** pour publier sur LinkedIn.
 
 ## Structure du projet
-- `send_email.py` : script Python qui génère et envoie l’email quotidien.
-- `.github/workflows/email.yml` : workflow GitHub Actions qui exécute le script chaque jour à 9h.
-- `image.jpg` : image jointe envoyée avec l’email.
+- `.github/workflows/daily_commit.yml` : workflow GitHub Actions qui génère et commit le fichier du post chaque jour à 9h.
+- `post_du_jour.md` : fichier généré automatiquement, contenant le texte du post et l’URL de l’image.
+- `image.jpg` : image stockée dans le dépôt, accessible via une URL publique GitHub.
 - `README.md` : documentation du projet.
 
 ## Fonctionnement
-1. GitHub Actions lance le script `send_email.py` chaque jour à 9h.
-2. Le script envoie un email via Outlook SMTP à l’adresse Zapier.
-3. Zapier reçoit l’email et envoie le contenu à Buffer.
-4. Buffer publie le post LinkedIn avec texte + image.
+1. GitHub Actions s’exécute chaque jour à 9h et génère `post_du_jour.md`.
+2. Le fichier contient le texte formaté pour LinkedIn (sauts de ligne, emojis) et l’URL publique de l’image.
+3. Le fichier est commit dans le dépôt.
+4. Zapier détecte le commit et lit le contenu du fichier.
+5. Zapier envoie le texte et l’image à Buffer.
+6. Buffer publie le post LinkedIn.
 
-## Tests
-Le script peut être testé en local avec :
-```bash
-python send_email.py
+## Exemple de contenu généré
+```markdown
+# Post LinkedIn du 2025-12-19
+
+Bonjour 👋,
+
+Aujourd’hui, je partage un contenu automatisé 🚀  
+Grâce à **GitHub Actions + Zapier + Buffer**, ce post est généré et publié sans intervention manuelle.  
+
+✨ Automatisation  
+📅 Publication quotidienne  
+🔗 Intégration fluide  
+
+Image associée :  
+https://raw.githubusercontent.com/<ton-compte>/<ton-repo>/main/image.jpg
