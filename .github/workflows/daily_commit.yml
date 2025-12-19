@@ -1,0 +1,33 @@
+name: Daily Commit for LinkedIn Post
+
+on:
+  schedule:
+    - cron: "0 8 * * 1-5"   # 8h UTC = 9h Paris, du lundi au vendredi
+  workflow_dispatch:
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate post file
+        run: python generate_post.py
+
+      - name: Commit and push
+        run: |
+          git add post_du_jour.md
+          git commit -m "Post LinkedIn du $(date +'%Y-%m-%d')"
+          git push
