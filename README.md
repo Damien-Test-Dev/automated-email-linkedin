@@ -1,49 +1,168 @@
-# automated-linkedin-commit
-Système automatisé gratuit qui publie chaque jour de semaine à 9h (heure de Paris) un post LinkedIn (texte + image) en utilisant GitHub Actions, Zapier et Buffer. Le contenu est généré automatiquement dans un fichier, commit dans le dépôt, puis transmis à Buffer via Zapier pour diffusion sur LinkedIn.
+Automated LinkedIn Publishing System
+===================================
 
-# Automated LinkedIn Commit System
+Ce projet met en place un système entièrement automatisé qui publie chaque jour de semaine à 9h (heure de Paris) un post LinkedIn contenant du texte et une image.
+Le système utilise uniquement des services gratuits : GitHub Actions, Zapier et Buffer.
 
-## Description
-Ce projet met en place un système entièrement automatisé qui :
-- Génère chaque jour de semaine (lundi à vendredi) à 9h heure locale Paris un fichier `post_du_jour.md` contenant le texte du post LinkedIn et l’URL publique de l’image.
-- Commit automatiquement ce fichier dans le dépôt GitHub.
-- Déclenche un workflow Zapier à chaque commit.
-- Zapier lit le fichier et transmet le texte + l’image à Buffer.
-- Buffer publie automatiquement le post sur LinkedIn.
+L’objectif est d’obtenir un pipeline autonome, fiable et sans intervention manuelle.
 
-## Objectif
-Automatiser un processus complet de publication LinkedIn en utilisant uniquement des services gratuits :
-- **GitHub Actions** pour générer le contenu et créer un commit quotidien.
-- **Zapier** pour détecter les commits et extraire le contenu du fichier.
-- **Buffer** pour publier sur LinkedIn.
+Objectifs du système
 
-## Structure du projet
-- `generate_post.py` : script Python qui génère le fichier du post avec texte + URL image.
-- `.github/workflows/daily_commit.yml` : workflow GitHub Actions qui exécute le script et commit le fichier chaque jour à 9h.
-- `post_du_jour.md` : fichier généré automatiquement, contenant le texte du post et l’URL de l’image.
-- `image.jpg` : image stockée dans le dépôt, accessible via une URL publique GitHub.
-- `README.md` : documentation du projet.
+Le système complet permet de :
 
-## Fonctionnement
-1. GitHub Actions s’exécute chaque jour à 9h heure locale Paris.
-2. Le script `generate_post.py` crée `post_du_jour.md` avec texte formaté (sauts de ligne, emojis) et l’URL publique de l’image.
-3. Le fichier est commit dans le dépôt.
-4. Zapier détecte le commit et lit le contenu du fichier.
-5. Zapier envoie le texte et l’image à Buffer.
-6. Buffer publie le post LinkedIn.
+    Générer automatiquement un post LinkedIn chaque jour de semaine à 9h heure de Paris.
 
-## Exemple de contenu généré
-```markdown
-# Post LinkedIn du 2025-12-19
+    Sélectionner automatiquement l’image correspondant à la date du jour.
 
-Bonjour 👋,
+    Renommer et convertir automatiquement les images ajoutées dans le dépôt.
 
-Aujourd’hui, je partage un contenu automatisé 🚀  
-Grâce à **GitHub Actions + Zapier + Buffer**, ce post est généré et publié sans intervention manuelle.  
+    Supprimer les images âgées de plus de 30 jours.
 
-✨ Automatisation  
-📅 Publication quotidienne  
-🔗 Intégration fluide  
+    Commit automatiquement le fichier du post.
 
-Image associée :  
-https://raw.githubusercontent.com/<ton-compte>/<ton-repo>/main/image.jpg
+    Déclencher Zapier à chaque commit.
+
+    Publier le post sur LinkedIn via Buffer.
+
+Une fois configuré, le système fonctionne seul.
+
+Architecture générale
+
+Le système repose sur deux workflows GitHub Actions :
+
+    daily_commit.yml
+
+        Exécuté chaque jour de semaine à 9h heure de Paris.
+
+        Génère le fichier post_du_jour.md.
+
+        Sélectionne l’image du jour (format YYYY-MM-DD.jpg).
+
+        Commit automatiquement le fichier.
+
+        Déclenche Zapier.
+
+    rename_images.yml
+
+        Exécuté à chaque ajout d’image dans le dossier images/.
+
+        Convertit automatiquement les images en .jpg.
+
+        Renomme les fichiers au format YYYY-MM-DD.jpg..
+
+        Attribue les prochaines dates disponibles (lundi à vendredi).
+
+        Supprime les images âgées de plus de 30 jours.
+
+        Commit automatiquement les modifications.
+
+Structure du projet
+
+Le dépôt contient les éléments suivants :
+
+    generate_post.py : génère le fichier du post quotidien.
+
+    rename_images.py : renomme, convertit et nettoie les images.
+
+    post_du_jour.md : fichier généré automatiquement.
+
+    images/ : dossier contenant les images datées.
+
+    .github/workflows/daily_commit.yml : workflow de génération du post.
+
+    .github/workflows/rename_images.yml : workflow de gestion des images.
+
+    README.md  : documentation du projet.
+
+Exemple de structure :
+
+/
+├── generate_post.py
+├── rename_images.py
+├── post_du_jour.md
+├── images/
+│   ├── .gitkeep
+│   ├── 2025-12-22.jpg
+│   ├── 2025-12-23.jpg
+│   └── ...
+└── .github/workflows/
+├── daily_commit.yml
+└── rename_images.yml
+
+Fonctionnement détaillé
+
+    Ajout d’images
+    Vous pouvez ajouter des images dans le dossier images/ sans vous soucier du nom ou du format.
+    Le workflow rename_images.yml va automatiquement :
+
+        convertir les images en .jpg
+
+        attribuer une date future (lundi à vendredi)
+
+        renommer les fichiers au format YYYY-MM-DD.jpg
+
+        supprimer les images de plus de 30 jours
+
+    Génération du post quotidien
+    Chaque jour de semaine à 9h heure de Paris :
+
+        generate_post.py sélectionne l’image du jour
+
+        génère post_du_jour.md
+
+        commit automatiquement
+
+        Zapier détecte le commit
+
+        Zapier envoie le texte et l’image à Buffer
+
+        Buffer publie sur LinkedIn
+
+Format des images
+
+Toutes les images sont automatiquement converties en .jpg.
+Ce format est compatible avec :
+
+    GitHub
+
+    Zapier
+
+    Buffer
+
+    LinkedIn
+
+Exemple de fichier généré
+
+Exemple de contenu du fichier post_du_jour.md :
+Post LinkedIn du 2025-12-22
+
+Bonjour,
+
+Aujourd’hui, je partage un contenu automatisé.
+Grâce à GitHub Actions, Zapier et Buffer, ce post est généré et publié sans intervention manuelle.
+
+Automatisation
+Publication quotidienne
+Intégration fluide
+
+Image associée :
+https://raw.githubusercontent.com/<ton-compte>/<ton-repo>/main/images/2025-12-22.jpg
+
+Déploiement
+
+    Créer le dossier images/ avec un fichier .gitkeep.
+
+    Ajouter les workflows dans .github/workflows/.
+
+    Ajouter les scripts Python à la racine du dépôt.
+
+    Uploader des images dans images/.
+
+    Laisser GitHub Actions gérer le reste.
+
+Notes
+
+Ce système est conçu pour être entièrement autonome.
+Il peut être étendu pour gérer plusieurs comptes, plusieurs formats de posts ou d’autres réseaux sociaux.
+
+Fin du README
