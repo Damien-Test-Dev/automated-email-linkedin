@@ -1,4 +1,4 @@
-# Post LinkedIn du 2025-12-22
+# Post LinkedIn du 2025-12-23
 
 Bonjour 👋,
 
