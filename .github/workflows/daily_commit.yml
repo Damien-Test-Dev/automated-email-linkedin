@@ -30,12 +30,15 @@ jobs:
       - name: Generate post file
         run: python generate_post.py
 
-      - name: Commit and push
+      - name: Commit and push generated post
         run: |
-          if [ -f post_du_jour.md ]; then
-            git add post_du_jour.md
-            git commit -m "Post LinkedIn du $(date +'%Y-%m-%d')"
+          # Vérifie si un fichier a été généré dans /posts/
+          if ls posts/*.md 1> /dev/null 2>&1; then
+            echo "Un fichier de post a été généré."
+            git add posts/*.md
+            git add posts_history.csv
+            git commit -m "Post LinkedIn généré automatiquement le $(date +'%Y-%m-%d')"
             git push
           else
-            echo "Pas de fichier généré (pas 9h Paris) → aucun commit."
+            echo "Aucun fichier généré (pas 9h Paris ou image manquante)."
           fi
