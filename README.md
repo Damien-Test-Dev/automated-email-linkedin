@@ -166,3 +166,35 @@ Ce système est conçu pour être entièrement autonome.
 Il peut être étendu pour gérer plusieurs comptes, plusieurs formats de posts ou d’autres réseaux sociaux.
 
 Fin du README
+
+
+
+
+/
+├── .github/
+│   └── workflows/
+│       ├── daily_commit.yml
+│       ├── rename_images.yml
+│       └── process_raw_posts.yml
+│
+├── images/
+│   └── .gitkeep
+│
+├── posts_raw/
+│   └── .gitkeep
+│
+├── posts/
+│   └── .gitkeep
+│
+├── dashboard/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+├── posts_history.csv
+│
+├── generate_post.py
+├── process_raw_posts.py
+├── rename_images.py
+│
+└── README.md
