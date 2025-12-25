@@ -22,10 +22,12 @@ POSTS_DIR = ROOT_DIR / "posts"
 IMAGES_DIR = ROOT_DIR / "images"
 HISTORY_FILE = ROOT_DIR / "posts_history.csv"
 
-OUTPUT_FILE = ROOT_DIR / "post_du_jour.md"  # fichier temporaire pour GitHub Actions
+# Fichier généré pour GitHub Actions → Zapier → Buffer → LinkedIn
+OUTPUT_FILE = ROOT_DIR / "post_du_jour.md"
 
 
 def ensure_history_file():
+    """Créer le fichier CSV s'il n'existe pas."""
     if not HISTORY_FILE.exists():
         with HISTORY_FILE.open("w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
@@ -33,11 +35,13 @@ def ensure_history_file():
 
 
 def weekday_name_fr(date_obj):
+    """Retourne le nom du jour en français."""
     jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
     return jours[date_obj.weekday()]
 
 
 def update_history(date_str, image_path, etat, post_path):
+    """Ajoute une ligne dans posts_history.csv."""
     ensure_history_file()
 
     date_obj = datetime.date.fromisoformat(date_str)
@@ -50,6 +54,7 @@ def update_history(date_str, image_path, etat, post_path):
 
 
 def generate_post():
+    """Génère le post du jour + image du jour."""
     today = datetime.date.today()
     date_str = today.isoformat()
 
@@ -69,9 +74,13 @@ def generate_post():
     # Lire le contenu du post
     content = post_path.read_text(encoding="utf-8").rstrip()
 
-    # Ajouter l'image du jour
-    image_url = f"https://raw.githubusercontent.com/<user>/<repo>/main/images/{date_str}.jpg"
+    # URL GitHub brute pour LinkedIn
+    image_url = (
+        f"https://raw.githubusercontent.com/"
+        f"Damien-Test-Dev/automated-email-linkedin/main/images/{date_str}.jpg"
+    )
 
+    # Construire le contenu final
     final_content = (
         content
         + "\n\n"
@@ -80,7 +89,7 @@ def generate_post():
         + "\n"
     )
 
-    # Écrire le fichier final pour GitHub Actions
+    # Écrire le fichier final
     OUTPUT_FILE.write_text(final_content, encoding="utf-8")
 
     # Mettre à jour l'historique
