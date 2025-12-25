@@ -1,175 +1,57 @@
-Automated LinkedIn Publishing System
-===================================
+📘 README — CMS LinkedIn Automatisé
+🚀 Présentation
+Ce projet est un CMS LinkedIn automatisé, conçu pour publier chaque jour un post LinkedIn accompagné de son image, sans intervention humaine.
 
-Ce projet met en place un système entièrement automatisé qui publie chaque jour de semaine à 9h (heure de Paris) un post LinkedIn contenant du texte et une image.
-Le système utilise uniquement des services gratuits : GitHub Actions, Zapier et Buffer.
+Il repose sur :
 
-L’objectif est d’obtenir un pipeline autonome, fiable et sans intervention manuelle.
+GitHub Actions pour l’automatisation
 
-Objectifs du système
+Python pour le traitement des posts et images
 
-Le système complet permet de :
+Zapier → Buffer → LinkedIn pour la publication
 
-    Générer automatiquement un post LinkedIn chaque jour de semaine à 9h heure de Paris.
+Un dashboard HTML/CSS/JS pour visualiser l’ensemble du calendrier éditorial
 
-    Sélectionner automatiquement l’image correspondant à la date du jour.
+Un fichier CSV historique pour le suivi complet
 
-    Renommer et convertir automatiquement les images ajoutées dans le dépôt.
+Ce système fonctionne 365 jours par an, même lorsque vous êtes en vacances.
 
-    Supprimer les images âgées de plus de 30 jours.
+🧠 Fonctionnement global
+Le pipeline complet fonctionne en 3 étapes :
 
-    Commit automatiquement le fichier du post.
+1️⃣ Préparation automatique des contenus
+Déposez vos posts bruts dans posts_raw/
 
-    Déclencher Zapier à chaque commit.
+Déposez vos images brutes dans images/
 
-    Publier le post sur LinkedIn via Buffer.
+GitHub Actions transforme automatiquement :
 
-Une fois configuré, le système fonctionne seul.
+les posts → en fichiers datés (posts/YYYY-MM-DD.md)
 
-Architecture générale
+les images → en .jpg datés (images/YYYY-MM-DD.jpg)
 
-Le système repose sur deux workflows GitHub Actions :
+2️⃣ Génération du post du jour
+Chaque matin (lundi → vendredi), GitHub Actions :
 
-    daily_commit.yml
+exécute generate_post.py
 
-        Exécuté chaque jour de semaine à 9h heure de Paris.
+assemble le post du jour + l’image du jour
 
-        Génère le fichier post_du_jour.md.
+génère post_du_jour.md
 
-        Sélectionne l’image du jour (format YYYY-MM-DD.jpg).
+met à jour l’historique
 
-        Commit automatiquement le fichier.
+commit le fichier
 
-        Déclenche Zapier.
+3️⃣ Publication automatique
+Le commit déclenche Zapier → Buffer → LinkedIn :
 
-    rename_images.yml
+Zapier détecte post_du_jour.md
 
-        Exécuté à chaque ajout d’image dans le dossier images/.
+Buffer publie le post + l’image sur LinkedIn
 
-        Convertit automatiquement les images en .jpg.
-
-        Renomme les fichiers au format YYYY-MM-DD.jpg..
-
-        Attribue les prochaines dates disponibles (lundi à vendredi).
-
-        Supprime les images âgées de plus de 30 jours.
-
-        Commit automatiquement les modifications.
-
-Structure du projet
-
-Le dépôt contient les éléments suivants :
-
-    generate_post.py : génère le fichier du post quotidien.
-
-    rename_images.py : renomme, convertit et nettoie les images.
-
-    post_du_jour.md : fichier généré automatiquement.
-
-    images/ : dossier contenant les images datées.
-
-    .github/workflows/daily_commit.yml : workflow de génération du post.
-
-    .github/workflows/rename_images.yml : workflow de gestion des images.
-
-    README.md  : documentation du projet.
-
-Exemple de structure :
-
-/
-├── generate_post.py
-├── rename_images.py
-├── post_du_jour.md
-├── images/
-│   ├── .gitkeep
-│   ├── 2025-12-22.jpg
-│   ├── 2025-12-23.jpg
-│   └── ...
-└── .github/workflows/
-├── daily_commit.yml
-└── rename_images.yml
-
-Fonctionnement détaillé
-
-    Ajout d’images
-    Vous pouvez ajouter des images dans le dossier images/ sans vous soucier du nom ou du format.
-    Le workflow rename_images.yml va automatiquement :
-
-        convertir les images en .jpg
-
-        attribuer une date future (lundi à vendredi)
-
-        renommer les fichiers au format YYYY-MM-DD.jpg
-
-        supprimer les images de plus de 30 jours
-
-    Génération du post quotidien
-    Chaque jour de semaine à 9h heure de Paris :
-
-        generate_post.py sélectionne l’image du jour
-
-        génère post_du_jour.md
-
-        commit automatiquement
-
-        Zapier détecte le commit
-
-        Zapier envoie le texte et l’image à Buffer
-
-        Buffer publie sur LinkedIn
-
-Format des images
-
-Toutes les images sont automatiquement converties en .jpg.
-Ce format est compatible avec :
-
-    GitHub
-
-    Zapier
-
-    Buffer
-
-    LinkedIn
-
-Exemple de fichier généré
-
-Exemple de contenu du fichier post_du_jour.md :
-Post LinkedIn du 2025-12-22
-
-Bonjour,
-
-Aujourd’hui, je partage un contenu automatisé.
-Grâce à GitHub Actions, Zapier et Buffer, ce post est généré et publié sans intervention manuelle.
-
-Automatisation
-Publication quotidienne
-Intégration fluide
-
-Image associée :
-https://raw.githubusercontent.com/<ton-compte>/<ton-repo>/main/images/2025-12-22.jpg
-
-Déploiement
-
-    Créer le dossier images/ avec un fichier .gitkeep.
-
-    Ajouter les workflows dans .github/workflows/.
-
-    Ajouter les scripts Python à la racine du dépôt.
-
-    Uploader des images dans images/.
-
-    Laisser GitHub Actions gérer le reste.
-
-Notes
-
-Ce système est conçu pour être entièrement autonome.
-Il peut être étendu pour gérer plusieurs comptes, plusieurs formats de posts ou d’autres réseaux sociaux.
-
-Fin du README
-
-
-
-
+📂 Structure du projet
+Code
 /
 ├── .github/
 │   └── workflows/
@@ -198,3 +80,194 @@ Fin du README
 ├── rename_images.py
 │
 └── README.md
+🛠️ Scripts Python
+process_raw_posts.py
+Transforme les posts bruts en posts datés :
+
+ignore les fichiers vides
+
+conserve la mise en forme et les emojis
+
+attribue des dates (lundi → vendredi)
+
+crée posts/YYYY-MM-DD.md
+
+met à jour posts_history.csv
+
+supprime les fichiers bruts
+
+rename_images.py
+Transforme les images brutes en images datées :
+
+accepte .jpg, .jpeg, .png, .webp
+
+convertit en .jpg
+
+attribue des dates (lundi → vendredi)
+
+supprime les images brutes
+
+nettoie les fichiers de plus de 30 jours
+
+met à jour posts_history.csv
+
+generate_post.py
+Génère le post du jour :
+
+détecte la date du jour
+
+assemble le texte + l’image
+
+génère post_du_jour.md
+
+met à jour l’historique
+
+utilisé par GitHub Actions pour déclencher Zapier
+
+⚙️ Workflows GitHub Actions
+process_raw_posts.yml
+Déclenché automatiquement quand des fichiers sont ajoutés dans posts_raw/.
+
+rename_images.yml
+Déclenché automatiquement quand des images sont ajoutées dans images/.
+
+daily_commit.yml
+Déclenché automatiquement chaque jour à 07:00 (lundi → vendredi).
+
+📊 Dashboard
+Accessible dans :
+
+Code
+dashboard/index.html
+Fonctionnalités :
+
+Synthèse globale (statistiques, couverture, jours manquants)
+
+Semaine en cours (statut par jour)
+
+Calendrier éditorial complet
+
+Filtres (état, période)
+
+Recherche instantanée
+
+Liens directs vers les posts et images
+
+Lecture automatique de posts_history.csv
+
+📈 Historique des posts
+Le fichier :
+
+Code
+posts_history.csv
+contient :
+
+date	jour	heure	image	etat	chemin_fichier_post
+Il sert :
+
+au dashboard
+
+au suivi
+
+à la traçabilité
+
+à la publication automatique
+
+🚀 Déploiement & utilisation
+1. Ajouter des posts bruts
+Déposer vos fichiers texte dans :
+
+Code
+posts_raw/
+2. Ajouter des images brutes
+Déposer vos images dans :
+
+Code
+images/
+3. Laisser GitHub Actions travailler
+Les workflows :
+
+transforment
+
+datent
+
+nettoient
+
+historisent
+
+4. Publication automatique
+Chaque matin, le post du jour est généré et publié.
+
+🧩 Personnalisation
+Vous pouvez modifier :
+
+l’heure de publication (daily_commit.yml)
+
+la fenêtre de nettoyage (30 jours → modifiable)
+
+le design du dashboard
+
+les états utilisés dans le CSV
+
+la logique d’attribution des dates
+
+🏁 Conclusion
+Ce projet constitue un CMS LinkedIn complet, automatisé, extensible, et pilotable via un dashboard moderne.
+
+Il permet :
+
+de préparer des semaines de contenu à l’avance
+
+de publier automatiquement
+
+de suivre l’historique
+
+de visualiser le calendrier éditorial
+
+de réduire le travail manuel à zéro
+
+
+
+
+
+🏗️ Architecture technique
+Code
+┌──────────────────────────────┐
+│        posts_raw/            │
+│   (posts bruts déposés)      │
+└───────────────┬──────────────┘
+                │ push
+                ▼
+      GitHub Action : process_raw_posts.yml
+                │
+                ▼
+┌──────────────────────────────┐
+│          posts/              │
+│  (posts datés générés)       │
+└───────────────┬──────────────┘
+                │
+                ▼
+      GitHub Action : daily_commit.yml
+                │
+                ▼
+┌──────────────────────────────┐
+│      post_du_jour.md         │
+│ (post final + image du jour) │
+└───────────────┬──────────────┘
+                │ commit
+                ▼
+           Zapier Trigger
+                │
+                ▼
+             Buffer
+                │
+                ▼
+           LinkedIn Post
+Et en parallèle :
+
+Code
+images/ → rename_images.yml → images datées + nettoyage
+Le dashboard lit :
+
+Code
+posts_history.csv → dashboard/index.html
