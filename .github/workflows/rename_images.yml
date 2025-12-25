@@ -1,46 +1,39 @@
-name: Rename and clean images
+name: Rename Images
 
 on:
   push:
     paths:
       - "images/**"
-  schedule:
-    # Tous les jours à 06:00 UTC (entretien / nettoyage)
-    - cron: "0 6 * * *"
   workflow_dispatch:
 
 jobs:
-  rename-and-clean:
+  rename_images:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install pillow
-
-      - name: Run image renamer/cleaner
-        run: python rename_images.py
-
-      - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          pip install pillow
 
-      - name: Commit and push changes
+      - name: Run rename_images.py
         run: |
-          git status
-          # Vérifier s'il y a des changements (renommage, suppression, conversion)
-          if git diff --quiet && git diff --cached --quiet; then
-            echo "Aucun changement à committer."
-          else
-            git add -A
-            git commit -m "Renommage/conversion/suppression automatique d'images"
-            git push
-          fi
+          python rename_images.py
+
+      - name: Commit renamed images
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add images/ posts/ posts_history.csv
+          git commit -m "Process raw images" || echo "No changes to commit"
+
+      - name: Push changes
+        run: |
+          git push
