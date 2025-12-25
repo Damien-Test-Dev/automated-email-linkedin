@@ -1,165 +1,191 @@
-import os
-import re
-from datetime import datetime, date, timedelta
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+rename_images.py
+
+Objectif :
+- Lire les images brutes dans images/
+- Ignorer les fichiers vides ou non-images
+- Renommer les images selon les dates disponibles (lundi à vendredi)
+- Convertir en .jpg si nécessaire
+- Supprimer les images brutes après traitement
+- Supprimer les images et posts de plus de 30 jours
+- Mettre à jour posts_history.csv
+"""
+
 from pathlib import Path
-from typing import List, Set, Tuple
-
 from PIL import Image
+import datetime
+import csv
+import os
+
+ROOT_DIR = Path(__file__).parent
+IMAGES_DIR = ROOT_DIR / "images"
+POSTS_DIR = ROOT_DIR / "posts"
+HISTORY_FILE = ROOT_DIR / "posts_history.csv"
+
+WEEKDAYS_TO_USE = {0, 1, 2, 3, 4}  # lundi à vendredi
 
 
-IMAGES_DIR = Path("images")
-DATE_PATTERN = re.compile(r"^(\d{4})-(\d{2})-(\d{2})\.jpg$")
+def ensure_history_file():
+    if not HISTORY_FILE.exists():
+        with HISTORY_FILE.open("w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["date", "jour", "heure", "image", "etat", "chemin_fichier_post"])
 
 
-def is_weekday(d: date) -> bool:
-    # 0 = lundi, 6 = dimanche
-    return d.weekday() < 5
+def weekday_name_fr(date_obj):
+    jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+    return jours[date_obj.weekday()]
 
 
-def parse_date_from_filename(filename: str) -> date | None:
-    match = DATE_PATTERN.match(filename)
-    if not match:
-        return None
-    year, month, day = map(int, match.groups())
-    try:
-        d = date(year, month, day)
-    except ValueError:
-        return None
-    return d
+def append_history(date_str, image_path, etat, post_path=""):
+    ensure_history_file()
+    date_obj = datetime.date.fromisoformat(date_str)
+    jour = weekday_name_fr(date_obj)
+    heure = ""
+
+    with HISTORY_FILE.open("a", encoding="utf-8", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([date_str, jour, heure, image_path, etat, post_path])
 
 
-def find_existing_dated_images() -> List[Tuple[date, Path]]:
-    dated_images: List[Tuple[date, Path]] = []
-    if not IMAGES_DIR.exists():
-        return dated_images
+def list_existing_dates():
+    used = set()
 
-    for entry in IMAGES_DIR.iterdir():
-        if not entry.is_file():
-            continue
-        if entry.name == ".gitkeep":
-            continue
-
-        d = parse_date_from_filename(entry.name)
-        if d is not None and is_weekday(d):
-            dated_images.append((d, entry))
-
-    return dated_images
-
-
-def find_files_to_process() -> List[Path]:
-    files: List[Path] = []
-    if not IMAGES_DIR.exists():
-        return files
-
-    for entry in IMAGES_DIR.iterdir():
-        if not entry.is_file():
-            continue
-        if entry.name == ".gitkeep":
+    # Dates déjà utilisées par les posts
+    for file in POSTS_DIR.glob("*.md"):
+        try:
+            date_str = file.stem
+            datetime.date.fromisoformat(date_str)
+            used.add(date_str)
+        except ValueError:
             continue
 
-        # On considère comme "à traiter" tout ce qui n'est pas déjà YYYY-MM-DD.jpg valide
-        d = parse_date_from_filename(entry.name)
-        if d is None or not is_weekday(d):
-            files.append(entry)
-
-    return files
-
-
-def next_available_weekday(start: date, used_dates: Set[date]) -> date:
-    current = start
-    while True:
-        if is_weekday(current) and current not in used_dates:
-            return current
-        current += timedelta(days=1)
-
-
-def convert_to_jpg(source_path: Path, target_path: Path) -> None:
-    # Convertit n'importe quelle image en .jpg (RGB)
-    with Image.open(source_path) as img:
-        rgb = img.convert("RGB")
-        target_path.parent.mkdir(parents=True, exist_ok=True)
-        rgb.save(target_path, format="JPEG", quality=90)
-
-
-def assign_dates_and_rename():
-    today = date.today()
-
-    # 1. Récupérer toutes les images déjà datées
-    dated_images = find_existing_dated_images()
-    used_dates: Set[date] = {d for d, _ in dated_images}
-
-    print(f"Dates déjà utilisées : {sorted(used_dates)}")
-
-    # 2. Récupérer tous les fichiers à traiter (mauvais nom ou mauvais jour)
-    to_process = find_files_to_process()
-    if not to_process:
-        print("Aucun fichier à renommer/convertir.")
-    else:
-        print(f"Fichiers à traiter : {[p.name for p in to_process]}")
-
-    # 3. Pour chaque fichier à traiter → assigner une date future disponible
-    for src_path in sorted(to_process):
-        # Déterminer l'extension
-        ext = src_path.suffix.lower()
-
-        # On ignore les fichiers sans extension ou bizarres
-        if ext not in [".jpg", ".jpeg", ".png", ".webp"]:
-            print(f"Ignoré (format non supporté) : {src_path.name}")
+    # Dates déjà utilisées par les images
+    for file in IMAGES_DIR.glob("*.jpg"):
+        try:
+            date_str = file.stem
+            datetime.date.fromisoformat(date_str)
+            used.add(date_str)
+        except ValueError:
             continue
 
-        # Calculer la prochaine date libre à partir d'aujourd'hui
-        target_date = next_available_weekday(today, used_dates)
-        target_name = f"{target_date.isoformat()}.jpg"
-        target_path = IMAGES_DIR / target_name
-
-        print(f"{src_path.name} → {target_name}")
-
-        # Si le fichier source a déjà le bon format .jpg mais mauvais nom,
-        # on renomme simplement. Sinon on convertit.
-        if ext == ".jpg" and parse_date_from_filename(src_path.name) is None:
-            # Juste un renommage .jpg -> .jpg
-            src_path.rename(target_path)
-        else:
-            # Conversion en .jpg
-            convert_to_jpg(src_path, target_path)
-            # Supprimer l'original si différent
-            if src_path.exists() and src_path != target_path:
-                src_path.unlink()
-
-        used_dates.add(target_date)
+    return used
 
 
-def delete_old_images(days: int = 30):
-    today = date.today()
-    dated_images = find_existing_dated_images()
-    deleted = []
+def next_available_dates(n, start_date=None, used_dates=None):
+    if start_date is None:
+        start_date = datetime.date.today()
 
-    for d, path in dated_images:
-        age = (today - d).days
-        if age > days:
-            print(f"Suppression de {path.name} (âge : {age} jours)")
-            path.unlink()
-            deleted.append(path.name)
+    if used_dates is None:
+        used_dates = set()
 
-    if not deleted:
-        print(f"Aucune image de plus de {days} jours à supprimer.")
-    else:
-        print(f"Images supprimées : {deleted}")
+    dates = []
+    current_date = start_date
+
+    while len(dates) < n:
+        if (
+            current_date.weekday() in WEEKDAYS_TO_USE
+            and current_date.isoformat() not in used_dates
+        ):
+            dates.append(current_date.isoformat())
+            used_dates.add(current_date.isoformat())
+
+        current_date += datetime.timedelta(days=1)
+
+    return dates
 
 
-def main():
-    if not IMAGES_DIR.exists():
-        print("Le dossier 'images/' n'existe pas, rien à faire.")
+def read_raw_images():
+    raw_images = []
+
+    for file in sorted(IMAGES_DIR.iterdir()):
+        if not file.is_file():
+            continue
+
+        if file.suffix.lower() not in (".jpg", ".jpeg", ".png", ".webp"):
+            continue
+
+        raw_images.append(file)
+
+    return raw_images
+
+
+def convert_to_jpg(src_path, dest_path):
+    img = Image.open(src_path).convert("RGB")
+    img.save(dest_path, "JPEG", quality=90)
+
+
+def cleanup_old_files(days=30):
+    cutoff = datetime.date.today() - datetime.timedelta(days=days)
+
+    # Supprimer les images trop anciennes
+    for file in IMAGES_DIR.glob("*.jpg"):
+        try:
+            date_str = file.stem
+            date_obj = datetime.date.fromisoformat(date_str)
+            if date_obj < cutoff:
+                file.unlink()
+                print(f"Image supprimée (ancienne) : {file.name}")
+        except ValueError:
+            continue
+
+    # Supprimer les posts trop anciens
+    for file in POSTS_DIR.glob("*.md"):
+        try:
+            date_str = file.stem
+            date_obj = datetime.date.fromisoformat(date_str)
+            if date_obj < cutoff:
+                file.unlink()
+                print(f"Post supprimé (ancien) : {file.name}")
+        except ValueError:
+            continue
+
+
+def process_images():
+    IMAGES_DIR.mkdir(exist_ok=True)
+    POSTS_DIR.mkdir(exist_ok=True)
+
+    raw_images = read_raw_images()
+    if not raw_images:
+        print("Aucune image brute à traiter.")
         return
 
-    print("=== Étape 1 : Renommage / conversion des nouvelles images ===")
-    assign_dates_and_rename()
+    used_dates = list_existing_dates()
+    dates = next_available_dates(len(raw_images), used_dates=used_dates)
 
-    print("=== Étape 2 : Suppression des images de plus de 30 jours ===")
-    delete_old_images(days=30)
+    print("Attribution des dates aux images :")
+    for file, date_str in zip(raw_images, dates):
+        print(f"  - {file.name} -> {date_str}.jpg")
 
-    print("Terminé.")
+    for file, date_str in zip(raw_images, dates):
+        final_path = IMAGES_DIR / f"{date_str}.jpg"
+
+        # Conversion si nécessaire
+        if file.suffix.lower() != ".jpg":
+            convert_to_jpg(file, final_path)
+        else:
+            file.rename(final_path)
+
+        append_history(
+            date_str=date_str,
+            image_path=str(final_path.relative_to(ROOT_DIR)),
+            etat="image_prete",
+            post_path=""
+        )
+
+        print(f"Image traitée : {file.name}")
+
+    # Nettoyage des fichiers bruts
+    for file in raw_images:
+        if file.exists():
+            file.unlink()
+
+    # Nettoyage des anciens fichiers
+    cleanup_old_files()
 
 
 if __name__ == "__main__":
-    main()
+    process_images()
