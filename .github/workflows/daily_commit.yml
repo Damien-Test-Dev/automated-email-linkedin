@@ -1,44 +1,38 @@
-name: Daily Commit for LinkedIn Post
+name: Daily Commit Post
 
 on:
   schedule:
-    - cron: "0 7 * * 1-5"   # 7h UTC = 9h Paris en été (UTC+2)
-    - cron: "0 8 * * 1-5"   # 8h UTC = 9h Paris en hiver (UTC+1)
-  workflow_dispatch:        # Permet de lancer manuellement si besoin
+    - cron: "0 7 * * 1-5"   # Tous les jours à 07:00 du lundi au vendredi
+  workflow_dispatch:
 
 jobs:
-  generate-post:
+  generate_and_commit_post:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install pytz
-
-      - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          pip install pillow
 
-      - name: Generate post file
-        run: python generate_post.py
-
-      - name: Commit and push generated post
+      - name: Generate today's post
         run: |
-          # Vérifie si un fichier a été généré dans /posts/
-          if ls posts/*.md 1> /dev/null 2>&1; then
-            echo "Un fichier de post a été généré."
-            git add posts/*.md
-            git add posts_history.csv
-            git commit -m "Post LinkedIn généré automatiquement le $(date +'%Y-%m-%d')"
-            git push
-          else
-            echo "Aucun fichier généré (pas 9h Paris ou image manquante)."
-          fi
+          python generate_post.py
+
+      - name: Commit post_du_jour.md
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add post_du_jour.md posts_history.csv
+          git commit -m "Post du jour" || echo "No changes to commit"
+
+      - name: Push changes
+        run: |
+          git push
