@@ -1,0 +1,33 @@
+name: Clean images folder
+
+on:
+  workflow_dispatch:  # déclenchement manuel uniquement
+
+jobs:
+  clean_images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Delete all files in images folder
+        run: |
+          echo "Contenu du dossier images/ AVANT nettoyage :"
+          ls -la images || echo "Le dossier images/ n'existe pas."
+
+          if [ -d "images" ]; then
+            find images -type f ! -name ".gitkeep" -delete
+          fi
+
+          echo "Contenu du dossier images/ APRÈS nettoyage :"
+          ls -la images || echo "Le dossier images/ est vide ou n'existe pas."
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add images || echo "Rien à ajouter depuis images/"
+          git commit -m "Clean images folder via GitHub Actions" || echo "Aucun changement à committer"
+          git push || echo "Aucun changement à pousser"
