@@ -1,0 +1,32 @@
+name: Manage Pending Files
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *"  # gestion automatique chaque nuit à 1h
+
+jobs:
+  manage_pending:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Run manage_pending.py
+        run: |
+          python manage_pending.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add posts_pending images_pending posts images
+          git commit -m "Manage pending files" || echo "Aucun changement"
+          git push || echo "Aucun changement"
