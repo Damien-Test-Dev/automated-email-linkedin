@@ -1,0 +1,33 @@
+name: Clean posts folder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clean_posts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Delete all files in posts folder
+        run: |
+          echo "Contenu du dossier posts/ AVANT nettoyage :"
+          ls -la posts || echo "Le dossier posts/ n'existe pas."
+
+          if [ -d "posts" ]; then
+            find posts -type f ! -name ".gitkeep" -delete
+          fi
+
+          echo "Contenu du dossier posts/ APRÈS nettoyage :"
+          ls -la posts || echo "Le dossier posts/ est vide ou n'existe pas."
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add posts || echo "Rien à ajouter depuis posts/"
+          git commit -m "Clean posts folder via GitHub Actions" || echo "Aucun changement à committer"
+          git push || echo "Aucun changement à pousser"
