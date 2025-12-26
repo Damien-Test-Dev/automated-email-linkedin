@@ -1,0 +1,32 @@
+name: Orchestrator
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 1-5"  # chaque jour ouvré à 8h (avant publication à 9h)
+
+jobs:
+  orchestrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Run orchestrator.py
+        run: |
+          python orchestrator.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add posts images posts_history.csv posts_pending images_pending post_du_jour.md
+          git commit -m "Orchestration complète du système" || echo "Aucun changement"
+          git push || echo "Aucun changement"
