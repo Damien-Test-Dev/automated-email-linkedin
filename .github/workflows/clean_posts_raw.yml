@@ -1,0 +1,33 @@
+name: Clean posts_raw folder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clean_posts_raw:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Delete all files in posts_raw folder
+        run: |
+          echo "Contenu du dossier posts_raw/ AVANT nettoyage :"
+          ls -la posts_raw || echo "Le dossier posts_raw/ n'existe pas."
+
+          if [ -d "posts_raw" ]; then
+            find posts_raw -type f ! -name ".gitkeep" -delete
+          fi
+
+          echo "Contenu du dossier posts_raw/ APRÈS nettoyage :"
+          ls -la posts_raw || echo "Le dossier posts_raw/ est vide ou n'existe pas."
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add posts_raw || echo "Rien à ajouter depuis posts_raw/"
+          git commit -m "Clean posts_raw folder via GitHub Actions" || echo "Aucun changement à committer"
+          git push || echo "Aucun changement à pousser"
