@@ -1,4 +1,5 @@
-/* Reset léger */
+/* ====== Layout global ====== */
+
 *,
 *::before,
 *::after {
@@ -8,286 +9,285 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #1c2541 0, #0b1020 50%, #050711 100%);
-  color: #f5f7ff;
+  background: #050814;
+  color: #f5f5f7;
 }
 
-/* Layout principal */
 .app {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px 16px 48px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
+/* ====== Header ====== */
 
 .app-header {
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  align-items: center;
+  padding: 16px 24px;
+  background: radial-gradient(circle at top left, #243b76 0, #0b1020 55%, #050814 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .app-header h1 {
   margin: 0;
-  font-size: 1.8rem;
-  letter-spacing: 0.04em;
+  font-size: 22px;
+  letter-spacing: 0.03em;
 }
 
 .app-subtitle {
   margin: 4px 0 0;
-  color: #a3b0d6;
-  font-size: 0.95rem;
+  font-size: 14px;
+  color: #b3bbd9;
 }
 
 .app-meta {
-  font-size: 0.85rem;
-  color: #7f8bb0;
+  font-size: 13px;
+  color: #c4c8e8;
 }
+
+/* ====== Main ====== */
 
 .app-main {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex: 1;
+  padding: 20px 24px 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr);
+  gap: 20px;
 }
 
-/* Cards */
+/* Sur petits écrans : une seule colonne */
+@media (max-width: 960px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====== Card générique ====== */
+
 .card {
-  background: rgba(10, 16, 35, 0.92);
-  border-radius: 12px;
-  padding: 16px 18px 18px;
-  border: 1px solid rgba(86, 115, 255, 0.35);
-  box-shadow: 0 0 30px rgba(37, 99, 235, 0.25);
-  backdrop-filter: blur(10px);
+  background: #0b1020;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  padding: 16px 18px;
 }
 
 .card h2 {
   margin: 0 0 10px;
-  font-size: 1.2rem;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .card-header {
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  align-items: baseline;
 }
 
 .muted {
-  color: #8893b5;
-  font-size: 0.85rem;
+  font-size: 13px;
+  color: #9aa0c7;
 }
 
-/* Synthèse */
+/* ====== Synthèse globale ====== */
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 10px;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 .stat-card {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(79, 70, 229, 0.08));
-  border-radius: 10px;
+  background: #101529;
+  border-radius: 8px;
   padding: 10px 12px;
-  border: 1px solid rgba(129, 140, 248, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .stat-label {
   display: block;
-  font-size: 0.8rem;
-  color: #a5b4fc;
+  font-size: 12px;
+  color: #a3a8cf;
   margin-bottom: 4px;
 }
 
 .stat-value {
-  font-size: 1.3rem;
+  font-size: 18px;
   font-weight: 600;
+  color: #f5f5ff;
 }
 
 .stat-extra {
   margin-top: 10px;
-  font-size: 0.9rem;
-  color: #c4d0ff;
+  font-size: 13px;
+  color: #c4c8e8;
 }
 
-/* Semaine en cours */
+/* ====== Semaine en cours ====== */
+
 .week-grid {
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 8px;
+  gap: 8px;
 }
 
-.week-day-card {
-  position: relative;
-  border-radius: 10px;
-  padding: 10px 10px 12px;
-  background: radial-gradient(circle at top left, rgba(129, 140, 248, 0.25), rgba(15, 23, 42, 0.95));
-  border: 1px solid rgba(148, 163, 255, 0.5);
+.week-day {
+  background: #101529;
+  border-radius: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
 }
 
-.week-day-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-
-.week-day-date {
-  font-size: 0.8rem;
-  color: #c7d2fe;
-  margin-bottom: 8px;
-}
-
-.week-day-status {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 0.75rem;
+.week-day-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
   font-weight: 500;
 }
 
-.status-pill-preparé {
-  background: rgba(56, 189, 248, 0.12);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.5);
+.week-day-status {
+  font-size: 12px;
+  color: #b3bbd9;
 }
 
-.status-pill-image_prete {
-  background: rgba(129, 140, 248, 0.12);
-  color: #818cf8;
-  border: 1px solid rgba(129, 140, 248, 0.5);
-}
+/* ====== Filtres & recherche ====== */
 
-.status-pill-pret_pour_publication {
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
-  border: 1px solid rgba(34, 197, 94, 0.6);
-}
-
-.status-pill-none {
-  background: rgba(148, 163, 184, 0.12);
-  color: #cbd5f5;
-  border: 1px solid rgba(148, 163, 184, 0.5);
-}
-
-.week-day-meta {
-  margin-top: 6px;
-  font-size: 0.75rem;
-  color: #9ca3c5;
-}
-
-/* Filtres & recherche */
 .filters-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-width: 150px;
+  min-width: 140px;
+  font-size: 13px;
 }
 
 .filter-group label {
-  font-size: 0.8rem;
-  color: #c7d2fe;
+  color: #b3bbd9;
 }
 
 .filter-group select,
 .filter-group input {
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 255, 0.6);
-  background: rgba(15, 23, 42, 0.95);
-  color: #e5e7ff;
-  padding: 6px 10px;
-  font-size: 0.9rem;
-  outline: none;
+  background: #101529;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 8px;
+  color: #f5f5ff;
+  font-size: 13px;
 }
 
-.filter-group input::placeholder {
-  color: #6b7280;
+.filter-group select:focus,
+.filter-group input:focus {
+  outline: 1px solid #4b8bff;
+  border-color: #4b8bff;
 }
 
 .filter-group.grow {
-  flex: 1 1 220px;
+  flex: 1;
 }
 
-/* Table */
+/* ====== Table calendrier éditorial ====== */
+
 .table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 8px;
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.85rem;
+  font-size: 13px;
+}
+
+thead {
+  background: #151a30;
 }
 
 th,
 td {
   padding: 6px 8px;
-  border-bottom: 1px solid rgba(51, 65, 85, 0.8);
-}
-
-th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   text-align: left;
-  font-weight: 500;
-  color: #a5b4fc;
-  background: rgba(15, 23, 42, 0.9);
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
 
 tbody tr:nth-child(even) {
-  background: rgba(15, 23, 42, 0.7);
+  background: #0f1325;
 }
 
-tbody tr:hover {
-  background: rgba(59, 130, 246, 0.18);
+tbody tr:nth-child(odd) {
+  background: #090d1b;
 }
 
-.td-etat {
-  font-weight: 500;
+/* ====== Monitoring du pipeline ====== */
+
+#monitoring {
+  margin-top: 10px;
 }
 
-.td-etat-preparé {
-  color: #38bdf8;
+.monitor-block {
+  background: #101529;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 12px;
+  margin-bottom: 12px;
 }
 
-.td-etat-image_prete {
-  color: #a5b4fc;
+.monitor-block h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding-bottom: 4px;
 }
 
-.td-etat-pret_pour_publication {
-  color: #4ade80;
+/* ====== Badges statut ====== */
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
 }
 
-.td-image a,
-.td-post a {
-  color: #93c5fd;
-  text-decoration: none;
+.badge-success {
+  background: #173d2d;
+  color: #82f2bf;
+  border: 1px solid #3fd691;
 }
 
-.td-image a:hover,
-.td-post a:hover {
-  text-decoration: underline;
+.badge-error {
+  background: #4c1717;
+  color: #ff9c9c;
+  border: 1px solid #ff7373;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .app {
-    padding: 16px 10px 28px;
-  }
+.badge-neutral {
+  background: #30354f;
+  color: #d3d7ff;
+  border: 1px solid #4b5178;
+}
 
+/* ====== Responsif ====== */
+
+@media (max-width: 600px) {
   .app-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
   }
 
   .week-grid {
