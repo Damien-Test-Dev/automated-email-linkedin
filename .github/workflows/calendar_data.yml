@@ -1,0 +1,42 @@
+name: Generate Calendar JSON
+
+on:
+  schedule:
+    - cron: "10 9 * * 1-5"  # chaque jour ouvré à 09:10
+  workflow_dispatch:
+
+jobs:
+  calendar_data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Generate calendar.json
+        run: |
+          python generate_calendar_json.py
+
+      - name: Show summary
+        run: |
+          echo "## Calendar JSON Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f "dashboard_data/calendar.json" ]; then
+            echo "calendar.json généré avec succès." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            head -n 20 dashboard_data/calendar.json >> $GITHUB_STEP_SUMMARY
+          else
+            echo "calendar.json introuvable." >> $GITHUB_STEP_SUMMARY
+
+      - name: Commit and push calendar.json
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add dashboard_data/calendar.json
+          git commit -m "Update calendar.json from posts_history.csv" || echo "Aucun changement"
+          git push || echo "Aucun changement"
