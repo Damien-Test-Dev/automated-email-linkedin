@@ -34,11 +34,20 @@ jobs:
           else
             echo "Aucun rapport généré." >> $GITHUB_STEP_SUMMARY
 
+      - name: Cleanup old reports (older than 365 days)
+        run: |
+          echo "Nettoyage des rapports de plus de 365 jours..."
+          if [ -d "reports" ]; then
+            find reports -type f -name "daily_report_*.md" -mtime +365 -print -delete
+          else
+            echo "Le dossier reports/ n'existe pas encore, rien à nettoyer."
+          fi
+
       - name: Commit and push report
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
           git add reports
-          git commit -m "Daily report generated" || echo "Aucun changement"
+          git commit -m "Daily report generated + cleanup old reports" || echo "Aucun changement"
           git push || echo "Aucun changement"
