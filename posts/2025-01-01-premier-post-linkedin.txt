@@ -1,0 +1,24 @@
+🚀 Construire un système LinkedIn… en partant de zéro
+
+Aujourd’hui, je pose la première brique d’un projet qui me tient beaucoup à cœur : 
+un pipeline complet, gratuit, pour publier du contenu LinkedIn de façon fiable, traçable et scalable.
+
+Pas d’outil magique.
+Pas de promesse bullshit.
+Juste :
+- une structure claire
+- des fichiers propres
+- et une méthode qui peut grandir avec mes ambitions.
+
+Pourquoi je fais ça ?
+Parce que publier tous les jours ne doit pas être un chaos, mais un système.
+Un système qui me libère du mental, et me laisse me concentrer sur la valeur de mes idées.
+
+Ce post est le premier.
+Le reste sera construit, testé, amélioré… sprint par sprint.
+
+🧩 Une brique à la fois.
+🧠 Un système au service de la clarté.
+🚀 Et tout ça dans l’univers du “gratuit bien architecturé”.
+
+#linkedin #productivité #système #automation #noCode #personalBranding
