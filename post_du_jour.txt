@@ -1,35 +1,3 @@
-🚀 Construire un système LinkedIn… une brique à la fois
-
-Aujourd’hui, je pose les bases de mon système de publication LinkedIn.
-
-Pas de magie.
-Pas d’outils ultra chers.
-Juste :
-- une structure claire
-- des fichiers propres
-- un flux simple que je peux automatiser plus tard.
-
-Je veux que chaque post parte d’un fichier.
-Que chaque fichier soit traçable.
-Et que tout mon système reste lisible, même dans 6 mois.
-
-Ce post est un premier test.
-La suite : itérer, optimiser, automatiser.
-
-#linkedin #productivité #système #automation #personalBranding
-
-🔥 Test du pipeline LinkedIn
-
-Ceci est un test réel du Sprint 3.
-Si tout fonctionne :
-- GitHub envoie un commit
-- Zapier détecte le commit
-- Buffer reçoit le texte
-- LinkedIn publiera selon le planning
-
-#linkedin #automation #test
-
-
 🚀 Mon post LinkedIn du jour
 
 Aujourd’hui je parle de…
@@ -39,29 +7,3 @@ Aujourd’hui je parle de…
 - point 3
 
 #linkedin #growth #automation
-
-
-🚀 Mon post LinkedIn du jour
-
-Aujourd’hui je parle de…
-
-- point 1
-- point 2
-- point 3
-
-#linkedin #growth #automation
-
-next
-
-🚀 Mon post LinkedIn du jour
-
-Aujourd’hui je parle de…
-
-- point 1
-- point 2
-- point 3
-
-#linkedin #growth #automation
-
-
-
