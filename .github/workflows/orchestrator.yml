@@ -1,7 +1,7 @@
 name: Orchestrator
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
   schedule:
     - cron: "0 8 * * 1-5"  # chaque jour ouvré à 8h (avant publication à 9h)
 
@@ -20,14 +20,16 @@ jobs:
 
       - name: Run orchestrator.py
         run: |
+          echo "=== Running orchestrator ==="
           python orchestrator.py
+          echo "=== Orchestrator completed ==="
 
       - name: Show last log entries
         run: |
           echo "=== Dernières entrées du log orchestrator ==="
           if [ -f "logs/orchestrator_log.csv" ]; then
             tail -n 20 logs/orchestrator_log.csv
-          else:
+          else
             echo "Aucun fichier de log trouvé."
           fi
 
@@ -38,8 +40,9 @@ jobs:
           if [ -f "logs/orchestrator_log.csv" ]; then
             echo "Dernières entrées du log :" >> $GITHUB_STEP_SUMMARY
             tail -n 10 logs/orchestrator_log.csv >> $GITHUB_STEP_SUMMARY
-          else:
+          else
             echo "Aucun fichier de log trouvé." >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Commit and push changes
         run: |
