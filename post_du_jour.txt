@@ -17,3 +17,15 @@ Ce post est un premier test.
 La suite : itérer, optimiser, automatiser.
 
 #linkedin #productivité #système #automation #personalBranding
+
+🔥 Test du pipeline LinkedIn
+
+Ceci est un test réel du Sprint 3.
+Si tout fonctionne :
+- GitHub envoie un commit
+- Zapier détecte le commit
+- Buffer reçoit le texte
+- LinkedIn publiera selon le planning
+
+#linkedin #automation #test
+
