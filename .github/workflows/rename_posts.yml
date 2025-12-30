@@ -97,3 +97,4 @@ jobs:
           COMMIT_MESSAGE="⭐ Auto-rename post files to YYYY-MM-DD_post.txt ⭐"
           git commit -m "$COMMIT_MESSAGE"
           git push
+
