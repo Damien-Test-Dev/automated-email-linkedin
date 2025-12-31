@@ -60,13 +60,12 @@ jobs:
           git add images/${{ steps.date.outputs.today }}_image.png
 
           # Construire le commit message multi-ligne
-          cat <<EOF > commit_message.txt
-${{ steps.commit_title.outputs.commit_title }}
+          COMMIT_TITLE="${{ steps.commit_title.outputs.commit_title }}"
+          POST_CONTENT="${{ steps.extract_post.outputs.post_content }}"
 
-${{ steps.extract_post.outputs.post_content }}
-EOF
+          COMMIT_MSG="$COMMIT_TITLE
 
-          git add commit_message.txt
+          $POST_CONTENT"
 
-          git commit -F commit_message.txt
+          git commit -m "$COMMIT_MSG"
           git push
