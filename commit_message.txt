@@ -1,4 +1,4 @@
-⭐ Automatisation — Utile, Mais Jamais Suffisante ⭐
+⭐ Tests E2E — Là Où Commence la Vraie Expérience ⭐
 
 TEST TEST TEST
 TEST 
@@ -33,3 +33,7 @@ TEST
 TEST TEST TEST
 
 gg
+
+DATE
+
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-01_image.png
