@@ -2,7 +2,7 @@ name: Daily Linkedin Orchestrator
 
 on:
   schedule:
-    - cron: "0 7 * * 1-5"   # 7h UTC = 9h France
+    - cron: "0 7 * * 1-5"   # 7h UTC = 9h Paris, du lundi au vendredi
   workflow_dispatch:
 
 jobs:
@@ -46,7 +46,8 @@ jobs:
         id: commit_title
         run: |
           WEEK=$(TZ="Europe/Paris" date +%U)
-          INDEX=$((10#$WEEK % 10 + 1))
+          TOTAL=$(wc -l < commit_titles.txt)
+          INDEX=$((10#$WEEK % TOTAL + 1))
           TITLE=$(sed -n "${INDEX}p" commit_titles.txt)
           echo "commit_title=$TITLE" >> $GITHUB_OUTPUT
 
@@ -58,11 +59,11 @@ jobs:
           # Ajouter l'image du jour au commit
           git add images/${{ steps.date.outputs.today }}_image.png
 
-          # Créer le commit message complet
+          # Construire le commit message final
           COMMIT_MSG="${{ steps.commit_title.outputs.commit_title }}
 
 ${{ steps.extract_post.outputs.post_content }}"
 
-          # Commit
+          # Commit + push
           git commit -m "$COMMIT_MSG"
           git push
