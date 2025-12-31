@@ -59,11 +59,14 @@ jobs:
           # Ajouter l'image du jour au commit
           git add images/${{ steps.date.outputs.today }}_image.png
 
-          # Construire le commit message final
-          COMMIT_MSG="${{ steps.commit_title.outputs.commit_title }}
+          # Construire le commit message multi-ligne
+          cat <<EOF > commit_message.txt
+${{ steps.commit_title.outputs.commit_title }}
 
-${{ steps.extract_post.outputs.post_content }}"
+${{ steps.extract_post.outputs.post_content }}
+EOF
 
-          # Commit + push
-          git commit -m "$COMMIT_MSG"
+          git add commit_message.txt
+
+          git commit -F commit_message.txt
           git push
