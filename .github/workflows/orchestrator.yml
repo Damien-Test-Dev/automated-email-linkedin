@@ -42,6 +42,12 @@ jobs:
           fi
           echo "image_path=$FILE" >> $GITHUB_OUTPUT
 
+      - name: Build raw image URL
+        id: image_url
+        run: |
+          RAW_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/images/${{ steps.date.outputs.today }}_image.png"
+          echo "raw_url=$RAW_URL" >> $GITHUB_OUTPUT
+
       - name: Select weekly commit title
         id: commit_title
         run: |
@@ -56,16 +62,19 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          # Ajouter l'image du jour (si elle existe)
+          # Ajouter l'image du jour
           git add images/${{ steps.date.outputs.today }}_image.png || true
 
           # Construire le commit message multi-ligne
           COMMIT_TITLE="${{ steps.commit_title.outputs.commit_title }}"
           POST_CONTENT="${{ steps.extract_post.outputs.post_content }}"
+          IMAGE_URL="${{ steps.image_url.outputs.raw_url }}"
 
           echo "$COMMIT_TITLE" > commit_message.txt
           echo "" >> commit_message.txt
           echo "$POST_CONTENT" >> commit_message.txt
+          echo "" >> commit_message.txt
+          echo "IMAGE_URL: $IMAGE_URL" >> commit_message.txt
 
           git add commit_message.txt
 
