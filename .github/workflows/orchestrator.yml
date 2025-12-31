@@ -56,16 +56,20 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          # Ajouter l'image du jour au commit
-          git add images/${{ steps.date.outputs.today }}_image.png
+          # Ajouter l'image du jour (si elle existe)
+          git add images/${{ steps.date.outputs.today }}_image.png || true
 
           # Construire le commit message multi-ligne
           COMMIT_TITLE="${{ steps.commit_title.outputs.commit_title }}"
           POST_CONTENT="${{ steps.extract_post.outputs.post_content }}"
 
-          COMMIT_MSG="$COMMIT_TITLE
+          echo "$COMMIT_TITLE" > commit_message.txt
+          echo "" >> commit_message.txt
+          echo "$POST_CONTENT" >> commit_message.txt
 
-          $POST_CONTENT"
+          git add commit_message.txt
 
-          git commit -m "$COMMIT_MSG"
+          # Commit même si aucun fichier n'a changé
+          git commit --allow-empty -F commit_message.txt
+
           git push
