@@ -1,0 +1,30 @@
+name: Reset Commit Title Index
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_index:
+        description: "Nouvel index de départ pour la rotation des commit titles"
+        required: true
+        default: "1"
+
+jobs:
+  reset-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update commit title index
+        run: |
+          echo "${{ github.event.inputs.start_index }}" > .commit_title_index
+
+      - name: Commit and push new index
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add .commit_title_index
+          git commit -m "Reset commit title index to ${{ github.event.inputs.start_index }}"
+          git push
