@@ -1,39 +1,6 @@
-⭐ Tests E2E — Là Où Commence la Vraie Expérience ⭐
-
-TEST TEST TEST
-TEST 
-TEST
-TEST
-TEST TEST TEST
-TEST
-TEST
-TEST
-TEST TEST TEST
+⭐ UX Finale — Le Seul Indicateur Qui Compte ⭐
 
 
-TEST TEST TEST
-TEST 
-TEST
-TEST
-TEST TEST TEST
-TEST
-TEST
-TEST
-TEST TEST TEST
 
-
-TEST TEST TEST
-TEST 
-TEST
-TEST
-TEST TEST TEST
-TEST
-TEST
-TEST
-TEST TEST TEST
-
-gg
-
-DATE
-
-IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-01_image.png
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2025-12-03_image.png
+EFFECTIVE_DATE: 2025-12-03
