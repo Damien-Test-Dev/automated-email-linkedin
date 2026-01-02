@@ -19,33 +19,70 @@ jobs:
           TODAY=$(TZ="Europe/Paris" date +%Y-%m-%d)
           echo "today=$TODAY" >> $GITHUB_OUTPUT
 
-      - name: Select today's post
-        id: extract_post
+      - name: Select post and image with fallback (J-30 backwards window)
+        id: select_content
+        env:
+          TODAY: ${{ steps.date.outputs.today }}
         run: |
-          FILE="posts/${{ steps.date.outputs.today }}_post.txt"
-          if [ ! -f "$FILE" ]; then
-            echo "Post introuvable : $FILE"
-            exit 1
+          echo "Date du jour : $TODAY"
+
+          # 1) Tester d'abord la date du jour
+          POST_TODAY="posts/${TODAY}_post.txt"
+          IMAGE_TODAY="images/${TODAY}_image.png"
+
+          if [ -f "$POST_TODAY" ] && [ -f "$IMAGE_TODAY" ]; then
+            echo "Utilisation du contenu du jour : $TODAY"
+            SELECTED_DATE="$TODAY"
+            POST_FILE="$POST_TODAY"
+            IMAGE_FILE="$IMAGE_TODAY"
+          else
+            echo "Contenu du jour incomplet, activation du fallback J-30 en arrière..."
+
+            FOUND_DATE=""
+
+            # 2) Boucle de TODAY-30 à TODAY-59 (fenêtre de 30 jours en arrière)
+            for OFFSET in $(seq 30 59); do
+              CANDIDATE_DATE=$(date -d "$TODAY -${OFFSET} days" +%Y-%m-%d)
+              CANDIDATE_POST="posts/${CANDIDATE_DATE}_post.txt"
+              CANDIDATE_IMAGE="images/${CANDIDATE_DATE}_image.png"
+
+              echo "Test du fallback pour la date : $CANDIDATE_DATE"
+
+              if [ -f "$CANDIDATE_POST" ] && [ -f "$CANDIDATE_IMAGE" ]; then
+                echo "Contenu fallback trouvé pour la date : $CANDIDATE_DATE"
+                FOUND_DATE="$CANDIDATE_DATE"
+                POST_FILE="$CANDIDATE_POST"
+                IMAGE_FILE="$CANDIDATE_IMAGE"
+                break
+              fi
+            done
+
+            if [ -z "$FOUND_DATE" ]; then
+              echo "Aucun contenu valide trouvé dans la fenêtre J-30 à J-59."
+              exit 1
+            fi
+
+            SELECTED_DATE="$FOUND_DATE"
           fi
-          CONTENT=$(cat "$FILE")
+
+          echo "Date réellement utilisée : $SELECTED_DATE"
+          echo "Fichier post : $POST_FILE"
+          echo "Fichier image : $IMAGE_FILE"
+
+          # 3) Exporter le contenu du post
+          CONTENT=$(cat "$POST_FILE")
           echo "post_content<<EOF" >> $GITHUB_OUTPUT
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Select today's image
-        id: extract_image
-        run: |
-          FILE="images/${{ steps.date.outputs.today }}_image.png"
-          if [ ! -f "$FILE" ]; then
-            echo "Image introuvable : $FILE"
-            exit 1
-          fi
-          echo "image_path=$FILE" >> $GITHUB_OUTPUT
+          # 4) Exporter le chemin de l'image et la date effective
+          echo "image_path=$IMAGE_FILE" >> $GITHUB_OUTPUT
+          echo "effective_date=$SELECTED_DATE" >> $GITHUB_OUTPUT
 
       - name: Build raw image URL
         id: image_url
         run: |
-          RAW_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/images/${{ steps.date.outputs.today }}_image.png"
+          RAW_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/${{ steps.select_content.outputs.image_path }}"
           echo "raw_url=$RAW_URL" >> $GITHUB_OUTPUT
 
       - name: Select next commit title (infinite rotation)
@@ -83,19 +120,21 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          # Ajouter l'image du jour
-          git add images/${{ steps.date.outputs.today }}_image.png || true
+          # Ajouter l'image utilisée (jour ou fallback)
+          git add ${{ steps.select_content.outputs.image_path }} || true
 
           # Construire le commit message
           COMMIT_TITLE="${{ steps.commit_title.outputs.commit_title }}"
-          POST_CONTENT="${{ steps.extract_post.outputs.post_content }}"
+          POST_CONTENT="${{ steps.select_content.outputs.post_content }}"
           IMAGE_URL="${{ steps.image_url.outputs.raw_url }}"
+          EFFECTIVE_DATE="${{ steps.select_content.outputs.effective_date }}"
 
           echo "$COMMIT_TITLE" > commit_message.txt
           echo "" >> commit_message.txt
           echo "$POST_CONTENT" >> commit_message.txt
           echo "" >> commit_message.txt
           echo "IMAGE_URL: $IMAGE_URL" >> commit_message.txt
+          echo "EFFECTIVE_DATE: $EFFECTIVE_DATE" >> commit_message.txt
 
           git add commit_message.txt
 
