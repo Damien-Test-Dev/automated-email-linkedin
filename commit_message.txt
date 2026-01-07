@@ -1,22 +1,26 @@
-⭐ E2E Automatisé — Puissant, Mais Pas Infaillible ⭐
+⭐ Scripts vs Réalité — Les Zones Que l’On Oublie ⭐
 
-✨La vraie expérience commence là où l’utilisateur complète sa première action clé : l’achat en ligne.
+✨La checklist galactique pour réussir un test E2E orienté expérience utilisateur.
 
-Un test end-to-end (E2E) vérifie un parcours complet du premier clic jusqu’au service après-vente.
+Étape 1 : identifier les parcours critiques qui génèrent valeur client.
 
-Dans une app de service, l’utilisateur humain provoque des combinaisons que l’automatisation n’imagine pas.
+Étape 2 : écrire des test case clairs et reproducibles pour chaque parcours.
 
-Nous avons perdu un panier à cause d’une règle promo mal combinée avec la livraison express.
+Étape 3 : inclure des profils réels et des profils limites dans les jeux de données.
 
-Le test système a reproduit le parcours complet et évité une crise réputationnelle le jour du lancement.
+Étape 4 : valider intégrations externes (paiement, notification, suivi).
 
-Definition of Done : inclure l’E2E critique dans la DoD garantit que la Story est réellement prête.
+Étape 5 : automatiser les flows répétitifs et garder des passes manuelles exploratoires.
 
-Le E2E est la répétition générale qui empêche la supernova en production.
+Étape 6 : instrumenter l’observabilité : logs, captures vidéo, HAR, traces distribuées.
 
-💬 🔭 Et vous, quel parcours humain mérite votre attention E2E cette semaine ?
+Étape 7 : intégrer l’E2E dans la Definition of Done pour chaque incrément.
 
-#SlashingDefectsWithAQualitySword #Agile #SoftwareTesting #E2E #TestLogiciel
+La puissance : cette checklist combine coverage utile et jugement humain.
 
-IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-06_image.png
-EFFECTIVE_DATE: 2026-01-06
+💬 📝 Quelle étape ajouteriez-vous pour sublimer l’expérience client dans vos tests E2E ?
+
+#SlashingDefectsWithAQualitySword #Scrum #QualitéLogicielle #TestLogiciel #ISTQB
+
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-07_image.png
+EFFECTIVE_DATE: 2026-01-07
