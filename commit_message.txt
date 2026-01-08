@@ -1,26 +1,22 @@
-⭐ Scripts vs Réalité — Les Zones Que l’On Oublie ⭐
+⭐ Exploratoire — Là Où la Qualité Se Révèle ⭐
 
-✨La checklist galactique pour réussir un test E2E orienté expérience utilisateur.
+✨Test design · ISTQB · exploratory testing : l’humain détecte l’imprévisible.
 
-Étape 1 : identifier les parcours critiques qui génèrent valeur client.
+La technique ISTQB partition d'équivalence aide à réduire les cas redondants.
 
-Étape 2 : écrire des test case clairs et reproducibles pour chaque parcours.
+La technique de la valeur limite révèle les erreurs aux limites d’un formulaire ou d’un paiement.
 
-Étape 3 : inclure des profils réels et des profils limites dans les jeux de données.
+Le test exploratoire humain expose les scénarios émotionnels et UX qu’un script ne verra pas.
 
-Étape 4 : valider intégrations externes (paiement, notification, suivi).
+Combinez test design formel et session exploratoire : script + session humaine par User Story.
 
-Étape 5 : automatiser les flows répétitifs et garder des passes manuelles exploratoires.
+Le plan de test doit prévoir ces sessions et définir les artefacts attendus (logs, vidéos, steps).
 
-Étape 6 : instrumenter l’observabilité : logs, captures vidéo, HAR, traces distribuées.
+La métaphore : l’humain est le télescope qui capte la comète que l’automate ignore.
 
-Étape 7 : intégrer l’E2E dans la Definition of Done pour chaque incrément.
+💬 🧭 Quelle technique ISTQB utilisez-vous dans vos sessions exploratoires E2E ?
 
-La puissance : cette checklist combine coverage utile et jugement humain.
+#SlashingDefectsWithAQualitySword #Agile #ISTQB #SoftwareTesting #E2E
 
-💬 📝 Quelle étape ajouteriez-vous pour sublimer l’expérience client dans vos tests E2E ?
-
-#SlashingDefectsWithAQualitySword #Scrum #QualitéLogicielle #TestLogiciel #ISTQB
-
-IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-07_image.png
-EFFECTIVE_DATE: 2026-01-07
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-08_image.png
+EFFECTIVE_DATE: 2026-01-08
