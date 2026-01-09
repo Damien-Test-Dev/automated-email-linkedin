@@ -1,22 +1,20 @@
-⭐ Exploratoire — Là Où la Qualité Se Révèle ⭐
+⭐ Humain + Automatisation — Le Duo Gagnant ⭐
 
-✨Test design · ISTQB · exploratory testing : l’humain détecte l’imprévisible.
+✨Automatisation · human-in-the-loop · E2E : la valeur est humaine.
 
-La technique ISTQB partition d'équivalence aide à réduire les cas redondants.
+Automatiser les flows répétitifs réduit le temps de validation et les régressions.
 
-La technique de la valeur limite révèle les erreurs aux limites d’un formulaire ou d’un paiement.
+Garder des sessions humaines pour l’UX, la conformité subtile et les scenarii multi-facteurs.
 
-Le test exploratoire humain expose les scénarios émotionnels et UX qu’un script ne verra pas.
+Priorisez selon risque × répétition × coût de maintenance pour décider d’automatiser.
 
-Combinez test design formel et session exploratoire : script + session humaine par User Story.
+ISTQB : la coverage utile doit guider vos choix, pas un pourcentage artificiel.
 
-Le plan de test doit prévoir ces sessions et définir les artefacts attendus (logs, vidéos, steps).
+La vision : une usine d’automates qui sert l’œil humain, et non l’inverse.
 
-La métaphore : l’humain est le télescope qui capte la comète que l’automate ignore.
+💬 ⚖️ Quelle proportion d’E2E garderiez-vous humaine dans votre roadmap cette année ?
 
-💬 🧭 Quelle technique ISTQB utilisez-vous dans vos sessions exploratoires E2E ?
+#SlashingDefectsWithAQualitySword #Agile #Automation #E2E #PsychologieDuTravail
 
-#SlashingDefectsWithAQualitySword #Agile #ISTQB #SoftwareTesting #E2E
-
-IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-08_image.png
-EFFECTIVE_DATE: 2026-01-08
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-09_image.png
+EFFECTIVE_DATE: 2026-01-09
