@@ -1,20 +1,9 @@
-⭐ Humain + Automatisation — Le Duo Gagnant ⭐
+⭐ Parcours E2E — Comprendre Avant de Tester ⭐
 
-✨Automatisation · human-in-the-loop · E2E : la valeur est humaine.
+today : 2025-12-13
+heure : 2026-01-02 19:48:12
 
-Automatiser les flows répétitifs réduit le temps de validation et les régressions.
+Ceci est un fichier de test g�n�r� automatiquement.
 
-Garder des sessions humaines pour l’UX, la conformité subtile et les scenarii multi-facteurs.
-
-Priorisez selon risque × répétition × coût de maintenance pour décider d’automatiser.
-
-ISTQB : la coverage utile doit guider vos choix, pas un pourcentage artificiel.
-
-La vision : une usine d’automates qui sert l’œil humain, et non l’inverse.
-
-💬 ⚖️ Quelle proportion d’E2E garderiez-vous humaine dans votre roadmap cette année ?
-
-#SlashingDefectsWithAQualitySword #Agile #Automation #E2E #PsychologieDuTravail
-
-IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2026-01-09_image.png
-EFFECTIVE_DATE: 2026-01-09
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2025-12-13_image.png
+EFFECTIVE_DATE: 2025-12-13
