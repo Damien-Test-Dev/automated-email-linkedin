@@ -1,9 +1,9 @@
-⭐ Parcours E2E — Comprendre Avant de Tester ⭐
+⭐ Utilisateurs Réels — Le Test Qui Ne Ment Pas ⭐
 
-today : 2025-12-13
+today : 2025-12-14
 heure : 2026-01-02 19:48:12
 
 Ceci est un fichier de test g�n�r� automatiquement.
 
-IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2025-12-13_image.png
-EFFECTIVE_DATE: 2025-12-13
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2025-12-14_image.png
+EFFECTIVE_DATE: 2025-12-14
