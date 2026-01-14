@@ -1,0 +1,241 @@
+:root {
+  --bg-color: #050816;
+  --card-bg: #0b1020;
+  --accent: #f5c542;
+  --accent-soft: rgba(245, 197, 66, 0.2);
+  --text-main: #f5f5f5;
+  --text-muted: #a0a4b8;
+  --border-soft: #1c2238;
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --radius: 10px;
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background: radial-gradient(circle at top, #1b2340 0, #050816 45%, #02030a 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ucf-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-soft);
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.08), transparent);
+}
+
+.ucf-header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ucf-subtitle {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.ucf-main {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.ucf-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ucf-stat-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+  min-width: 180px;
+}
+
+.ucf-stat-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.ucf-stat-value {
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ucf-list h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.ucf-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ucf-entry-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+  gap: 12px;
+}
+
+.ucf-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ucf-entry-date {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.ucf-entry-id {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ucf-entry-title {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.ucf-entry-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ucf-entry-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ucf-entry-image {
+  max-width: 100%;
+  max-height: 140px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-soft);
+  object-fit: cover;
+}
+
+.ucf-loading,
+.ucf-empty {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.ucf-footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-soft);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .ucf-entry-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ucf-main {
+    padding: 16px;
+  }
+}
+
+/* ============================
+   WATCHTOWER — Vue Hebdomadaire
+   ============================ */
+
+.ucf-watchtower {
+  margin-top: 40px;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.ucf-watchtower h2 {
+  margin-bottom: 16px;
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+.ucf-watchtower-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ucf-watchtower-day {
+  padding: 10px;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.ucf-day-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.ucf-day-status {
+  font-size: 1.4rem;
+}
+
+.ucf-watchtower-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ucf-watchtower-stat {
+  background: var(--card-bg);
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  min-width: 160px;
+}
+
+.ucf-watchtower-stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ucf-watchtower-stat-value {
+  font-size: 1.3rem;
+  color: var(--accent);
+  font-weight: 600;
+}
