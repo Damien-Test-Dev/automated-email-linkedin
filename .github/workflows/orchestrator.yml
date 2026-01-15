@@ -6,8 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
+
   orchestrate:
     runs-on: ubuntu-latest
+
+    outputs:
+      effective_date: ${{ steps.select_content.outputs.effective_date }}
 
     steps:
       - name: Checkout repository
@@ -26,7 +30,6 @@ jobs:
         run: |
           echo "Date du jour : $TODAY"
 
-          # 1) Tester d'abord la date du jour
           POST_TODAY="posts/${TODAY}_post.txt"
           IMAGE_TODAY="images/${TODAY}_image.png"
 
@@ -37,10 +40,8 @@ jobs:
             IMAGE_FILE="$IMAGE_TODAY"
           else
             echo "Contenu du jour incomplet, activation du fallback J-30 en arrière..."
-
             FOUND_DATE=""
 
-            # 2) Boucle de TODAY-30 à TODAY-59 (fenêtre de 30 jours en arrière)
             for OFFSET in $(seq 30 59); do
               CANDIDATE_DATE=$(date -d "$TODAY -${OFFSET} days" +%Y-%m-%d)
               CANDIDATE_POST="posts/${CANDIDATE_DATE}_post.txt"
@@ -69,13 +70,11 @@ jobs:
           echo "Fichier post : $POST_FILE"
           echo "Fichier image : $IMAGE_FILE"
 
-          # 3) Exporter le contenu du post
           CONTENT=$(cat "$POST_FILE")
           echo "post_content<<EOF" >> $GITHUB_OUTPUT
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-          # 4) Exporter le chemin de l'image et la date effective
           echo "image_path=$IMAGE_FILE" >> $GITHUB_OUTPUT
           echo "effective_date=$SELECTED_DATE" >> $GITHUB_OUTPUT
 
@@ -88,22 +87,12 @@ jobs:
       - name: Select next commit title (infinite rotation)
         id: commit_title
         run: |
-          # Lire l'index actuel
           CURRENT_INDEX=$(cat .commit_title_index || echo 0)
-
-          # Nombre total de titres
           TOTAL=$(wc -l < commit_titles.txt)
-
-          # Calcul du prochain index (rotation infinie)
           NEXT_INDEX=$(( (CURRENT_INDEX % TOTAL) + 1 ))
-
-          # Extraire le titre correspondant
           TITLE=$(sed -n "${NEXT_INDEX}p" commit_titles.txt)
 
-          # Exporter le titre
           echo "commit_title=$TITLE" >> $GITHUB_OUTPUT
-
-          # Mettre à jour l'index
           echo "$NEXT_INDEX" > .commit_title_index
 
       - name: Commit updated index
@@ -120,10 +109,8 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          # Ajouter l'image utilisée (jour ou fallback)
           git add ${{ steps.select_content.outputs.image_path }} || true
 
-          # Construire le commit message
           COMMIT_TITLE="${{ steps.commit_title.outputs.commit_title }}"
           POST_CONTENT="${{ steps.select_content.outputs.post_content }}"
           IMAGE_URL="${{ steps.image_url.outputs.raw_url }}"
@@ -137,6 +124,32 @@ jobs:
           echo "EFFECTIVE_DATE: $EFFECTIVE_DATE" >> commit_message.txt
 
           git add commit_message.txt
-
           git commit --allow-empty -F commit_message.txt
           git push
+
+
+  update-history:
+    name: Update history.json after publication
+    runs-on: ubuntu-latest
+    needs: orchestrate
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+
+      - name: Trigger history workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EFFECTIVE_DATE: ${{ needs.orchestrate.outputs.effective_date }}
+        run: |
+          echo "📅 Date envoyée au workflow d’historique : $EFFECTIVE_DATE"
+
+          gh workflow run "Ultra Cosmic Flow Codex (History)" \
+            -f date="$EFFECTIVE_DATE"
+
+          echo "🚀 Workflow d’historique déclenché."
