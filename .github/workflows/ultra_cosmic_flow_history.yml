@@ -57,12 +57,8 @@ jobs:
           HISTORY_FILE="${{ steps.prep.outputs.history_file }}"
 
           if [ ! -f "$HISTORY_FILE" ]; then
-            echo "history.json introuvable, création..."
-cat > "$HISTORY_FILE" <<EOF
-{
-  "entries": []
-}
-EOF
+            echo "Création de history.json..."
+            echo '{"entries":[]}' > "$HISTORY_FILE"
           else
             echo "history.json trouvé."
           fi
@@ -74,13 +70,11 @@ EOF
           HISTORY_FILE="${{ steps.prep.outputs.history_file }}"
           DATE_INPUT="${{ steps.prep.outputs.date }}"
 
-          EXISTS=$(jq --arg d "$DATE_INPUT" '.entries[]? | select(.date == $d) | .date' "$HISTORY_FILE" || true)
+          EXISTS=$(jq --arg d "$DATE_INPUT" '.entries[]? | select(.date == $d)' "$HISTORY_FILE" || true)
 
           if [ -n "$EXISTS" ]; then
-            echo "Une entrée existe déjà pour la date $DATE_INPUT. Aucune mise à jour."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Aucune entrée existante pour la date $DATE_INPUT."
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
@@ -91,12 +85,9 @@ EOF
           set -e
           POST_FILE="${{ steps.prep.outputs.post_file }}"
 
-          echo "Extraction des deux premières lignes de : $POST_FILE"
-
           TITLE_LINES=$(head -n 2 "$POST_FILE" | sed 's/"/\\"/g')
 
           if [ -z "$TITLE_LINES" ]; then
-            echo "Le post est vide ou ne contient pas de texte exploitable."
             TITLE_LINES="(Titre indisponible)"
           fi
 
@@ -118,7 +109,6 @@ EOF
           DATE_COMPACT=$(echo "$DATE_INPUT" | tr -d '-')
           ID=$(printf "UCFlow-%s-%03d" "$DATE_COMPACT" "$INDEX")
 
-          echo "ID généré : $ID"
           echo "id=$ID" >> "$GITHUB_OUTPUT"
 
       - name: Append entry to history.json
@@ -132,31 +122,26 @@ EOF
           IMAGE_FILE_BASENAME="$(basename "${{ steps.prep.outputs.image_file }}")"
           TITLE="${{ steps.extract.outputs.title }}"
           ID="${{ steps.genid.outputs.id }}"
-
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
-          echo "Ajout d'une entrée dans $HISTORY_FILE"
 
           TMP_FILE="${HISTORY_FILE}.tmp"
 
           jq --arg date "$DATE_INPUT" \
-             --arg post_file "$POST_FILE_BASENAME" \
-             --arg image_file "$IMAGE_FILE_BASENAME" \
+             --arg post "$POST_FILE_BASENAME" \
+             --arg img "$IMAGE_FILE_BASENAME" \
              --arg title "$TITLE" \
-             --arg timestamp "$TIMESTAMP" \
+             --arg ts "$TIMESTAMP" \
              --arg id "$ID" \
              '.entries += [{
                 "date": $date,
-                "post_file": $post_file,
-                "image_file": $image_file,
+                "post_file": $post,
+                "image_file": $img,
                 "title": $title,
-                "timestamp": $timestamp,
+                "timestamp": $ts,
                 "id": $id
               }]' "$HISTORY_FILE" > "$TMP_FILE"
 
           mv "$TMP_FILE" "$HISTORY_FILE"
-
-          echo "history.json mis à jour."
 
       - name: Commit and push changes
         if: steps.check.outputs.skip == 'false'
@@ -164,14 +149,10 @@ EOF
           set -e
 
           if git diff --quiet; then
-            echo "Aucun changement à committer."
             exit 0
           fi
 
           DATE_INPUT="${{ steps.prep.outputs.date }}"
-          COMMIT_MESSAGE="Ultra Cosmic Flow: update history for ${DATE_INPUT}"
-
-          echo "Commit : $COMMIT_MESSAGE"
           git add history.json
-          git commit -m "$COMMIT_MESSAGE"
+          git commit -m "Ultra Cosmic Flow: update history for ${DATE_INPUT}"
           git push
