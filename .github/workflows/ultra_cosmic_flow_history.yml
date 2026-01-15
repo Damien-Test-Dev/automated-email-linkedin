@@ -58,11 +58,11 @@ jobs:
 
           if [ ! -f "$HISTORY_FILE" ]; then
             echo "history.json introuvable, création..."
-cat > "$HISTORY_FILE" <<EOF
-{
-  "entries": []
-}
-EOF
+        cat > "$HISTORY_FILE" <<EOF
+        {
+          "entries": []
+        }
+        EOF
           else
             echo "history.json trouvé."
           fi
