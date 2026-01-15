@@ -28,7 +28,7 @@ jobs:
           set -e
 
           DATE_INPUT="${{ github.event.inputs.date }}"
-          echo "📅 Date reçue : $DATE_INPUT"
+          echo "Date reçue : $DATE_INPUT"
 
           POSTS_DIR="posts"
           IMAGES_DIR="images"
@@ -38,12 +38,12 @@ jobs:
           IMAGE_FILE="${IMAGES_DIR}/${DATE_INPUT}_image.png"
 
           if [ ! -f "$POST_FILE" ]; then
-            echo "❌ Fichier post introuvable : $POST_FILE"
+            echo "Fichier post introuvable : $POST_FILE"
             exit 1
           fi
 
           if [ ! -f "$IMAGE_FILE" ]; then
-            echo "❌ Fichier image introuvable : $IMAGE_FILE"
+            echo "Fichier image introuvable : $IMAGE_FILE"
             exit 1
           fi
 
@@ -57,14 +57,14 @@ jobs:
           HISTORY_FILE="${{ steps.prep.outputs.history_file }}"
 
           if [ ! -f "$HISTORY_FILE" ]; then
-            echo "📘 history.json introuvable, création..."
-            cat > "$HISTORY_FILE" << 'EOF'
+            echo "history.json introuvable, création..."
+            cat > "$HISTORY_FILE" <<EOF
 {
   "entries": []
 }
 EOF
           else
-            echo "📘 history.json trouvé."
+            echo "history.json trouvé."
           fi
 
       - name: Check if date already exists in history
@@ -77,10 +77,10 @@ EOF
           EXISTS=$(jq --arg d "$DATE_INPUT" '.entries[]? | select(.date == $d) | .date' "$HISTORY_FILE" || true)
 
           if [ -n "$EXISTS" ]; then
-            echo "⚠️ Une entrée existe déjà pour la date $DATE_INPUT. Aucune mise à jour."
+            echo "Une entrée existe déjà pour la date $DATE_INPUT. Aucune mise à jour."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
-            echo "✅ Aucune entrée existante pour la date $DATE_INPUT."
+            echo "Aucune entrée existante pour la date $DATE_INPUT."
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
@@ -91,17 +91,15 @@ EOF
           set -e
           POST_FILE="${{ steps.prep.outputs.post_file }}"
 
-          echo "📄 Extraction des deux premières lignes de : $POST_FILE"
+          echo "Extraction des deux premières lignes de : $POST_FILE"
 
-          # Lire les deux premières lignes, gérer les fichiers courts
           TITLE_LINES=$(head -n 2 "$POST_FILE" | sed 's/"/\\"/g')
 
           if [ -z "$TITLE_LINES" ]; then
-            echo "⚠️ Le post est vide ou ne contient pas de texte exploitable."
+            echo "Le post est vide ou ne contient pas de texte exploitable."
             TITLE_LINES="(Titre indisponible)"
           fi
 
-          # Remplacer les retours à la ligne par \n pour JSON
           TITLE_JSON=$(printf '%s\n' "$TITLE_LINES" | awk 'BEGIN{ORS="\\n"} {print}' | sed 's/\\n$//')
 
           echo "title=$TITLE_JSON" >> "$GITHUB_OUTPUT"
@@ -114,14 +112,13 @@ EOF
           HISTORY_FILE="${{ steps.prep.outputs.history_file }}"
           DATE_INPUT="${{ steps.prep.outputs.date }}"
 
-          # Compter les entrées existantes pour cette date
           COUNT_FOR_DATE=$(jq --arg d "$DATE_INPUT" '[.entries[]? | select(.date == $d)] | length' "$HISTORY_FILE")
           INDEX=$((COUNT_FOR_DATE + 1))
 
           DATE_COMPACT=$(echo "$DATE_INPUT" | tr -d '-')
           ID=$(printf "UCFlow-%s-%03d" "$DATE_COMPACT" "$INDEX")
 
-          echo "🆔 ID généré : $ID"
+          echo "ID généré : $ID"
           echo "id=$ID" >> "$GITHUB_OUTPUT"
 
       - name: Append entry to history.json
@@ -138,7 +135,7 @@ EOF
 
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-          echo "📝 Ajout d'une entrée dans $HISTORY_FILE"
+          echo "Ajout d'une entrée dans $HISTORY_FILE"
 
           TMP_FILE="${HISTORY_FILE}.tmp"
 
@@ -159,7 +156,7 @@ EOF
 
           mv "$TMP_FILE" "$HISTORY_FILE"
 
-          echo "✅ history.json mis à jour."
+          echo "history.json mis à jour."
 
       - name: Commit and push changes
         if: steps.check.outputs.skip == 'false'
@@ -167,14 +164,14 @@ EOF
           set -e
 
           if git diff --quiet; then
-            echo "✅ Aucun changement à committer."
+            echo "Aucun changement à committer."
             exit 0
           fi
 
           DATE_INPUT="${{ steps.prep.outputs.date }}"
           COMMIT_MESSAGE="Ultra Cosmic Flow: update history for ${DATE_INPUT}"
 
-          echo "🚀 Commit : $COMMIT_MESSAGE"
+          echo "Commit : $COMMIT_MESSAGE"
           git add history.json
           git commit -m "$COMMIT_MESSAGE"
           git push
