@@ -1,4 +1,0 @@
-today : 2025-12-05
-heure : 2026-01-02 19:48:12
-
-Ceci est un fichier de test généré automatiquement.
