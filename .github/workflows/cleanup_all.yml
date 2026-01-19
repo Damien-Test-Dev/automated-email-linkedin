@@ -1,0 +1,34 @@
+name: Cleanup All Posts and Images
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Delete all files in posts and images
+        run: |
+          echo "Deleting all files in posts/ and images/..."
+          rm -f posts/* || true
+          rm -f images/* || true
+
+      - name: Commit and push cleanup
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+
+          git add posts images
+          git commit -m "Cleanup: removed all posts and images"
+          git push
