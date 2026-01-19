@@ -1,23 +1,115 @@
+name: Ultra Cosmic Flow Orchestrator
+
+on:
+  workflow_dispatch:
+
+jobs:
+  orchestrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # ---------------------------------------------------------
+      # 1. Generate Post
+      # ---------------------------------------------------------
+      - name: Generate post
+        id: generate_post
+        run: |
+          DATE_INPUT=$(date +'%Y-%m-%d')
+          POST_FILE="${DATE_INPUT}_post.txt"
+
+          echo "This is the generated post for $DATE_INPUT" > "posts/$POST_FILE"
+
+          echo "date=$DATE_INPUT" >> $GITHUB_OUTPUT
+          echo "post_file=$POST_FILE" >> $GITHUB_OUTPUT
+
+      # ---------------------------------------------------------
+      # 2. Generate Image
+      # ---------------------------------------------------------
+      - name: Generate image
+        id: generate_image
+        run: |
+          DATE_INPUT="${{ steps.generate_post.outputs.date }}"
+          IMAGE_FILE="${DATE_INPUT}_image.png"
+
+          # Fake image generation for now
+          echo "PNGDATA" > "images/$IMAGE_FILE"
+
+          echo "image_file=$IMAGE_FILE" >> $GITHUB_OUTPUT
+
+      # ---------------------------------------------------------
+      # 3. Update History
+      # ---------------------------------------------------------
+      - name: Update history.json
+        id: history
+        run: |
+          DATE_INPUT="${{ steps.generate_post.outputs.date }}"
+          POST_FILE="${{ steps.generate_post.outputs.post_file }}"
+          IMAGE_FILE="${{ steps.generate_image.outputs.image_file }}"
+
+          # Create history.json if missing
+          if [ ! -f history.json ]; then
+            echo '{"entries":[]}' > history.json
+          fi
+
+          # Count entries for this date
+          COUNT=$(jq --arg d "$DATE_INPUT" '[.entries[] | select(.date == $d)] | length' history.json)
+          INDEX=$((COUNT + 1))
+          DATE_COMPACT=$(echo "$DATE_INPUT" | tr -d '-')
+          ID=$(printf "UCFlow-%s-%03d" "$DATE_COMPACT" "$INDEX")
+
+          # Add entry using jq (no heredoc)
+          jq --arg date "$DATE_INPUT" \
+             --arg id "$ID" \
+             --arg post "$POST_FILE" \
+             --arg image "$IMAGE_FILE" \
+             '.entries += [{"date":$date,"id":$id,"post_file":$post,"image_file":$image}]' \
+             history.json > history_tmp.json
+
+          mv history_tmp.json history.json
+
+          echo "entry_id=$ID" >> $GITHUB_OUTPUT
+
+      # ---------------------------------------------------------
+      # 4. Update zapier_trigger.json (NO HEREDOC)
+      # ---------------------------------------------------------
       - name: Update zapier_trigger.json
         run: |
-          echo "Updating zapier_trigger.json..."
-
-          # Variables déjà connues dans ton orchestrateur
           DATE_INPUT="${{ steps.generate_post.outputs.date }}"
           POST_FILE="${{ steps.generate_post.outputs.post_file }}"
           IMAGE_FILE="${{ steps.generate_image.outputs.image_file }}"
           ID="${{ steps.history.outputs.entry_id }}"
 
-          # Construction du JSON
-          cat <<EOF > zapier_trigger.json
-{
-  "date": "$DATE_INPUT",
-  "id": "$ID",
-  "post_file": "$POST_FILE",
-  "image_file": "$IMAGE_FILE"
-}
-EOF
+          # Create empty file if missing
+          if [ ! -f zapier_trigger.json ]; then
+            echo '{}' > zapier_trigger.json
+          fi
+
+          # Build JSON safely using jq
+          jq -n \
+            --arg date "$DATE_INPUT" \
+            --arg id "$ID" \
+            --arg post "$POST_FILE" \
+            --arg image "$IMAGE_FILE" \
+            '{date:$date, id:$id, post_file:$post, image_file:$image}' \
+            > zapier_trigger.json
 
           git add zapier_trigger.json
           git commit -m "Update zapier_trigger.json for new post: $ID"
+          git push
+
+      # ---------------------------------------------------------
+      # 5. Commit posts, images, history
+      # ---------------------------------------------------------
+      - name: Commit generated content
+        run: |
+          git add posts images history.json
+          git commit -m "Add generated post, image and history entry"
           git push
