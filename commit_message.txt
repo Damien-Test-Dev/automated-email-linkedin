@@ -1,9 +1,9 @@
-⭐ Scripts vs Réalité — Les Zones Que l’On Oublie ⭐
+⭐ Exploratoire — Là Où la Qualité Se Révèle ⭐
 
-today : 2025-12-17
+today : 2025-12-20
 heure : 2026-01-02 19:48:12
 
 Ceci est un fichier de test g�n�r� automatiquement.
 
-IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2025-12-17_image.png
-EFFECTIVE_DATE: 2025-12-17
+IMAGE_URL: https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/images/2025-12-20_image.png
+EFFECTIVE_DATE: 2025-12-20
