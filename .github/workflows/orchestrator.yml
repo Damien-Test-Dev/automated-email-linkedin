@@ -1,155 +1,23 @@
-name: Daily Linkedin Orchestrator
-
-on:
-  schedule:
-    - cron: "0 7 * * 1-5"   # 7h UTC = 9h Paris, du lundi au vendredi
-  workflow_dispatch:
-
-jobs:
-
-  orchestrate:
-    runs-on: ubuntu-latest
-
-    outputs:
-      effective_date: ${{ steps.select_content.outputs.effective_date }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Get today's date (Europe/Paris)
-        id: date
+      - name: Update zapier_trigger.json
         run: |
-          TODAY=$(TZ="Europe/Paris" date +%Y-%m-%d)
-          echo "today=$TODAY" >> $GITHUB_OUTPUT
+          echo "Updating zapier_trigger.json..."
 
-      - name: Select post and image with fallback (J-30 backwards window)
-        id: select_content
-        env:
-          TODAY: ${{ steps.date.outputs.today }}
-        run: |
-          echo "Date du jour : $TODAY"
+          # Variables déjà connues dans ton orchestrateur
+          DATE_INPUT="${{ steps.generate_post.outputs.date }}"
+          POST_FILE="${{ steps.generate_post.outputs.post_file }}"
+          IMAGE_FILE="${{ steps.generate_image.outputs.image_file }}"
+          ID="${{ steps.history.outputs.entry_id }}"
 
-          POST_TODAY="posts/${TODAY}_post.txt"
-          IMAGE_TODAY="images/${TODAY}_image.png"
+          # Construction du JSON
+          cat <<EOF > zapier_trigger.json
+{
+  "date": "$DATE_INPUT",
+  "id": "$ID",
+  "post_file": "$POST_FILE",
+  "image_file": "$IMAGE_FILE"
+}
+EOF
 
-          if [ -f "$POST_TODAY" ] && [ -f "$IMAGE_TODAY" ]; then
-            echo "Utilisation du contenu du jour : $TODAY"
-            SELECTED_DATE="$TODAY"
-            POST_FILE="$POST_TODAY"
-            IMAGE_FILE="$IMAGE_TODAY"
-          else
-            echo "Contenu du jour incomplet, activation du fallback J-30 en arrière..."
-            FOUND_DATE=""
-
-            for OFFSET in $(seq 30 59); do
-              CANDIDATE_DATE=$(date -d "$TODAY -${OFFSET} days" +%Y-%m-%d)
-              CANDIDATE_POST="posts/${CANDIDATE_DATE}_post.txt"
-              CANDIDATE_IMAGE="images/${CANDIDATE_DATE}_image.png"
-
-              echo "Test du fallback pour la date : $CANDIDATE_DATE"
-
-              if [ -f "$CANDIDATE_POST" ] && [ -f "$CANDIDATE_IMAGE" ]; then
-                echo "Contenu fallback trouvé pour la date : $CANDIDATE_DATE"
-                FOUND_DATE="$CANDIDATE_DATE"
-                POST_FILE="$CANDIDATE_POST"
-                IMAGE_FILE="$CANDIDATE_IMAGE"
-                break
-              fi
-            done
-
-            if [ -z "$FOUND_DATE" ]; then
-              echo "Aucun contenu valide trouvé dans la fenêtre J-30 à J-59."
-              exit 1
-            fi
-
-            SELECTED_DATE="$FOUND_DATE"
-          fi
-
-          echo "Date réellement utilisée : $SELECTED_DATE"
-          echo "Fichier post : $POST_FILE"
-          echo "Fichier image : $IMAGE_FILE"
-
-          CONTENT=$(cat "$POST_FILE")
-          echo "post_content<<EOF" >> $GITHUB_OUTPUT
-          echo "$CONTENT" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-          echo "image_path=$IMAGE_FILE" >> $GITHUB_OUTPUT
-          echo "effective_date=$SELECTED_DATE" >> $GITHUB_OUTPUT
-
-      - name: Build raw image URL
-        id: image_url
-        run: |
-          RAW_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/${{ steps.select_content.outputs.image_path }}"
-          echo "raw_url=$RAW_URL" >> $GITHUB_OUTPUT
-
-      - name: Select next commit title (infinite rotation)
-        id: commit_title
-        run: |
-          CURRENT_INDEX=$(cat .commit_title_index || echo 0)
-          TOTAL=$(wc -l < commit_titles.txt)
-          NEXT_INDEX=$(( (CURRENT_INDEX % TOTAL) + 1 ))
-          TITLE=$(sed -n "${NEXT_INDEX}p" commit_titles.txt)
-
-          echo "commit_title=$TITLE" >> $GITHUB_OUTPUT
-          echo "$NEXT_INDEX" > .commit_title_index
-
-      - name: Commit updated index
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-          git add .commit_title_index
-          git commit -m "Update commit title index to ${{ steps.commit_title.outputs.commit_title }}" || echo "No changes to commit"
+          git add zapier_trigger.json
+          git commit -m "Update zapier_trigger.json for new post: $ID"
           git push
-
-      - name: Create daily commit
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-          git add ${{ steps.select_content.outputs.image_path }} || true
-
-          COMMIT_TITLE="${{ steps.commit_title.outputs.commit_title }}"
-          POST_CONTENT="${{ steps.select_content.outputs.post_content }}"
-          IMAGE_URL="${{ steps.image_url.outputs.raw_url }}"
-          EFFECTIVE_DATE="${{ steps.select_content.outputs.effective_date }}"
-
-          echo "$COMMIT_TITLE" > commit_message.txt
-          echo "" >> commit_message.txt
-          echo "$POST_CONTENT" >> commit_message.txt
-          echo "" >> commit_message.txt
-          echo "IMAGE_URL: $IMAGE_URL" >> commit_message.txt
-          echo "EFFECTIVE_DATE: $EFFECTIVE_DATE" >> commit_message.txt
-
-          git add commit_message.txt
-          git commit --allow-empty -F commit_message.txt
-          git push
-
-
-  update-history:
-    name: Update history.json after publication
-    runs-on: ubuntu-latest
-    needs: orchestrate
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install GitHub CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gh
-
-      - name: Trigger history workflow
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EFFECTIVE_DATE: ${{ needs.orchestrate.outputs.effective_date }}
-        run: |
-          echo "📅 Date envoyée au workflow d’historique : $EFFECTIVE_DATE"
-
-          gh workflow run "Ultra Cosmic Flow Codex (History)" \
-            -f date="$EFFECTIVE_DATE"
-
-          echo "🚀 Workflow d’historique déclenché."
