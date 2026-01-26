@@ -26,6 +26,10 @@ body {
   flex-direction: column;
 }
 
+/* ============================
+   HEADER
+   ============================ */
+
 .ucf-header {
   padding: 20px;
   text-align: center;
@@ -45,13 +49,24 @@ body {
   color: var(--text-muted);
 }
 
-.ucf-main {
-  flex: 1;
+/* ============================
+   LAYOUT
+   ============================ */
+
+.ucf-container {
   max-width: 1100px;
   width: 100%;
   margin: 0 auto;
+}
+
+.ucf-main {
+  flex: 1;
   padding: 20px;
 }
+
+/* ============================
+   STATS
+   ============================ */
 
 .ucf-stats {
   display: flex;
@@ -67,6 +82,11 @@ body {
   border: 1px solid var(--border-soft);
   box-shadow: var(--shadow-soft);
   min-width: 180px;
+  transition: transform 0.2s ease;
+}
+
+.ucf-stat-card:hover {
+  transform: translateY(-3px);
 }
 
 .ucf-stat-label {
@@ -82,10 +102,19 @@ body {
   font-weight: 600;
 }
 
-.ucf-list h2 {
-  font-size: 1.2rem;
+/* ============================
+   TITRES DE SECTION
+   ============================ */
+
+.ucf-section-title {
+  font-size: 1.3rem;
   margin-bottom: 12px;
+  color: var(--accent);
 }
+
+/* ============================
+   LISTE DES PUBLICATIONS
+   ============================ */
 
 .ucf-entries {
   display: flex;
@@ -102,6 +131,11 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
   gap: 12px;
+  transition: transform 0.2s ease;
+}
+
+.ucf-entry-card:hover {
+  transform: translateY(-3px);
 }
 
 .ucf-entry-header {
@@ -151,27 +185,8 @@ body {
   color: var(--text-muted);
 }
 
-.ucf-footer {
-  text-align: center;
-  padding: 12px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border-soft);
-  background: rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 768px) {
-  .ucf-entry-card {
-    grid-template-columns: 1fr;
-  }
-
-  .ucf-main {
-    padding: 16px;
-  }
-}
-
 /* ============================
-   WATCHTOWER — Vue Hebdomadaire
+   WATCHTOWER
    ============================ */
 
 .ucf-watchtower {
@@ -181,12 +196,6 @@ body {
   border-radius: var(--radius);
   border: 1px solid var(--border-soft);
   box-shadow: var(--shadow-soft);
-}
-
-.ucf-watchtower h2 {
-  margin-bottom: 16px;
-  color: var(--accent);
-  font-size: 1.3rem;
 }
 
 .ucf-watchtower-week {
@@ -238,4 +247,31 @@ body {
   font-size: 1.3rem;
   color: var(--accent);
   font-weight: 600;
+}
+
+/* ============================
+   FOOTER
+   ============================ */
+
+.ucf-footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-soft);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+
+@media (max-width: 768px) {
+  .ucf-entry-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ucf-main {
+    padding: 16px;
+  }
 }
