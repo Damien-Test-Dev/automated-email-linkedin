@@ -3,7 +3,7 @@
 // ===============================
 async function loadData() {
   try {
-    const response = await fetch('../history.json');
+    const response = await fetch('history.json');
     if (!response.ok) return null;
     const data = await response.json();
     return Array.isArray(data.entries) ? data.entries : [];
