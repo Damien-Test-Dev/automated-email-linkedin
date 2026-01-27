@@ -16,10 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: List current files in /images
+      - name: List current files in /docs/images
         run: |
-          echo "Fichiers actuels dans /images :"
-          ls -la images || echo "Aucun dossier images trouvé"
+          echo "Fichiers actuels dans /docs/images :"
+          ls -la docs/images || echo "Aucun dossier docs/images trouvé"
 
       - name: Rename raw image files to YYYY-MM-DD_image.png (weekdays only)
         run: |
@@ -33,9 +33,9 @@ jobs:
             exit 1
           fi
 
-          cd images
+          cd docs/images
 
-          echo "Fichiers trouvés dans /images avant filtrage :"
+          echo "Fichiers trouvés dans /docs/images avant filtrage :"
           ls -1
 
           RAW_FILES=()
@@ -72,7 +72,7 @@ jobs:
             CURRENT_DATE=$(date -d "$CURRENT_DATE + 1 day" +%Y-%m-%d)
           done
 
-          echo "Fichiers finaux dans /images :"
+          echo "Fichiers finaux dans /docs/images :"
           ls -1
 
       - name: Commit and push renamed files
@@ -87,8 +87,8 @@ jobs:
             exit 0
           fi
 
-          git add images
+          git add docs/images
 
-          COMMIT_MESSAGE="⭐ Auto-rename image files to YYYY-MM-DD_image.png ⭐"
+          COMMIT_MESSAGE="⭐ Auto-rename image files in docs/images to YYYY-MM-DD_image.png ⭐"
           git commit -m "$COMMIT_MESSAGE"
           git push
