@@ -66,7 +66,6 @@ jobs:
           if any(e.get("date") == date for e in entries):
             print(f"Entrée déjà existante pour {date}, aucune modification de history.json.")
           else:
-            # ID simple : UCFlow-YYYYMMDD-001
             id_value = f"UCFlow-{date.replace('-', '')}-001"
             new_entry = {
               "date": date,
@@ -87,7 +86,7 @@ jobs:
       - name: Vérifier s'il y a des changements à committer
         run: |
           if git diff --quiet; then
-            echo "Aucun changement à committer (probablement entrée déjà existante)."
+            echo "Aucun changement à committer."
             exit 0
           fi
 
@@ -97,5 +96,12 @@ jobs:
           git config user.email "github-actions@github.com"
 
           git add docs/history.json
+
+          # Si aucun changement n'est staged → ne pas échouer
+          if git diff --cached --quiet; then
+            echo "Aucun changement à committer (staging vide)."
+            exit 0
+          fi
+
           git commit -m "auto: publication du ${DATE} (contenu existant)"
           git push
