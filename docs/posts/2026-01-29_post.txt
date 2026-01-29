@@ -1,5 +1,3 @@
-﻿Post du 2026-01-29
+Post du 2026-01-29
 
-Ceci est un post de test généré manuellement pour simuler le fonctionnement de l'application Ultra Cosmic Flow.
-
-Chaque post représente une publication quotidienne (du lundi au vendredi).
+Ceci est un post généré automatiquement par l'orchestrateur Ultra Cosmic Flow.
