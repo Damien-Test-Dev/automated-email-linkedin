@@ -1,68 +1,101 @@
-name: Ultra Cosmic Flow — Orchestrator
+name: Orchestrator - publier contenu existant
 
 on:
   schedule:
-    - cron: "55 8 * * 1-5"   # Tous les jours à 08:55, du lundi au vendredi
-  workflow_dispatch:         # Permet de lancer manuellement
+    # Tous les jours du lundi au vendredi à 9h (heure de Paris)
+    # 8h UTC = 9h CET
+    - cron: "0 8 * * 1-5"
+  workflow_dispatch: {}
 
 jobs:
-  generate_publication:
+  publish_existing_content:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: Install ImageMagick
-        run: sudo apt-get update && sudo apt-get install -y imagemagick
-
-      - name: Generate post + image (LinkedIn format)
+      - name: Déterminer la date du jour (heure de Paris)
         run: |
-          DATE=$(date +'%Y-%m-%d')
-          POST_FILE="docs/posts/${DATE}_post.txt"
-          IMAGE_FILE="docs/images/${DATE}_image.png"
+          TZ="Europe/Paris" date +"DATE=%Y-%m-%d" >> "$GITHUB_ENV"
 
-          echo "Génération du post : $POST_FILE"
-          echo "Post du $DATE" > $POST_FILE
-          echo "" >> $POST_FILE
-          echo "Ceci est un post généré automatiquement par l'orchestrateur Ultra Cosmic Flow." >> $POST_FILE
-
-          echo "Génération de l'image LinkedIn : $IMAGE_FILE"
-          convert -size 1200x627 xc:white \
-            -gravity center \
-            -pointsize 48 \
-            -annotate 0 "Image du $DATE" \
-            $IMAGE_FILE
-
-      - name: Update history.json
+      - name: Construire les chemins des fichiers du jour
         run: |
-          DATE=$(date +'%Y-%m-%d')
-          ID="UCFlow-${DATE//-/}-001"
-          POST_FILE="${DATE}_post.txt"
-          IMAGE_FILE="${DATE}_image.png"
+          echo "POST_FILE=docs/posts/${DATE}_post.txt" >> "$GITHUB_ENV"
+          echo "IMAGE_FILE=docs/images/${DATE}_image.png" >> "$GITHUB_ENV"
 
-          echo "Mise à jour de history.json"
-
-          TMP=$(mktemp)
-          jq --arg date "$DATE" \
-             --arg id "$ID" \
-             --arg post "$POST_FILE" \
-             --arg image "$IMAGE_FILE" \
-             '.entries += [{"date": $date, "id": $id, "post_file": $post, "image_file": $image}]' \
-             docs/history.json > "$TMP"
-
-          mv "$TMP" docs/history.json
-
-      - name: Commit and push changes
+      - name: Vérifier l’existence des fichiers du jour
         run: |
-          git config --global user.name "Ultra Cosmic Flow Bot"
-          git config --global user.email "bot@example.com"
+          echo "Date du jour : $DATE"
+          echo "Post attendu : $POST_FILE"
+          echo "Image attendue : $IMAGE_FILE"
 
-          git add .
-          git commit -m "auto: publication du $DATE (format LinkedIn)"
+          if [ ! -f "$POST_FILE" ]; then
+            echo "⚠ Fichier post introuvable, aucune publication aujourd'hui."
+            exit 0
+          fi
+
+          if [ ! -f "$IMAGE_FILE" ]; then
+            echo "⚠ Fichier image introuvable, aucune publication aujourd'hui."
+            exit 0
+          fi
+
+          echo "✅ Les deux fichiers existent, on continue."
+
+      - name: Mettre à jour docs/history.json
+        run: |
+          python << 'PY'
+          import json
+          from pathlib import Path
+          import os
+
+          history_path = Path("docs/history.json")
+          date = os.environ["DATE"]
+          post_file = os.environ["POST_FILE"].split("/")[-1]
+          image_file = os.environ["IMAGE_FILE"].split("/")[-1]
+
+          if not history_path.exists():
+            data = {"entries": []}
+          else:
+            with history_path.open("r", encoding="utf-8") as f:
+              data = json.load(f)
+
+          entries = data.get("entries", [])
+
+          # Si une entrée existe déjà pour cette date → on ne duplique pas
+          if any(e.get("date") == date for e in entries):
+            print(f"Entrée déjà existante pour {date}, aucune modification de history.json.")
+          else:
+            # ID simple : UCFlow-YYYYMMDD-001
+            id_value = f"UCFlow-{date.replace('-', '')}-001"
+            new_entry = {
+              "date": date,
+              "id": id_value,
+              "post_file": post_file,
+              "image_file": image_file,
+            }
+            entries.append(new_entry)
+            data["entries"] = entries
+
+            with history_path.open("w", encoding="utf-8") as f:
+              json.dump(data, f, indent=2, ensure_ascii=False)
+
+            print(f"Nouvelle entrée ajoutée pour {date} : {id_value}")
+
+          PY
+
+      - name: Vérifier s'il y a des changements à committer
+        run: |
+          if git diff --quiet; then
+            echo "Aucun changement à committer (probablement entrée déjà existante)."
+            exit 0
+          fi
+
+      - name: Commit et push des changements
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add docs/history.json
+          git commit -m "auto: publication du ${DATE} (contenu existant)"
           git push
