@@ -83,6 +83,38 @@ jobs:
 
           PY
 
+      - name: Générer le payload JSON pour Zapier
+        run: |
+          mkdir -p docs/payload
+
+          python << 'PY'
+          import json
+          from pathlib import Path
+          import os
+
+          date = os.environ["DATE"]
+          post_file = os.environ["POST_FILE"]
+          image_file = os.environ["IMAGE_FILE"]
+
+          # Lire le texte du post
+          post_text = Path(post_file).read_text(encoding="utf-8")
+
+          # Construire l'ID
+          id_value = f"UCFlow-{date.replace('-', '')}-001"
+
+          payload = {
+              "date": date,
+              "id": id_value,
+              "text": post_text,
+              "image": image_file
+          }
+
+          output_path = Path(f"docs/payload/{date}.json")
+          output_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
+          print(f"Payload JSON généré : {output_path}")
+          PY
+
       - name: Vérifier s'il y a des changements à committer
         run: |
           if git diff --quiet; then
@@ -96,6 +128,7 @@ jobs:
           git config user.email "github-actions@github.com"
 
           git add docs/history.json
+          git add docs/payload/
 
           # Si aucun changement n'est staged → ne pas échouer
           if git diff --cached --quiet; then
