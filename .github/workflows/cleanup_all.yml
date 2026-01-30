@@ -16,11 +16,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Delete all files in posts and images
+      - name: Delete all files in docs/posts and docs/images
         run: |
-          echo "Deleting all files in posts/ and images/..."
-          rm -f posts/* || true
-          rm -f images/* || true
+          echo "Deleting all files in docs/posts/ and docs/images/..."
+          rm -f docs/posts/* || true
+          rm -f docs/images/* || true
 
       - name: Commit and push cleanup
         run: |
@@ -29,6 +29,6 @@ jobs:
             exit 0
           fi
 
-          git add posts images
+          git add docs/posts docs/images
           git commit -m "Cleanup: removed all posts and images"
           git push
