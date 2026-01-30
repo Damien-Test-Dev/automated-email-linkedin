@@ -1,4 +1,4 @@
-name: Rename all posts and images with dates
+name: Rename all posts and images (Ultimate Version)
 
 on:
   workflow_dispatch:
@@ -16,6 +16,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install image conversion tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+
+      - name: Prepare report directory
+        run: |
+          mkdir -p docs/reports
+          echo "# Rapport de renommage et conversion" > docs/reports/rename_report.md
+          echo "Généré le $(date)" >> docs/reports/rename_report.md
+          echo "" >> docs/reports/rename_report.md
+
       - name: Rename posts and images using unified logic
         run: |
           set -e
@@ -23,14 +35,13 @@ jobs:
           START_DATE="${{ github.event.inputs.start_date }}"
           echo "Date de départ : $START_DATE"
 
-          # Vérification du format de date
           if ! date -d "$START_DATE" "+%Y-%m-%d" >/dev/null 2>&1; then
             echo "❌ Erreur : format de date invalide. Utilise YYYY-MM-DD."
             exit 1
           fi
 
           ###############################################
-          # Fonction Bash factorisée pour renommer
+          # Fonction factorisée pour renommer les fichiers
           ###############################################
           rename_files() {
             local DIR="$1"
@@ -38,24 +49,21 @@ jobs:
             local EXT="$3"
             local CURRENT_DATE="$4"
 
-            echo "📁 Traitement du dossier : $DIR"
-            cd "$DIR"
+            echo "## Dossier : $DIR" >> docs/reports/rename_report.md
 
+            cd "$DIR"
             FILES=($(ls -1))
 
             for file in "${FILES[@]}"; do
-              # Ignorer .gitkeep
               if [[ "$file" == ".gitkeep" ]]; then
                 continue
               fi
 
-              # Ignorer les fichiers déjà au bon format
               if echo "$file" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}_'; then
-                echo "⏭️  Skip (déjà conforme) : $file"
+                echo "- ⏭️ Skip (déjà conforme) : $file" >> ../reports/rename_report.md
                 continue
               fi
 
-              # Sauter les week-ends
               while true; do
                 DAY_OF_WEEK=$(date -d "$CURRENT_DATE" +%u)
                 if [ "$DAY_OF_WEEK" -le 5 ]; then
@@ -65,19 +73,43 @@ jobs:
               done
 
               NEW_NAME="${CURRENT_DATE}_${PREFIX}.${EXT}"
-              echo "🔄 Renommage : $file → $NEW_NAME"
+              echo "- 🔄 Renommage : $file → $NEW_NAME" >> ../reports/rename_report.md
               mv "$file" "$NEW_NAME"
 
               CURRENT_DATE=$(date -d "$CURRENT_DATE + 1 day" +%Y-%m-%d)
             done
 
             cd - > /dev/null
+            echo "" >> docs/reports/rename_report.md
           }
 
           ###############################################
-          # Appels de la fonction pour posts + images
+          # Conversion automatique des images en PNG
           ###############################################
+          echo "## Conversion des images en PNG" >> docs/reports/rename_report.md
+          cd docs/images
 
+          for img in *; do
+            if [[ "$img" == ".gitkeep" ]]; then
+              continue
+            fi
+
+            EXT="${img##*.}"
+            BASENAME="${img%.*}"
+
+            if [[ "$EXT" =~ ^(jpg|jpeg|webp)$ ]]; then
+              echo "- 🖼️ Conversion : $img → ${BASENAME}.png" >> ../reports/rename_report.md
+              convert "$img" "${BASENAME}.png"
+              rm "$img"
+            fi
+          done
+
+          cd - > /dev/null
+          echo "" >> docs/reports/rename_report.md
+
+          ###############################################
+          # Renommage final posts + images
+          ###############################################
           rename_files "docs/posts" "post" "txt" "$START_DATE"
           rename_files "docs/images" "image" "png" "$START_DATE"
 
@@ -91,8 +123,8 @@ jobs:
             exit 0
           fi
 
-          git add docs/posts docs/images
+          git add docs/posts docs/images docs/reports/rename_report.md
 
-          COMMIT_MESSAGE="✨ Auto-rename posts & images to YYYY-MM-DD_* (workflow fusionné) ✨"
+          COMMIT_MESSAGE="✨ Auto-rename posts & images + PNG conversion + report (workflow fusionné ultime) ✨"
           git commit -m "$COMMIT_MESSAGE"
           git push
