@@ -1,4 +1,4 @@
-name: Cleanup All Posts and Images
+name: Cleanup All System Data
 
 on:
   workflow_dispatch:
@@ -16,11 +16,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Delete all files in docs/posts and docs/images
+      - name: Delete all posts, images, payloads, and reset history.json
         run: |
-          echo "Deleting all files in docs/posts/ and docs/images/..."
+          echo "Deleting all files in docs/posts/, docs/images/, docs/payload/..."
           rm -f docs/posts/* || true
           rm -f docs/images/* || true
+          rm -f docs/payload/* || true
+
+          echo "Resetting docs/history.json..."
+          cat > docs/history.json << 'EOF'
+          {
+            "entries": []
+          }
+          EOF
 
       - name: Commit and push cleanup
         run: |
@@ -29,6 +37,6 @@ jobs:
             exit 0
           fi
 
-          git add docs/posts docs/images
-          git commit -m "Cleanup: removed all posts and images"
+          git add docs/posts docs/images docs/payload docs/history.json
+          git commit -m "Cleanup: reset posts, images, payload, and history"
           git push
