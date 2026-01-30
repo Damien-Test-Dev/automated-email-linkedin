@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - Ultra Cosmic Flow</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra Cosmic Flow – Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
   <header>
-    <h1>Dashboard - Publications Automatisées</h1>
-    <p>Affichage du post du jour : texte réel + image réelle</p>
+    <h1>Ultra Cosmic Flow – Dashboard</h1>
+    <p>Visualisation des publications, images et rapports système</p>
   </header>
 
-  <main id="posts-container" class="posts-container">
-    <!-- Les cartes seront injectées ici par app.js -->
-  </main>
+  <!-- SECTION : LISTE DES POSTS -->
+  <section id="posts-section">
+    <h2>Publications</h2>
+    <div id="posts-container"></div>
+  </section>
+
+  <!-- SECTION : RAPPORT DE RENOMMAGE -->
+  <section id="rename-report-section">
+    <h2>Rapport de renommage</h2>
+    <p>Ce rapport est généré automatiquement par le workflow de renommage.</p>
+    <div id="rename-report-table"></div>
+  </section>
+
+  <footer>
+    <p>Ultra Cosmic Flow – GitHub Pages Dashboard</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>
