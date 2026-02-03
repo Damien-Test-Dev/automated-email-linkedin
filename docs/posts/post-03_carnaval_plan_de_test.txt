@@ -1,0 +1,4 @@
+﻿3) **Parc d’attractions / carnaval**
+Un plan de test solide, c’est la carte du parc : stratégie, risques, métriques, livrables, outillage.
+Sans ça, tu pilotes au feeling et tu multiplies les tours… sans maîtriser la file d’attente des bugs.
+Cadre le plan, aligne l’équipe, et transforme le chaos en expérience premium.
