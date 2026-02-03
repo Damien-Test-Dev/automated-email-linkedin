@@ -30,7 +30,7 @@ jobs:
 
       - name: Rename posts and images using unified logic
         run: |
-          set -e
+          set -euo pipefail
 
           START_DATE="${{ github.event.inputs.start_date }}"
           echo "Date de départ : $START_DATE"
@@ -41,7 +41,7 @@ jobs:
           fi
 
           ###############################################
-          # Fonction factorisée pour renommer les fichiers
+          # Fonction robuste pour renommer les fichiers
           ###############################################
           rename_files() {
             local DIR="$1"
@@ -52,12 +52,11 @@ jobs:
             echo "## Dossier : $DIR" >> docs/reports/rename_report.md
 
             cd "$DIR"
-            FILES=($(ls -1))
 
-            for file in "${FILES[@]}"; do
-              if [[ "$file" == ".gitkeep" ]]; then
-                continue
-              fi
+            find . -maxdepth 1 -type f ! -name ".gitkeep" -print0 | \
+            while IFS= read -r -d '' file; do
+
+              file="${file#./}"
 
               if echo "$file" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}_'; then
                 echo "- ⏭️ Skip (déjà conforme) : $file" >> ../reports/rename_report.md
@@ -73,8 +72,9 @@ jobs:
               done
 
               NEW_NAME="${CURRENT_DATE}_${PREFIX}.${EXT}"
+
               echo "- 🔄 Renommage : $file → $NEW_NAME" >> ../reports/rename_report.md
-              mv "$file" "$NEW_NAME"
+              mv -- "$file" "$NEW_NAME"
 
               CURRENT_DATE=$(date -d "$CURRENT_DATE + 1 day" +%Y-%m-%d)
             done
@@ -87,21 +87,22 @@ jobs:
           # Conversion automatique des images en PNG
           ###############################################
           echo "## Conversion des images en PNG" >> docs/reports/rename_report.md
+
           cd docs/images
 
-          for img in *; do
-            if [[ "$img" == ".gitkeep" ]]; then
-              continue
-            fi
+          find . -maxdepth 1 -type f ! -name ".gitkeep" -print0 | \
+          while IFS= read -r -d '' img; do
 
+            img="${img#./}"
             EXT="${img##*.}"
             BASENAME="${img%.*}"
 
             if [[ "$EXT" =~ ^(jpg|jpeg|webp)$ ]]; then
               echo "- 🖼️ Conversion : $img → ${BASENAME}.png" >> ../reports/rename_report.md
-              convert "$img" "${BASENAME}.png"
-              rm "$img"
+              convert -- "$img" "${BASENAME}.png"
+              rm -- "$img"
             fi
+
           done
 
           cd - > /dev/null
@@ -125,6 +126,6 @@ jobs:
 
           git add docs/posts docs/images docs/reports/rename_report.md
 
-          COMMIT_MESSAGE="✨ Auto-rename posts & images + PNG conversion + report (workflow fusionné ultime) ✨"
+          COMMIT_MESSAGE="✨ Auto-rename posts & images + PNG conversion + report (workflow fusionné ultime, version robuste) ✨"
           git commit -m "$COMMIT_MESSAGE"
           git push
