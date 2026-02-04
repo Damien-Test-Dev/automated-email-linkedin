@@ -62,11 +62,11 @@ h2 {
   color: #9aa0c8;
 }
 
-/* --- IMAGE STYLE LINKEDIN --- */
+/* --- IMAGE STYLE VERTICAL LINKEDIN --- */
 .card-image {
   width: 100%;
-  max-width: 600px;        /* limite la largeur */
-  aspect-ratio: 1.91 / 1;  /* ratio LinkedIn */
+  max-width: 450px;        /* largeur max raisonnable */
+  aspect-ratio: 4 / 5;     /* format vertical LinkedIn */
   object-fit: cover;       /* crop propre */
   border-radius: 8px;
   border: 1px solid #222842;
