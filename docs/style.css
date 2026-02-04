@@ -65,7 +65,7 @@ h2 {
 /* --- IMAGE STYLE VERTICAL LINKEDIN --- */
 .card-image {
   width: 100%;
-  max-width: 450px;        /* largeur max raisonnable */
+  max-width: 450px;        /* largeur max */
   aspect-ratio: 4 / 5;     /* format vertical LinkedIn */
   object-fit: cover;       /* crop propre */
   border-radius: 8px;
@@ -75,12 +75,13 @@ h2 {
   display: block;
 }
 
-/* --- TEXTE DU POST --- */
+/* --- TEXTE DU POST (centré) --- */
 .card-text {
   font-size: 0.9rem;
   line-height: 1.5;
   white-space: pre-wrap;
   color: #f5f5f5;
+  text-align: center;      /* centrage du texte */
 }
 
 /* --- LIENS --- */
@@ -89,6 +90,7 @@ h2 {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.25rem;
+  justify-content: center; /* centre les liens aussi */
 }
 
 .card-links a {
