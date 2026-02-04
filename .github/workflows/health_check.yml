@@ -1,0 +1,109 @@
+name: Health Check (Manual Audit)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare report directory
+        run: |
+          mkdir -p docs/reports
+          REPORT="docs/reports/health_check.md"
+          echo "# 🔍 Health Check Report" > $REPORT
+          echo "Généré le $(date)" >> $REPORT
+          echo "" >> $REPORT
+
+      - name: Check repository structure
+        run: |
+          REPORT="docs/reports/health_check.md"
+
+          echo "## 📁 Vérification de la structure" >> $REPORT
+
+          check_dir() {
+            if [ -d "$1" ]; then
+              echo "- 🟢 OK : dossier présent → $1" >> $REPORT
+            else
+              echo "- 🔴 ERREUR : dossier manquant → $1" >> $REPORT
+            fi
+          }
+
+          check_file() {
+            if [ -f "$1" ]; then
+              echo "- 🟢 OK : fichier présent → $1" >> $REPORT
+            else
+              echo "- 🔴 ERREUR : fichier manquant → $1" >> $REPORT
+            fi
+          }
+
+          check_dir "docs/posts"
+          check_dir "docs/images"
+          check_dir "docs/reports"
+
+          check_file "scripts/generate-history.js"
+          check_file "docs/history.json"
+          check_file "docs/index.html"
+          check_file "docs/app.js"
+
+          echo "" >> $REPORT
+
+      - name: Check posts and images consistency
+        run: |
+          REPORT="docs/reports/health_check.md"
+          echo "## 📝 Vérification des posts & images" >> $REPORT
+
+          POSTS="docs/posts"
+          IMAGES="docs/images"
+
+          for post in $POSTS/*_post.txt; do
+            [ -e "$post" ] || continue
+
+            filename=$(basename "$post")
+            date="${filename%_post.txt}"
+
+            if [ ! -s "$post" ]; then
+              echo "- 🔴 ERREUR : post vide → $filename" >> $REPORT
+            else
+              echo "- 🟢 OK : post valide → $filename" >> $REPORT
+            fi
+
+            img="$IMAGES/${date}_image.png"
+            if [ -f "$img" ]; then
+              echo "  - 🟢 Image trouvée : ${date}_image.png" >> $REPORT
+            else
+              echo "  - 🔴 ERREUR : image manquante pour $date" >> $REPORT
+            fi
+          done
+
+          echo "" >> $REPORT
+
+      - name: Validate history.json
+        run: |
+          REPORT="docs/reports/health_check.md"
+          echo "## 📚 Vérification de history.json" >> $REPORT
+
+          if ! jq empty docs/history.json 2>/dev/null; then
+            echo "- 🔴 ERREUR : history.json n'est pas un JSON valide" >> $REPORT
+            exit 0
+          fi
+
+          echo "- 🟢 OK : JSON valide" >> $REPORT
+
+          entries=$(jq length docs/history.json)
+          echo "- Nombre d'entrées : $entries" >> $REPORT
+
+          echo "" >> $REPORT
+
+      - name: Commit and push report
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add docs/reports/health_check.md
+          git commit -m "🩺 Health check report" || echo "Aucun changement"
+          git push
