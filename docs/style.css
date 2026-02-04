@@ -1,3 +1,4 @@
+/* --- BASE --- */
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -23,11 +24,6 @@ main {
   gap: 2rem;
 }
 
-h2 {
-  margin-top: 0;
-  font-size: 1.3rem;
-}
-
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -42,55 +38,66 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
 }
 
-/* --- HEADER DE LA CARTE --- */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.card-date {
+/* --- TAGS --- */
+.card-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #e0e4ff;
+  color: white;
 }
 
-.card-id {
-  font-size: 0.8rem;
-  color: #9aa0c8;
+.tag-published {
+  background: #2e7d32; /* vert */
+}
+
+.tag-scheduled {
+  background: #c62828; /* rouge */
+}
+
+.tag-today {
+  background: #1565c0; /* bleu */
+}
+
+.tag-week {
+  background: #6a1b9a; /* violet */
 }
 
 /* --- IMAGE STYLE VERTICAL LINKEDIN --- */
 .card-image {
   width: 100%;
-  max-width: 450px;        /* largeur max */
-  aspect-ratio: 4 / 5;     /* format vertical LinkedIn */
-  object-fit: cover;       /* crop propre */
+  max-width: 450px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
   border-radius: 8px;
   border: 1px solid #222842;
   background: #0b1020;
-  margin: 0 auto;          /* centre l’image */
+  margin: 0 auto;
   display: block;
 }
 
-/* --- TEXTE DU POST (centré) --- */
+/* --- TEXTE CENTRÉ --- */
 .card-text {
   font-size: 0.9rem;
   line-height: 1.5;
   white-space: pre-wrap;
   color: #f5f5f5;
-  text-align: center;      /* centrage du texte */
+  text-align: center;
 }
 
-/* --- LIENS --- */
+/* --- LIENS CENTRÉS --- */
 .card-links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.25rem;
-  justify-content: center; /* centre les liens aussi */
+  justify-content: center;
 }
 
 .card-links a {
@@ -103,20 +110,22 @@ h2 {
   border: 1px solid #2b355a;
 }
 
-.card-links a:hover {
-  background: #27325a;
+/* --- FLOU POUR LES POSTS FUTURS --- */
+.future {
+  filter: blur(6px);
+  pointer-events: none;
+  opacity: 0.6;
 }
 
-/* --- RAPPORT DE RENOMMAGE --- */
-#report-container {
-  background: #151a30;
-  border-radius: 10px;
-  padding: 1rem;
-  border: 1px solid #222842;
-  font-size: 0.85rem;
-  max-height: 80vh;
-  overflow: auto;
-  white-space: pre-wrap;
+/* --- STYLE POST DU JOUR --- */
+.today {
+  border: 2px solid #1565c0;
+  box-shadow: 0 0 12px #1565c0aa;
+}
+
+/* --- STYLE SEMAINE EN COURS --- */
+.week {
+  border: 2px solid #6a1b9a;
 }
 
 /* --- RESPONSIVE --- */
