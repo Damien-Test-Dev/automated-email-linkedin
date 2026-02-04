@@ -1,0 +1,33 @@
+name: Build History JSON
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-history:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate history.json
+        run: node scripts/generate-history.js
+
+      - name: Commit and push updated history.json
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add docs/history.json
+          git commit -m "Auto-update history.json" || echo "No changes to commit"
+          git push
