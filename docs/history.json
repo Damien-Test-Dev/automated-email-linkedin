@@ -1,10 +1,44 @@
-{
-  "entries": [
-    {
-      "date": "2026-02-04",
-      "id": "UCFlow-20260204-001",
-      "post_file": "2026-02-04_post.txt",
-      "image_file": "2026-02-04_image.png"
-    }
-  ]
-}
+[
+  {
+    "date": "2026-02-04",
+    "id": "UCFlow-20260204-001",
+    "image": "images/2026-02-04_image.png",
+    "text": "4) **Réalités oniriques / astrales / cauchemars**\nDans un cauchemar astral, le vrai danger, c’est l’angle mort : les zones non testées.\nLa couverture d’instructions te met un projecteur sur ce qui reste dans l’ombre.\nCartographie, comble les trous, et reprends le contrôle avant que le risque ne prenne forme.",
+    "links": []
+  },
+  {
+    "date": "2026-02-05",
+    "id": "UCFlow-20260205-001",
+    "image": "images/2026-02-05_image.png",
+    "text": "1) **Royaumes divins / entités cosmiques**\nDans l’endgame cosmique, l’automatisation te donne de la vélocité… mais elle facture la maintenance.\nTraque le flakiness, coupe les fausses alertes, et rembourse la dette d’automatisation avant qu’elle n’explose.\nTon levier : des tests stables, observables, et un pipeline qui inspire confiance.",
+    "links": []
+  },
+  {
+    "date": "2026-02-06",
+    "id": "UCFlow-20260206-001",
+    "image": "images/2026-02-06_image.png",
+    "text": "6) **Dimensions alternatives / type Another Dimension**\nEn dimension alternative, le test statique est ton portail : il détecte tôt et aligne la compréhension partagée.\nRevue, analyse, feedback rapide : moins de surprises, plus de fluidité en delivery.\nInvestis tôt, et tu sécurises la trajectoire sans ralentir la vitesse.",
+    "links": []
+  },
+  {
+    "date": "2026-02-09",
+    "id": "UCFlow-20260209-001",
+    "image": "images/2026-02-09_image.png",
+    "text": "3) **Parc d’attractions / carnaval**\nUn plan de test solide, c’est la carte du parc : stratégie, risques, métriques, livrables, outillage.\nSans ça, tu pilotes au feeling et tu multiplies les tours… sans maîtriser la file d’attente des bugs.\nCadre le plan, aligne l’équipe, et transforme le chaos en expérience premium.",
+    "links": []
+  },
+  {
+    "date": "2026-02-10",
+    "id": "UCFlow-20260210-001",
+    "image": "images/2026-02-10_image.png",
+    "text": "2) **Théâtre / opéra / scène et coulisses**\nSur scène : le test dynamique montre les défaillances à l’exécution ; en coulisses : le statique révèle les défauts dans l’artefact.\nDeux angles, un seul objectif : réduire l’incertitude avant la première.\nFais jouer les deux disciplines, et tu passes de “show” à “quality show”.",
+    "links": []
+  },
+  {
+    "date": "2026-02-11",
+    "id": "UCFlow-20260211-001",
+    "image": "images/2026-02-11_image.png",
+    "text": "5) **Villes (parfois abandonnées)**\nDans une ville en ruines, ton reporting est ton GPS : il doit parler aux décideurs (exec, produit, tech).\nUn même résultat, trois narratifs : impact business, valeur produit, signal technique.\nSegmente ton message, et tu convertis des chiffres en décisions.",
+    "links": []
+  }
+]
