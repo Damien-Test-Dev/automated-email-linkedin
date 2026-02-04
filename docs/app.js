@@ -36,7 +36,11 @@ function createPostCard(entry, payload) {
 
   const img = document.createElement("img");
   img.className = "card-image";
-  img.src = payload.image || `images/${entry.image_file}`;
+
+  // Correction : normalisation du chemin image
+  let imagePath = payload.image || `images/${entry.image_file}`;
+  imagePath = imagePath.replace(/^docs\//, ""); // enlève "docs/" si présent
+  img.src = imagePath;
   img.alt = `Image pour ${entry.date}`;
 
   const textEl = document.createElement("div");
@@ -78,7 +82,7 @@ function createPostCard(entry, payload) {
 
 async function loadPosts() {
   try {
-    // 🔥 Correction principale : history.json est maintenant dans /docs/
+    // Correction : history.json est maintenant dans /docs/
     const history = await fetchJSON("history.json");
 
     const entries = (history.entries || [])
