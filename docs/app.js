@@ -36,7 +36,7 @@ function createPostCard(entry, payload) {
 
   const img = document.createElement("img");
   img.className = "card-image";
-  img.src = payload.image || entry.image_file || "";
+  img.src = payload.image || `images/${entry.image_file}`;
   img.alt = `Image pour ${entry.date}`;
 
   const textEl = document.createElement("div");
@@ -78,13 +78,16 @@ function createPostCard(entry, payload) {
 
 async function loadPosts() {
   try {
-    const history = await fetchJSON("../history.json");
-    const entries = (history.entries || []).slice().sort((a, b) =>
-      a.date < b.date ? 1 : -1
-    );
+    // 🔥 Correction principale : history.json est maintenant dans /docs/
+    const history = await fetchJSON("history.json");
+
+    const entries = (history.entries || [])
+      .slice()
+      .sort((a, b) => (a.date < b.date ? 1 : -1));
 
     for (const entry of entries) {
       const payloadPath = `payload/${entry.date}.json`;
+
       try {
         const payload = await fetchJSON(payloadPath);
         createPostCard(entry, payload);
