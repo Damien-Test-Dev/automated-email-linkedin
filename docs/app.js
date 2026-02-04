@@ -1,125 +1,108 @@
-async function fetchJSON(path) {
-  const res = await fetch(path);
-  if (!res.ok) {
-    throw new Error(`Erreur de chargement : ${path}`);
-  }
-  return res.json();
+async function loadHistory() {
+  const response = await fetch("history.json");
+  const history = await response.json();
+  renderCards(history);
 }
 
-async function fetchText(path) {
-  const res = await fetch(path);
-  if (!res.ok) {
-    throw new Error(`Erreur de chargement : ${path}`);
-  }
-  return res.text();
-}
+function renderCards(entries) {
+  const container = document.getElementById("cards-container");
+  container.innerHTML = "";
 
-function createPostCard(entry, payload) {
-  const container = document.getElementById("posts-container");
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const card = document.createElement("article");
-  card.className = "card";
+  const weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - today.getDay() + 1); // lundi
 
-  const header = document.createElement("div");
-  header.className = "card-header";
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekStart.getDate() + 4); // vendredi
 
-  const dateEl = document.createElement("div");
-  dateEl.className = "card-date";
-  dateEl.textContent = entry.date;
+  entries.forEach(entry => {
+    const card = document.createElement("div");
+    card.className = "card";
 
-  const idEl = document.createElement("div");
-  idEl.className = "card-id";
-  idEl.textContent = entry.id;
+    const postDate = new Date(entry.date);
+    postDate.setHours(0, 0, 0, 0);
 
-  header.appendChild(dateEl);
-  header.appendChild(idEl);
+    let tag = "";
+    let tagClass = "";
 
-  const img = document.createElement("img");
-  img.className = "card-image";
+    if (postDate > today) {
+      card.classList.add("future");
+      tag = "Scheduled";
+      tagClass = "tag-scheduled";
+    } else {
+      card.classList.add("published");
+      tag = "Published";
+      tagClass = "tag-published";
+    }
 
-  // Correction : normalisation du chemin image
-  let imagePath = payload.image || `images/${entry.image_file}`;
-  imagePath = imagePath.replace(/^docs\//, ""); // enlève "docs/" si présent
-  img.src = imagePath;
-  img.alt = `Image pour ${entry.date}`;
+    if (postDate.getTime() === today.getTime()) {
+      card.classList.add("today");
+      tag = "Today";
+      tagClass = "tag-today";
+    }
 
-  const textEl = document.createElement("div");
-  textEl.className = "card-text";
-  textEl.textContent = payload.text || "(Aucun texte trouvé dans le payload)";
-
-  const links = document.createElement("div");
-  links.className = "card-links";
-
-  const payloadLink = document.createElement("a");
-  payloadLink.href = `payload/${entry.date}.json`;
-  payloadLink.target = "_blank";
-  payloadLink.rel = "noopener noreferrer";
-  payloadLink.textContent = "Voir le payload JSON";
-
-  const postSourceLink = document.createElement("a");
-  postSourceLink.href = `posts/${entry.post_file}`;
-  postSourceLink.target = "_blank";
-  postSourceLink.rel = "noopener noreferrer";
-  postSourceLink.textContent = "Voir le fichier post";
-
-  const imageSourceLink = document.createElement("a");
-  imageSourceLink.href = `images/${entry.image_file}`;
-  imageSourceLink.target = "_blank";
-  imageSourceLink.rel = "noopener noreferrer";
-  imageSourceLink.textContent = "Voir le fichier image";
-
-  links.appendChild(payloadLink);
-  links.appendChild(postSourceLink);
-  links.appendChild(imageSourceLink);
-
-  card.appendChild(header);
-  card.appendChild(img);
-  card.appendChild(textEl);
-  card.appendChild(links);
-
-  container.appendChild(card);
-}
-
-async function loadPosts() {
-  try {
-    // Correction : history.json est maintenant dans /docs/
-    const history = await fetchJSON("history.json");
-
-    const entries = (history.entries || [])
-      .slice()
-      .sort((a, b) => (a.date < b.date ? 1 : -1));
-
-    for (const entry of entries) {
-      const payloadPath = `payload/${entry.date}.json`;
-
-      try {
-        const payload = await fetchJSON(payloadPath);
-        createPostCard(entry, payload);
-      } catch (e) {
-        console.error(`Erreur payload pour ${entry.date}:`, e);
-        createPostCard(entry, {
-          text: "(Payload introuvable ou illisible)",
-          image: `images/${entry.image_file}`,
-        });
+    if (postDate >= weekStart && postDate <= weekEnd) {
+      card.classList.add("week");
+      if (postDate <= today) {
+        tag = "Week";
+        tagClass = "tag-week";
       }
     }
-  } catch (e) {
-    console.error("Erreur de chargement de history.json :", e);
-  }
+
+    const tagEl = document.createElement("div");
+    tagEl.className = `card-tag ${tagClass}`;
+    tagEl.textContent = tag;
+    card.appendChild(tagEl);
+
+    const header = document.createElement("div");
+    header.className = "card-header";
+
+    const dateEl = document.createElement("div");
+    dateEl.className = "card-date";
+    dateEl.textContent = entry.date;
+
+    const idEl = document.createElement("div");
+    idEl.className = "card-id";
+    idEl.textContent = entry.id;
+
+    header.appendChild(dateEl);
+    header.appendChild(idEl);
+
+    const img = document.createElement("img");
+    img.className = "card-image";
+    img.src = entry.image;
+
+    const text = document.createElement("div");
+    text.className = "card-text";
+    text.textContent = entry.text;
+
+    const links = document.createElement("div");
+    links.className = "card-links";
+
+    entry.links.forEach(link => {
+      const a = document.createElement("a");
+      a.href = link.url;
+      a.target = "_blank";
+      a.textContent = link.label;
+      links.appendChild(a);
+    });
+
+    card.appendChild(header);
+    card.appendChild(img);
+    card.appendChild(text);
+    card.appendChild(links);
+
+    container.appendChild(card);
+  });
 }
 
 async function loadReport() {
-  const container = document.getElementById("report-container");
-  try {
-    const text = await fetchText("reports/rename_report.md");
-    container.textContent = text;
-  } catch (e) {
-    console.error("Erreur de chargement du rapport :", e);
-    container.textContent = "Aucun rapport de renommage disponible.";
-  }
+  const response = await fetch("reports/rename_report.md");
+  const text = await response.text();
+  document.getElementById("report-container").textContent = text;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadPosts();
-  loadReport();
-});
+loadHistory();
+loadReport();
