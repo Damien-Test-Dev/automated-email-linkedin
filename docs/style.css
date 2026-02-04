@@ -1,136 +1,111 @@
-/* --- BASE --- */
+/* ---------------------------------------------------------
+   Style général
+--------------------------------------------------------- */
+
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #0b1020;
-  color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7;
+    color: #333;
 }
 
-header {
-  padding: 1.5rem 2rem;
-  background: #11162a;
-  border-bottom: 1px solid #222842;
+h1, h2 {
+    margin-top: 0;
 }
 
-h1 {
-  margin: 0;
-  font-size: 1.6rem;
+/* ---------------------------------------------------------
+   Barre d'onglets
+--------------------------------------------------------- */
+
+.tabs {
+    display: flex;
+    background: #1e1e1e;
+    padding: 10px;
 }
 
-main {
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
-  gap: 2rem;
+.tab {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background 0.2s;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
+.tab:hover {
+    background: #444;
 }
 
-.card {
-  background: #151a30;
-  border-radius: 10px;
-  padding: 1rem;
-  border: 1px solid #222842;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  position: relative;
-  overflow: hidden;
+.tab.active {
+    background: #0078ff;
 }
 
-/* --- TAGS --- */
-.card-tag {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: white;
+/* ---------------------------------------------------------
+   Panneaux d'onglets
+--------------------------------------------------------- */
+
+.tab-panel {
+    padding: 20px;
 }
 
-.tag-published {
-  background: #2e7d32; /* vert */
+.hidden {
+    display: none;
 }
 
-.tag-scheduled {
-  background: #c62828; /* rouge */
+/* ---------------------------------------------------------
+   Section Monitoring
+--------------------------------------------------------- */
+
+.monitoring-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    line-height: 1.6;
 }
 
-.tag-today {
-  background: #1565c0; /* bleu */
+/* Titres du rapport */
+.monitoring-box h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
 }
 
-.tag-week {
-  background: #6a1b9a; /* violet */
+.monitoring-box h2 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-/* --- IMAGE STYLE VERTICAL LINKEDIN --- */
-.card-image {
-  width: 100%;
-  max-width: 450px;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #222842;
-  background: #0b1020;
-  margin: 0 auto;
-  display: block;
+/* Listes */
+.monitoring-box ul {
+    padding-left: 20px;
 }
 
-/* --- TEXTE CENTRÉ --- */
-.card-text {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  color: #f5f5f5;
-  text-align: center;
+.monitoring-box li {
+    margin-bottom: 6px;
 }
 
-/* --- LIENS CENTRÉS --- */
-.card-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
+/* Paragraphes */
+.monitoring-box p {
+    margin-bottom: 12px;
 }
 
-.card-links a {
-  font-size: 0.8rem;
-  text-decoration: none;
-  color: #c3d4ff;
-  background: #1b2340;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid #2b355a;
+/* ---------------------------------------------------------
+   Style des posts existants
+--------------------------------------------------------- */
+
+#today img,
+.week-item img,
+.past-item img {
+    max-width: 100%;
+    border-radius: 6px;
 }
 
-/* --- FLOU POUR LES POSTS FUTURS --- */
-.future {
-  filter: blur(6px);
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-/* --- STYLE POST DU JOUR --- */
-.today {
-  border: 2px solid #1565c0;
-  box-shadow: 0 0 12px #1565c0aa;
-}
-
-/* --- STYLE SEMAINE EN COURS --- */
-.week {
-  border: 2px solid #6a1b9a;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 900px) {
-  main {
-    grid-template-columns: 1fr;
-  }
+.week-item,
+.past-item {
+    margin-bottom: 10px;
 }
