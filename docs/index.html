@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>UCFlow – Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UCFlow Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <header>
-    <h1>UCFlow – Dashboard des publications</h1>
-  </header>
 
-  <main>
-    <section id="posts-section">
-      <h2>Publications</h2>
-      <div id="posts-container" class="cards"></div>
+    <!-- 🔵 NAVIGATION PAR ONGLET -->
+    <nav class="tabs">
+        <button class="tab active" data-tab="posts">Posts</button>
+        <button class="tab" data-tab="monitoring">Monitoring</button>
+    </nav>
+
+    <!-- 🟢 ONGLET POSTS (DASHBOARD ACTUEL) -->
+    <section id="tab-posts" class="tab-panel">
+        <h1>UCFlow Dashboard</h1>
+        <div id="today"></div>
+        <div id="week"></div>
+        <div id="past"></div>
     </section>
 
-    <section id="report-section">
-      <h2>Rapport de renommage</h2>
-      <div id="report-container"></div>
+    <!-- 🟠 ONGLET MONITORING -->
+    <section id="tab-monitoring" class="tab-panel hidden">
+        <h1>Monitoring du système</h1>
+        <p>Dernier rapport généré par le workflow Health Check :</p>
+        <div id="monitoring-content" class="monitoring-box">
+            <p>Chargement du rapport...</p>
+        </div>
     </section>
-  </main>
 
-  <footer>
-    <p>Généré automatiquement depuis GitHub Actions.</p>
-  </footer>
-
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
