@@ -18,8 +18,6 @@ jobs:
         with:
           node-version: 18
 
-      # ❌ Étape supprimée : pas de package.json → npm install inutile
-
       - name: Generate history.json
         run: node scripts/generate-history.js
 
@@ -27,11 +25,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-
-          # Ajouter uniquement le fichier généré
           git add docs/history.json
-
-          # Commit seulement s'il y a des changements
           git commit -m "Auto-update history.json" || echo "No changes to commit"
-
           git push
