@@ -1,12 +1,10 @@
-name: Rename all posts and images (Ultimate Version)
+name: Rename all posts and images (Automatic Daily Version)
 
 on:
-  workflow_dispatch:
-    inputs:
-      start_date:
-        description: "Date de départ au format YYYY-MM-DD (ex: 2025-01-13)"
-        required: true
-        default: "2025-01-13"
+  schedule:
+    # Tous les jours du lundi au vendredi à 05:00 UTC
+    # = 06:00 Paris (hiver) / 07:00 Paris (été)
+    - cron: "0 5 * * 1-5"
 
 jobs:
   rename-all:
@@ -32,13 +30,11 @@ jobs:
         run: |
           set -euo pipefail
 
-          START_DATE="${{ github.event.inputs.start_date }}"
-          echo "Date de départ : $START_DATE"
-
-          if ! date -d "$START_DATE" "+%Y-%m-%d" >/dev/null 2>&1; then
-            echo "❌ Erreur : format de date invalide. Utilise YYYY-MM-DD."
-            exit 1
-          fi
+          ###############################################
+          # Date automatique = demain
+          ###############################################
+          START_DATE=$(date -d "+1 day" "+%Y-%m-%d")
+          echo "Date de départ automatique : $START_DATE"
 
           ###############################################
           # Fonction robuste pour renommer les fichiers
@@ -58,11 +54,13 @@ jobs:
 
               file="${file#./}"
 
+              # Déjà conforme → skip
               if echo "$file" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}_'; then
                 echo "- ⏭️ Skip (déjà conforme) : $file" >> ../reports/rename_report.md
                 continue
               fi
 
+              # Sauter les week-ends
               while true; do
                 DAY_OF_WEEK=$(date -d "$CURRENT_DATE" +%u)
                 if [ "$DAY_OF_WEEK" -le 5 ]; then
@@ -126,6 +124,6 @@ jobs:
 
           git add docs/posts docs/images docs/reports/rename_report.md
 
-          COMMIT_MESSAGE="✨ Auto-rename posts & images + PNG conversion + report (workflow fusionné ultime, version robuste) ✨"
+          COMMIT_MESSAGE="✨ Auto-rename posts & images (daily cron) + PNG conversion + report ✨"
           git commit -m "$COMMIT_MESSAGE"
           git push
