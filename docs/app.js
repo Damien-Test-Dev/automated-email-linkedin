@@ -1,3 +1,8 @@
+document.addEventListener("DOMContentLoaded", () => {
+  loadHistory();
+  loadReport();
+});
+
 async function loadHistory() {
   const response = await fetch("history.json");
   const history = await response.json();
@@ -5,7 +10,7 @@ async function loadHistory() {
 }
 
 function renderCards(entries) {
-  const container = document.getElementById("cards-container");
+  const container = document.getElementById("posts-container");
   container.innerHTML = "";
 
   const today = new Date();
@@ -27,35 +32,43 @@ function renderCards(entries) {
     let tag = "";
     let tagClass = "";
 
+    // FUTUR → flou + tag Scheduled
     if (postDate > today) {
       card.classList.add("future");
       tag = "Scheduled";
       tagClass = "tag-scheduled";
-    } else {
+    } 
+    // PASSÉ / AUJOURD’HUI → Published
+    else {
       card.classList.add("published");
       tag = "Published";
       tagClass = "tag-published";
     }
 
+    // POST DU JOUR
     if (postDate.getTime() === today.getTime()) {
       card.classList.add("today");
       tag = "Today";
       tagClass = "tag-today";
     }
 
+    // SEMAINE EN COURS (lundi → vendredi)
     if (postDate >= weekStart && postDate <= weekEnd) {
       card.classList.add("week");
+
       if (postDate <= today) {
         tag = "Week";
         tagClass = "tag-week";
       }
     }
 
+    // TAG VISUEL
     const tagEl = document.createElement("div");
     tagEl.className = `card-tag ${tagClass}`;
     tagEl.textContent = tag;
     card.appendChild(tagEl);
 
+    // HEADER
     const header = document.createElement("div");
     header.className = "card-header";
 
@@ -70,14 +83,17 @@ function renderCards(entries) {
     header.appendChild(dateEl);
     header.appendChild(idEl);
 
+    // IMAGE
     const img = document.createElement("img");
     img.className = "card-image";
     img.src = entry.image;
 
+    // TEXTE
     const text = document.createElement("div");
     text.className = "card-text";
     text.textContent = entry.text;
 
+    // LIENS
     const links = document.createElement("div");
     links.className = "card-links";
 
@@ -89,6 +105,7 @@ function renderCards(entries) {
       links.appendChild(a);
     });
 
+    // ASSEMBLAGE
     card.appendChild(header);
     card.appendChild(img);
     card.appendChild(text);
@@ -103,6 +120,3 @@ async function loadReport() {
   const text = await response.text();
   document.getElementById("report-container").textContent = text;
 }
-
-loadHistory();
-loadReport();
