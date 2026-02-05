@@ -1,4 +1,40 @@
 /* ---------------------------------------------------------
+   Utils dates
+--------------------------------------------------------- */
+
+function parseDate(str) {
+    // str attendu : "YYYY-MM-DD"
+    return new Date(str + "T00:00:00");
+}
+
+function isSameDay(d1, d2) {
+    return d1.getFullYear() === d2.getFullYear() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getDate() === d2.getDate();
+}
+
+function isFuture(entryDate, today) {
+    return entryDate > today;
+}
+
+function isPast(entryDate, today) {
+    return entryDate < today;
+}
+
+function isThisWeek(entryDate, today) {
+    // semaine = lundi → vendredi de la semaine de "today"
+    const day = today.getDay(); // 0 = dimanche, 1 = lundi...
+    const diffToMonday = (day === 0 ? -6 : 1 - day); // ajuster si dimanche
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + diffToMonday);
+
+    const friday = new Date(monday);
+    friday.setDate(monday.getDate() + 4);
+
+    return entryDate >= monday && entryDate <= friday;
+}
+
+/* ---------------------------------------------------------
    Gestion des onglets (Posts / Monitoring)
 --------------------------------------------------------- */
 
@@ -48,25 +84,14 @@ async function loadMonitoringReport() {
 function convertMarkdownToHtml(md) {
     let html = md;
 
-    // Titres
     html = html.replace(/^# (.*$)/gim, "<h1>$1</h1>");
     html = html.replace(/^## (.*$)/gim, "<h2>$1</h2>");
     html = html.replace(/^### (.*$)/gim, "<h3>$1</h3>");
-
-    // Gras
     html = html.replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>");
-
-    // Italique
     html = html.replace(/\*(.*?)\*/gim, "<em>$1</em>");
-
-    // Listes
     html = html.replace(/^- (.*$)/gim, "<li>$1</li>");
-
-    // Paragraphes
     html = html.replace(/\n\n/gim, "</p><p>");
     html = "<p>" + html + "</p>";
-
-    // Listes <ul>
     html = html.replace(/(<p><li>)/gim, "<ul><li>");
     html = html.replace(/(<\/li><\/p>)/gim, "</li></ul>");
 
@@ -74,7 +99,7 @@ function convertMarkdownToHtml(md) {
 }
 
 /* ---------------------------------------------------------
-   Chargement des posts (fonction existante)
+   Chargement des posts
 --------------------------------------------------------- */
 
 async function loadHistory() {
@@ -82,9 +107,7 @@ async function loadHistory() {
         const response = await fetch("history.json");
         const data = await response.json();
 
-        renderToday(data);
-        renderWeek(data);
-        renderPast(data);
+        renderDashboard(data);
 
     } catch (error) {
         console.error("Erreur lors du chargement de history.json", error);
@@ -92,54 +115,132 @@ async function loadHistory() {
 }
 
 /* ---------------------------------------------------------
-   Rendu des sections du dashboard (inchangé)
+   Rendu global du dashboard
 --------------------------------------------------------- */
 
-function renderToday(data) {
+function renderDashboard(data) {
     const todayDiv = document.getElementById("today");
+    const weekDiv = document.getElementById("week");
+    const pastDiv = document.getElementById("past");
+
     todayDiv.innerHTML = "";
+    weekDiv.innerHTML = "";
+    pastDiv.innerHTML = "";
 
-    if (data.length === 0) return;
+    if (!data || data.length === 0) return;
 
-    const last = data[data.length - 1];
+    const today = new Date();
+    const entries = data.map(e => ({
+        ...e,
+        _dateObj: parseDate(e.date)
+    }));
 
-    todayDiv.innerHTML = `
+    const todayEntry = entries.find(e => isSameDay(e._dateObj, today));
+    const weekEntries = entries.filter(e => isThisWeek(e._dateObj, today));
+    const pastEntries = entries.filter(e => isPast(e._dateObj, today));
+    const futureEntries = entries.filter(e => isFuture(e._dateObj, today));
+
+    renderToday(todayDiv, todayEntry);
+    renderWeek(weekDiv, weekEntries);
+    renderPast(pastDiv, pastEntries, futureEntries);
+}
+
+/* ---------------------------------------------------------
+   Post du jour — carte premium
+--------------------------------------------------------- */
+
+function renderToday(container, entry) {
+    if (!entry) {
+        container.innerHTML = "<h2>Post du jour</h2><p>Aucun post pour aujourd'hui.</p>";
+        return;
+    }
+
+    container.innerHTML = `
         <h2>Post du jour</h2>
-        <img src="${last.image}" alt="Image du jour" />
-        <p>${last.text}</p>
+        <div class="today-card">
+            <div class="today-blob"></div>
+            <div class="today-bg">
+                <img src="${entry.image}" alt="Image du jour" />
+                <p>${entry.text}</p>
+                <p><small>${entry.date}</small></p>
+            </div>
+        </div>
     `;
 }
 
-function renderWeek(data) {
-    const weekDiv = document.getElementById("week");
-    weekDiv.innerHTML = "<h2>Semaine en cours</h2>";
+/* ---------------------------------------------------------
+   Semaine en cours — carrousel 3D
+--------------------------------------------------------- */
 
-    const last7 = data.slice(-7);
+function renderWeek(container, weekEntries) {
+    container.innerHTML = "<h2>Semaine en cours</h2>";
 
-    last7.forEach(entry => {
-        weekDiv.innerHTML += `
-            <div class="week-item">
-                <img src="${entry.image}" />
-                <p>${entry.date}</p>
+    if (!weekEntries || weekEntries.length === 0) {
+        container.innerHTML += "<p>Aucun post pour cette semaine.</p>";
+        return;
+    }
+
+    const limited = weekEntries.slice(0, 5);
+
+    let cardsHtml = "";
+    limited.forEach((entry, index) => {
+        cardsHtml += `
+            <div class="week-card" style="--index:${index};">
+                <img src="${entry.image}" alt="${entry.date}" />
             </div>
         `;
     });
+
+    container.innerHTML += `
+        <div class="week-wrapper">
+            <div class="week-inner">
+                ${cardsHtml}
+            </div>
+        </div>
+    `;
 }
 
-function renderPast(data) {
-    const pastDiv = document.getElementById("past");
-    pastDiv.innerHTML = "<h2>Posts précédents</h2>";
+/* ---------------------------------------------------------
+   Posts passés + futurs
+   - passés : net + bandeau "Publié"
+   - futurs : flou + 🔒 + "À venir"
+--------------------------------------------------------- */
 
-    const older = data.slice(0, -7);
+function renderPast(container, pastEntries, futureEntries) {
+    container.innerHTML = "<h2>Posts précédents</h2>";
 
-    older.forEach(entry => {
-        pastDiv.innerHTML += `
-            <div class="past-item">
-                <img src="${entry.image}" />
-                <p>${entry.date}</p>
-            </div>
-        `;
-    });
+    pastEntries
+        .sort((a, b) => b._dateObj - a._dateObj)
+        .forEach(entry => {
+            container.innerHTML += `
+                <div class="past-item">
+                    <img src="${entry.image}" alt="${entry.date}" />
+                    <div class="past-banner">Publié</div>
+                    <p>${entry.date}</p>
+                </div>
+            `;
+        });
+
+    if (futureEntries && futureEntries.length > 0) {
+        container.innerHTML += "<h3>À venir</h3>";
+
+        futureEntries
+            .sort((a, b) => a._dateObj - b._dateObj)
+            .forEach(entry => {
+                container.innerHTML += `
+                    <div class="past-item">
+                        <div class="future">
+                            <img src="${entry.image}" alt="${entry.date}" />
+                        </div>
+                        <div class="future-overlay">
+                            <span class="future-banner">À venir</span>
+                            <span class="future-lock">🔒</span>
+                        </div>
+                        <p>${entry.date}</p>
+                    </div>
+                `;
+            });
+    }
 }
 
 /* ---------------------------------------------------------
