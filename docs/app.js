@@ -3,7 +3,6 @@
 --------------------------------------------------------- */
 
 function parseDate(str) {
-    // str attendu : "YYYY-MM-DD"
     return new Date(str + "T00:00:00");
 }
 
@@ -22,9 +21,8 @@ function isPast(entryDate, today) {
 }
 
 function isThisWeek(entryDate, today) {
-    // semaine = lundi → vendredi de la semaine de "today"
-    const day = today.getDay(); // 0 = dimanche, 1 = lundi...
-    const diffToMonday = (day === 0 ? -6 : 1 - day); // ajuster si dimanche
+    const day = today.getDay();
+    const diffToMonday = (day === 0 ? -6 : 1 - day);
     const monday = new Date(today);
     monday.setDate(today.getDate() + diffToMonday);
 
@@ -35,28 +33,23 @@ function isThisWeek(entryDate, today) {
 }
 
 /* ---------------------------------------------------------
-   Gestion des onglets (Posts / Monitoring)
+   Gestion des onglets
 --------------------------------------------------------- */
 
 function setActiveTab(tabName) {
-    const tabs = document.querySelectorAll(".tab");
-    const panels = document.querySelectorAll(".tab-panel");
-
-    tabs.forEach(tab => {
+    document.querySelectorAll(".tab").forEach(tab => {
         tab.classList.toggle("active", tab.dataset.tab === tabName);
     });
 
-    panels.forEach(panel => {
+    document.querySelectorAll(".tab-panel").forEach(panel => {
         panel.classList.toggle("hidden", panel.id !== `tab-${tabName}`);
     });
 
-    if (tabName === "monitoring") {
-        loadMonitoringReport();
-    }
+    if (tabName === "monitoring") loadMonitoringReport();
 }
 
 /* ---------------------------------------------------------
-   Chargement du rapport Monitoring (Markdown → HTML)
+   Monitoring
 --------------------------------------------------------- */
 
 async function loadMonitoringReport() {
@@ -72,14 +65,10 @@ async function loadMonitoringReport() {
         const markdown = await response.text();
         container.innerHTML = convertMarkdownToHtml(markdown);
 
-    } catch (error) {
+    } catch {
         container.innerHTML = "<p>Erreur lors du chargement du rapport.</p>";
     }
 }
-
-/* ---------------------------------------------------------
-   Convertisseur Markdown minimaliste → HTML
---------------------------------------------------------- */
 
 function convertMarkdownToHtml(md) {
     let html = md;
@@ -106,7 +95,6 @@ async function loadHistory() {
     try {
         const response = await fetch("history.json");
         const data = await response.json();
-
         renderDashboard(data);
 
     } catch (error) {
@@ -115,7 +103,7 @@ async function loadHistory() {
 }
 
 /* ---------------------------------------------------------
-   Rendu global du dashboard
+   Rendu global
 --------------------------------------------------------- */
 
 function renderDashboard(data) {
@@ -136,7 +124,12 @@ function renderDashboard(data) {
     }));
 
     const todayEntry = entries.find(e => isSameDay(e._dateObj, today));
-    const weekEntries = entries.filter(e => isThisWeek(e._dateObj, today));
+
+    const weekEntries = entries.filter(e =>
+        isThisWeek(e._dateObj, today) &&
+        !isFuture(e._dateObj, today)
+    );
+
     const pastEntries = entries.filter(e => isPast(e._dateObj, today));
     const futureEntries = entries.filter(e => isFuture(e._dateObj, today));
 
@@ -150,13 +143,14 @@ function renderDashboard(data) {
 --------------------------------------------------------- */
 
 function renderToday(container, entry) {
+    container.innerHTML = "<h2>Post du jour</h2>";
+
     if (!entry) {
-        container.innerHTML = "<h2>Post du jour</h2><p>Aucun post pour aujourd'hui.</p>";
+        container.innerHTML += "<p>Aucun post pour aujourd'hui.</p>";
         return;
     }
 
-    container.innerHTML = `
-        <h2>Post du jour</h2>
+    container.innerHTML += `
         <div class="today-card">
             <div class="today-blob"></div>
             <div class="today-bg">
@@ -180,10 +174,14 @@ function renderWeek(container, weekEntries) {
         return;
     }
 
-    const limited = weekEntries.slice(0, 5);
+    // Toujours 5 cartes
+    const cards = [];
+    for (let i = 0; i < 5; i++) {
+        cards.push(weekEntries[i % weekEntries.length]);
+    }
 
     let cardsHtml = "";
-    limited.forEach((entry, index) => {
+    cards.forEach((entry, index) => {
         cardsHtml += `
             <div class="week-card" style="--index:${index};">
                 <img src="${entry.image}" alt="${entry.date}" />
@@ -202,8 +200,6 @@ function renderWeek(container, weekEntries) {
 
 /* ---------------------------------------------------------
    Posts passés + futurs
-   - passés : net + bandeau "Publié"
-   - futurs : flou + 🔒 + "À venir"
 --------------------------------------------------------- */
 
 function renderPast(container, pastEntries, futureEntries) {
@@ -221,7 +217,7 @@ function renderPast(container, pastEntries, futureEntries) {
             `;
         });
 
-    if (futureEntries && futureEntries.length > 0) {
+    if (futureEntries.length > 0) {
         container.innerHTML += "<h3>À venir</h3>";
 
         futureEntries
