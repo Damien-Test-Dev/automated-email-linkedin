@@ -2,9 +2,9 @@ name: Rename all posts and images (Automatic Daily Version)
 
 on:
   schedule:
-    # Tous les jours du lundi au vendredi à 05:00 UTC
-    # = 06:00 Paris (hiver) / 07:00 Paris (été)
-    - cron: "0 5 * * 1-5"
+    # Tous les jours du lundi au vendredi à 08:00 UTC
+    # = 09:00 Paris (hiver) / 10:00 Paris (été)
+    - cron: "0 8 * * 1-5"
 
 jobs:
   rename-all:
