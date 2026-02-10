@@ -1,13 +1,12 @@
-name: Rename all posts and images (Daily 19:00 Paris)
+name: Rename all posts and images (Weekend 10:00 Paris)
 
 on:
   schedule:
-    # Objectif: 19:00 heure de Paris toute l’année (DST inclus)
-    # On déclenche 2 fois (UTC) + garde-fou heure Paris:
-    # - 17:00 UTC => 19:00 Paris en été (UTC+2)
-    # - 18:00 UTC => 19:00 Paris en hiver (UTC+1)
-    - cron: "0 17 * * *"
-    - cron: "0 18 * * *"
+    # Objectif: 10:00 heure de Paris, uniquement Sam–Dim, DST inclus
+    # Été (Paris UTC+2)  => 08:00 UTC
+    # Hiver (Paris UTC+1)=> 09:00 UTC
+    - cron: "0 8 * * 6,0"
+    - cron: "0 9 * * 6,0"
 
 jobs:
   rename-all:
@@ -22,12 +21,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Guard — ne s’exécute qu’à 19h Paris
+      - name: Guard — uniquement Week-end à 10h Paris
         run: |
           HOUR_PARIS=$(TZ="Europe/Paris" date +"%H")
+          DOW_PARIS=$(TZ="Europe/Paris" date +"%u") # 1..7 (1=Lun, 6=Sam, 7=Dim)
           echo "Heure Paris détectée: ${HOUR_PARIS}"
-          if [ "${HOUR_PARIS}" != "19" ]; then
-            echo "⏭️ Pas 19h Paris → stop (run technique)."
+          echo "Jour semaine Paris détecté: ${DOW_PARIS}"
+
+          # ✅ On ne garde QUE samedi(6) / dimanche(7)
+          if [ "${DOW_PARIS}" -le 5 ]; then
+            echo "⏭️ Pas le week-end → stop."
+            exit 0
+          fi
+
+          # ✅ On ne garde QUE 10h Paris
+          if [ "${HOUR_PARIS}" != "10" ]; then
+            echo "⏭️ Pas 10h Paris → stop (run technique DST)."
             exit 0
           fi
 
@@ -58,6 +67,7 @@ jobs:
 
           ###############################################
           # Helpers: jour ouvré + next date
+          # (On planifie les fichiers sur des jours ouvrés)
           ###############################################
           next_business_day() {
             local d="$1"
@@ -134,7 +144,6 @@ jobs:
             echo "Détails images:" >> docs/reports/rename_report.md
             for i in "${IMAGES[@]}"; do echo "- $i" >> docs/reports/rename_report.md; done
 
-            # Fail visible (pour que tu voies le problème tout de suite)
             exit 1
           fi
 
@@ -145,6 +154,7 @@ jobs:
 
           ###############################################
           # 4) Renommage par paires (post + image)
+          # Planification sur jours ouvrés via next_business_day()
           ###############################################
           echo "## Renommage par paires (post + image)" >> docs/reports/rename_report.md
 
@@ -155,15 +165,12 @@ jobs:
             post="${POSTS[$idx]}"
             img="${IMAGES[$idx]}"
 
-            # Normalise les paths affichés
             post_name="${post##*/}"
             img_name="${img##*/}"
 
-            # Cibles
             target_post="docs/posts/${CURRENT_DATE}_post.txt"
             target_img="docs/images/${CURRENT_DATE}_image.png"
 
-            # Assure qu'on n’écrase rien: si date déjà prise, on avance
             while [ -f "$target_post" ] || [ -f "$target_img" ]; do
               CURRENT_DATE=$(next_day "$CURRENT_DATE")
               CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
@@ -177,7 +184,6 @@ jobs:
 
             mv -- "$post" "$target_post"
 
-            # Si l'image n'est pas png (cas résiduel), on force la conversion
             if [[ "${img##*.}" =~ ^(jpg|jpeg|webp)$ ]]; then
               tmp_png="docs/images/${img_name%.*}.png"
               convert -- "$img" "$tmp_png"
@@ -200,8 +206,7 @@ jobs:
 
           if git status --porcelain | grep -q .; then
             git add docs/posts docs/images docs/reports/rename_report.md
-            COMMIT_MESSAGE="✨ Auto-rename (pairs) @19h Paris + PNG conversion + report ✨"
-            git commit -m "$COMMIT_MESSAGE"
+            git commit -m "✨ Auto-rename (pairs) @10h Paris (weekend) + PNG conversion + report ✨"
             git push
           else
             echo "Aucun changement à committer."
