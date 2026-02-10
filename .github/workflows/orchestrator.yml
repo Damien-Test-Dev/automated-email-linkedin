@@ -7,9 +7,19 @@ on:
     - cron: "0 8 * * 1-5"
   workflow_dispatch: {}
 
+# ✅ IMPORTANT : on donne le droit d’écrire dans Issues + de push du contenu
+permissions:
+  contents: write
+  issues: write
+
 jobs:
   publish_existing_content:
     runs-on: ubuntu-latest
+
+    # ✅ Empêche 2 runs en parallèle (stabilité)
+    concurrency:
+      group: ucflow-orchestrator
+      cancel-in-progress: false
 
     steps:
       - name: Checkout repository
@@ -31,59 +41,29 @@ jobs:
           echo "Image attendue : $IMAGE_FILE"
 
           if [ ! -f "$POST_FILE" ]; then
-            echo "⚠ Fichier post introuvable, aucune publication aujourd'hui."
+            echo "⚠ Post introuvable → stop (pas de publication)."
             exit 0
           fi
 
           if [ ! -f "$IMAGE_FILE" ]; then
-            echo "⚠ Fichier image introuvable, aucune publication aujourd'hui."
+            echo "⚠ Image introuvable → stop (pas de publication)."
             exit 0
           fi
 
-          echo "✅ Les deux fichiers existent, on continue."
+          echo "✅ Post + image OK."
 
-      - name: Mettre à jour docs/history.json
+      - name: Construire l’URL publique de l’image (RAW + Pages)
         run: |
-          python << 'PY'
-          import json
-          from pathlib import Path
-          import os
+          OWNER="${GITHUB_REPOSITORY%%/*}"
+          REPO="${GITHUB_REPOSITORY##*/}"
 
-          history_path = Path("docs/history.json")
-          date = os.environ["DATE"]
-          post_file = os.environ["POST_FILE"].split("/")[-1]
-          image_file = os.environ["IMAGE_FILE"].split("/")[-1]
+          echo "IMAGE_URL_RAW=https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/docs/images/${DATE}_image.png" >> "$GITHUB_ENV"
+          echo "IMAGE_URL_PAGES=https://${OWNER}.github.io/${REPO}/images/${DATE}_image.png" >> "$GITHUB_ENV"
 
-          if not history_path.exists():
-            data = {"entries": []}
-          else:
-            with history_path.open("r", encoding="utf-8") as f:
-              data = json.load(f)
+          echo "➡️ IMAGE_URL_RAW : $IMAGE_URL_RAW"
+          echo "➡️ IMAGE_URL_PAGES: $IMAGE_URL_PAGES"
 
-          entries = data.get("entries", [])
-
-          # Si une entrée existe déjà pour cette date → on ne duplique pas
-          if any(e.get("date") == date for e in entries):
-            print(f"Entrée déjà existante pour {date}, aucune modification de history.json.")
-          else:
-            id_value = f"UCFlow-{date.replace('-', '')}-001"
-            new_entry = {
-              "date": date,
-              "id": id_value,
-              "post_file": post_file,
-              "image_file": image_file,
-            }
-            entries.append(new_entry)
-            data["entries"] = entries
-
-            with history_path.open("w", encoding="utf-8") as f:
-              json.dump(data, f, indent=2, ensure_ascii=False)
-
-            print(f"Nouvelle entrée ajoutée pour {date} : {id_value}")
-
-          PY
-
-      - name: Générer le payload JSON pour Zapier
+      - name: Générer le payload JSON (archive / intégrations futures)
         run: |
           mkdir -p docs/payload
 
@@ -95,24 +75,66 @@ jobs:
           date = os.environ["DATE"]
           post_file = os.environ["POST_FILE"]
           image_file = os.environ["IMAGE_FILE"]
+          image_url_raw = os.environ["IMAGE_URL_RAW"]
+          image_url_pages = os.environ["IMAGE_URL_PAGES"]
 
-          # Lire le texte du post
-          post_text = Path(post_file).read_text(encoding="utf-8")
-
-          # Construire l'ID
+          post_text = Path(post_file).read_text(encoding="utf-8").rstrip("\n")
           id_value = f"UCFlow-{date.replace('-', '')}-001"
 
           payload = {
-              "date": date,
-              "id": id_value,
-              "text": post_text,
-              "image": image_file
+            "date": date,
+            "id": id_value,
+            "text": post_text,
+            "image_file": image_file,
+            "image_url": image_url_raw,
+            "image_url_pages": image_url_pages
           }
 
-          output_path = Path(f"docs/payload/{date}.json")
-          output_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+          out = Path(f"docs/payload/{date}.json")
+          out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+          print(f"✅ Payload généré : {out}")
+          PY
 
-          print(f"Payload JSON généré : {output_path}")
+      - name: Créer une Issue (payload métier pour Zapier/Buffer)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python << 'PY'
+          import os, json, urllib.request
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          token = os.environ["GH_TOKEN"]
+
+          title = os.environ["IMAGE_URL_RAW"]      # ✅ va dans Buffer “Photo URL”
+          body_path = os.environ["POST_FILE"]       # ✅ va dans Buffer “Text”
+          body = open(body_path, "r", encoding="utf-8").read().rstrip("\n")
+
+          def gh_request(url, method="GET", data=None):
+            headers = {
+              "Authorization": f"Bearer {token}",
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "User-Agent": "ucflow-orchestrator"
+            }
+            req = urllib.request.Request(url, headers=headers, method=method)
+            if data is not None:
+              req.data = data
+            with urllib.request.urlopen(req) as r:
+              return json.loads(r.read().decode("utf-8"))
+
+          # 1) Anti-duplication : si une issue a déjà EXACTEMENT ce title, on ne recrée pas
+          issues = gh_request(f"https://api.github.com/repos/{repo}/issues?state=all&per_page=100")
+          issues = [i for i in issues if "pull_request" not in i]  # exclut PR
+
+          if any(i.get("title") == title for i in issues):
+            print("ℹ️ Issue déjà existante (même image URL) → skip.")
+            raise SystemExit(0)
+
+          # 2) Créer l’issue
+          payload = json.dumps({"title": title, "body": body}).encode("utf-8")
+          created = gh_request(f"https://api.github.com/repos/{repo}/issues", method="POST", data=payload)
+
+          print("✅ Issue créée :", created.get("html_url"))
           PY
 
       - name: Vérifier s'il y a des changements à committer
@@ -127,14 +149,12 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add docs/history.json
           git add docs/payload/
 
-          # Si aucun changement n'est staged → ne pas échouer
           if git diff --cached --quiet; then
             echo "Aucun changement à committer (staging vide)."
             exit 0
           fi
 
-          git commit -m "auto: publication du ${DATE} (contenu existant)"
+          git commit -m "auto: payload + issue ${DATE}"
           git push
