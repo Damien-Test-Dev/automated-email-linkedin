@@ -1,0 +1,23 @@
+La meilleure façon de “tenir la qualité” en banque d’investissement ?  
+Arrêter de confondre **qualité** et **documentation**. 📌
+
+Oui, il faut de la traçabilité.  
+Mais la traçabilité sans preuves d’exécution, c’est du théâtre.
+
+🎯 Ce qui sécurise vraiment un périmètre réglementé (MiFID/EMIR, contrôles internes, audit) :
+
+1) **Test evidence automatisée**  
+   Pipelines qui produisent logs, rapports, versions, résultats, et qui les archivent de façon gouvernée. ✅
+
+2) **Traçabilité légère mais robuste**  
+   User story ↔ critères ↔ tests ↔ exécution CI ↔ artefacts.  
+   Pas 12 fichiers Word, mais un flux auditable.
+
+3) **Risk-based testing**  
+   On explicite les zones à risque (pricing, confirmations, reporting) et on concentre l’effort là où ça compte. 🛡️
+
+En clair : on passe d’une QA “conforme” à une QA **pilotable**.
+
+Question : dans votre organisation, l’audit est-il vécu comme une contrainte… ou comme un levier pour industrialiser la qualité ? 🔍
+
+#QualityAssurance #SoftwareTesting #RegTech #Governance #Agile #Scrum #InvestmentBanking #Compliance

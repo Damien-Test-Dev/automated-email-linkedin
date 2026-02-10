@@ -1,0 +1,23 @@
+L’IA dans le test logiciel en banque/finance : gadget ou accélérateur ? 🤖
+
+Ma position est simple : **si l’IA ne réduit pas le risque**, elle n’a rien à faire dans la chaîne de delivery.
+
+✅ Où ça crée de la valeur (concrète) en Agile/Scrum :
+
+1) **Génération assistée de cas de test**  
+   À partir des règles métier (pricing, limites, exceptions), l’IA propose des scénarios… et la QA tranche. 🧩
+
+2) **Priorisation intelligente de la régression**  
+   On teste d’abord ce qui a le plus de probabilité de casser + le plus d’impact.  
+   Moins de bruit, plus de signal. 📈
+
+3) **Analyse d’incidents & triage**  
+   Regrouper les erreurs, suggérer la cause probable, accélérer le retour à un état stable. 🛡️
+
+⚠️ Et la règle d’or : **traçabilité + contrôle**.  
+Pas d’IA “boîte noire” sur des composants sensibles (risk, P&L, reporting).
+
+L’avenir de la QA en banque d’investissement, c’est du **Quality Engineering** :  
+des équipes qui livrent vite **et** qui savent expliquer pourquoi c’est sûr. ✅
+
+#AI #QualityEngineering #SoftwareTesting #Agile #Scrum #InvestmentBanking #DevOps #RiskManagement
