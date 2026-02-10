@@ -1,18 +1,35 @@
-name: Rename all posts and images (Automatic Daily Version)
+name: Rename all posts and images (Daily 19:00 Paris)
 
 on:
   schedule:
-    # Tous les jours du lundi au vendredi à 08:00 UTC
-    # = 09:00 Paris (hiver) / 10:00 Paris (été)
-    - cron: "0 8 * * 1-5"
+    # Objectif: 19:00 heure de Paris toute l’année (DST inclus)
+    # On déclenche 2 fois (UTC) + garde-fou heure Paris:
+    # - 17:00 UTC => 19:00 Paris en été (UTC+2)
+    # - 18:00 UTC => 19:00 Paris en hiver (UTC+1)
+    - cron: "0 17 * * *"
+    - cron: "0 18 * * *"
 
 jobs:
   rename-all:
     runs-on: ubuntu-latest
 
+    # ✅ Evite les runs simultanés (stabilité)
+    concurrency:
+      group: ucflow-rename-all
+      cancel-in-progress: false
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Guard — ne s’exécute qu’à 19h Paris
+        run: |
+          HOUR_PARIS=$(TZ="Europe/Paris" date +"%H")
+          echo "Heure Paris détectée: ${HOUR_PARIS}"
+          if [ "${HOUR_PARIS}" != "19" ]; then
+            echo "⏭️ Pas 19h Paris → stop (run technique)."
+            exit 0
+          fi
 
       - name: Install image conversion tools
         run: |
@@ -23,107 +40,169 @@ jobs:
         run: |
           mkdir -p docs/reports
           echo "# Rapport de renommage et conversion" > docs/reports/rename_report.md
-          echo "Généré le $(date)" >> docs/reports/rename_report.md
+          echo "Généré le $(TZ="Europe/Paris" date)" >> docs/reports/rename_report.md
           echo "" >> docs/reports/rename_report.md
 
-      - name: Rename posts and images using unified logic
+      - name: Rename posts + images by pairs (aligned) + PNG conversion
         run: |
           set -euo pipefail
 
           ###############################################
-          # Date automatique = demain
+          # Date automatique = demain (base de planification)
           ###############################################
-          START_DATE=$(date -d "+1 day" "+%Y-%m-%d")
+          START_DATE=$(TZ="Europe/Paris" date -d "+1 day" "+%Y-%m-%d")
           echo "Date de départ automatique : $START_DATE"
+          echo "" >> docs/reports/rename_report.md
+          echo "## Date de départ : $START_DATE" >> docs/reports/rename_report.md
+          echo "" >> docs/reports/rename_report.md
 
           ###############################################
-          # Fonction robuste pour renommer les fichiers
+          # Helpers: jour ouvré + next date
           ###############################################
-          rename_files() {
-            local DIR="$1"
-            local PREFIX="$2"
-            local EXT="$3"
-            local CURRENT_DATE="$4"
-
-            echo "## Dossier : $DIR" >> docs/reports/rename_report.md
-
-            cd "$DIR"
-
-            find . -maxdepth 1 -type f ! -name ".gitkeep" -print0 | \
-            while IFS= read -r -d '' file; do
-
-              file="${file#./}"
-
-              # Déjà conforme → skip
-              if echo "$file" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}_'; then
-                echo "- ⏭️ Skip (déjà conforme) : $file" >> ../reports/rename_report.md
-                continue
+          next_business_day() {
+            local d="$1"
+            while true; do
+              local dow
+              dow=$(date -d "$d" +%u) # 1..7
+              if [ "$dow" -le 5 ]; then
+                echo "$d"
+                return
               fi
-
-              # Sauter les week-ends
-              while true; do
-                DAY_OF_WEEK=$(date -d "$CURRENT_DATE" +%u)
-                if [ "$DAY_OF_WEEK" -le 5 ]; then
-                  break
-                fi
-                CURRENT_DATE=$(date -d "$CURRENT_DATE + 1 day" +%Y-%m-%d)
-              done
-
-              NEW_NAME="${CURRENT_DATE}_${PREFIX}.${EXT}"
-
-              echo "- 🔄 Renommage : $file → $NEW_NAME" >> ../reports/rename_report.md
-              mv -- "$file" "$NEW_NAME"
-
-              CURRENT_DATE=$(date -d "$CURRENT_DATE + 1 day" +%Y-%m-%d)
+              d=$(date -d "$d + 1 day" +%Y-%m-%d)
             done
+          }
 
-            cd - > /dev/null
-            echo "" >> docs/reports/rename_report.md
+          next_day() {
+            date -d "$1 + 1 day" +%Y-%m-%d
           }
 
           ###############################################
-          # Conversion automatique des images en PNG
+          # 1) Conversion images -> PNG (avant renommage)
           ###############################################
           echo "## Conversion des images en PNG" >> docs/reports/rename_report.md
 
           cd docs/images
-
           find . -maxdepth 1 -type f ! -name ".gitkeep" -print0 | \
           while IFS= read -r -d '' img; do
-
             img="${img#./}"
-            EXT="${img##*.}"
-            BASENAME="${img%.*}"
+            ext="${img##*.}"
+            base="${img%.*}"
 
-            if [[ "$EXT" =~ ^(jpg|jpeg|webp)$ ]]; then
-              echo "- 🖼️ Conversion : $img → ${BASENAME}.png" >> ../reports/rename_report.md
-              convert -- "$img" "${BASENAME}.png"
+            if [[ "$ext" =~ ^(jpg|jpeg|webp)$ ]]; then
+              echo "- 🖼️ Conversion : $img → ${base}.png" >> ../reports/rename_report.md
+              convert -- "$img" "${base}.png"
               rm -- "$img"
             fi
-
           done
-
           cd - > /dev/null
           echo "" >> docs/reports/rename_report.md
 
           ###############################################
-          # Renommage final posts + images
+          # 2) Collecte des fichiers NON conformes
+          # Conformes = commencent par YYYY-MM-DD_
           ###############################################
-          rename_files "docs/posts" "post" "txt" "$START_DATE"
-          rename_files "docs/images" "image" "png" "$START_DATE"
+          echo "## Détection des fichiers non conformes" >> docs/reports/rename_report.md
+
+          mapfile -d '' -t POSTS < <(
+            find docs/posts -maxdepth 1 -type f ! -name ".gitkeep" \
+              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_.*' \
+              -print0 | sort -z
+          )
+
+          mapfile -d '' -t IMAGES < <(
+            find docs/images -maxdepth 1 -type f ! -name ".gitkeep" \
+              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_.*' \
+              -print0 | sort -z
+          )
+
+          echo "- 📝 Posts non conformes: ${#POSTS[@]}" >> docs/reports/rename_report.md
+          echo "- 🖼️ Images non conformes: ${#IMAGES[@]}" >> docs/reports/rename_report.md
+          echo "" >> docs/reports/rename_report.md
+
+          ###############################################
+          # 3) Garde-fou alignment (OBLIGATOIRE)
+          ###############################################
+          if [ "${#POSTS[@]}" -ne "${#IMAGES[@]}" ]; then
+            echo "❌ Désalignement détecté: ${#POSTS[@]} posts vs ${#IMAGES[@]} images" >> docs/reports/rename_report.md
+            echo "➡️ Stop pour éviter de casser le calendrier." >> docs/reports/rename_report.md
+            echo "" >> docs/reports/rename_report.md
+
+            echo "Détails posts:" >> docs/reports/rename_report.md
+            for p in "${POSTS[@]}"; do echo "- $p" >> docs/reports/rename_report.md; done
+
+            echo "" >> docs/reports/rename_report.md
+            echo "Détails images:" >> docs/reports/rename_report.md
+            for i in "${IMAGES[@]}"; do echo "- $i" >> docs/reports/rename_report.md; done
+
+            # Fail visible (pour que tu voies le problème tout de suite)
+            exit 1
+          fi
+
+          if [ "${#POSTS[@]}" -eq 0 ]; then
+            echo "✅ Rien à renommer (tout conforme)." >> docs/reports/rename_report.md
+            exit 0
+          fi
+
+          ###############################################
+          # 4) Renommage par paires (post + image)
+          ###############################################
+          echo "## Renommage par paires (post + image)" >> docs/reports/rename_report.md
+
+          CURRENT_DATE="$START_DATE"
+          for idx in "${!POSTS[@]}"; do
+            CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
+
+            post="${POSTS[$idx]}"
+            img="${IMAGES[$idx]}"
+
+            # Normalise les paths affichés
+            post_name="${post##*/}"
+            img_name="${img##*/}"
+
+            # Cibles
+            target_post="docs/posts/${CURRENT_DATE}_post.txt"
+            target_img="docs/images/${CURRENT_DATE}_image.png"
+
+            # Assure qu'on n’écrase rien: si date déjà prise, on avance
+            while [ -f "$target_post" ] || [ -f "$target_img" ]; do
+              CURRENT_DATE=$(next_day "$CURRENT_DATE")
+              CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
+              target_post="docs/posts/${CURRENT_DATE}_post.txt"
+              target_img="docs/images/${CURRENT_DATE}_image.png"
+            done
+
+            echo "- 🔄 Pair $((idx+1))" >> docs/reports/rename_report.md
+            echo "  - 📝 $post_name → ${CURRENT_DATE}_post.txt" >> docs/reports/rename_report.md
+            echo "  - 🖼️ $img_name → ${CURRENT_DATE}_image.png" >> docs/reports/rename_report.md
+
+            mv -- "$post" "$target_post"
+
+            # Si l'image n'est pas png (cas résiduel), on force la conversion
+            if [[ "${img##*.}" =~ ^(jpg|jpeg|webp)$ ]]; then
+              tmp_png="docs/images/${img_name%.*}.png"
+              convert -- "$img" "$tmp_png"
+              rm -- "$img"
+              mv -- "$tmp_png" "$target_img"
+            else
+              mv -- "$img" "$target_img"
+            fi
+
+            CURRENT_DATE=$(next_day "$CURRENT_DATE")
+          done
+
+          echo "" >> docs/reports/rename_report.md
+          echo "✅ Renommage terminé." >> docs/reports/rename_report.md
 
       - name: Commit and push renamed files
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          if git diff --quiet && git diff --cached --quiet; then
+          if git status --porcelain | grep -q .; then
+            git add docs/posts docs/images docs/reports/rename_report.md
+            COMMIT_MESSAGE="✨ Auto-rename (pairs) @19h Paris + PNG conversion + report ✨"
+            git commit -m "$COMMIT_MESSAGE"
+            git push
+          else
             echo "Aucun changement à committer."
-            exit 0
           fi
-
-          git add docs/posts docs/images docs/reports/rename_report.md
-
-          COMMIT_MESSAGE="✨ Auto-rename posts & images (daily cron) + PNG conversion + report ✨"
-          git commit -m "$COMMIT_MESSAGE"
-          git push
