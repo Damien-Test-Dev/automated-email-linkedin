@@ -1,0 +1,8 @@
+{
+  "date": "2026-02-13",
+  "id": "UCFlow-20260213-001",
+  "text": "La plupart des incidents en finance de marché ne viennent pas d’un “bug exotique”.  \nIls viennent de **données**. 📊\n\nEn Agile, on parle user stories, vélocité, CI/CD…  \nMais si la stratégie **Test Data** est faible, la QA devient une loterie.\n\n🧩 Ce qui marche en banque d’investissement (et qui change vraiment l’exécution) :\n\n1) **Jeux de données versionnés**  \n   Des datasets “golden” par produit/desk, versionnés comme du code.  \n   Résultat : régression reproductible, analyses rapides, moins de débats stériles.\n\n2) **Données synthétiques + masquage**  \n   On protège le client, on respecte le régulateur, et on garde une profondeur de cas. ✅\n\n3) **Data-on-demand**  \n   Pipelines pour générer/rafraîchir les scénarios clés (trades, courbes, spreads) à chaque sprint. 🚀\n\nLe vrai KPI : pas “combien de tests”, mais **combien de décisions fiables par sprint**.\n\nSi tu devais investir une semaine dans ta QA, tu la mettrais sur :  \n(A) plus d’automatisation, (B) meilleure data, (C) meilleure définition des règles ?\n\n#QualityEngineering #TestDataManagement #SoftwareTesting #Agile #Scrum #InvestmentBanking #DataQuality #RegTech",
+  "image_file": "docs/images/2026-02-13_image.png",
+  "image_url": "https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/docs/images/2026-02-13_image.png",
+  "image_url_pages": "https://Damien-Test-Dev.github.io/automated-email-linkedin/images/2026-02-13_image.png"
+}
