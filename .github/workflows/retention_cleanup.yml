@@ -1,0 +1,102 @@
+name: Retention - keep last 300 complete posts (weekend)
+
+on:
+  schedule:
+    # 10:30 Paris (DST inclus) => 08:30 UTC (été) / 09:30 UTC (hiver)
+    - cron: "30 8 * * 6,0"
+    - cron: "30 9 * * 6,0"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  retention:
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: ucflow-maintenance
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Guard — uniquement week-end à 10:30 Paris
+        run: |
+          HHMM=$(TZ="Europe/Paris" date +"%H%M")
+          DOW=$(TZ="Europe/Paris" date +"%u") # 6=Sam, 7=Dim
+          echo "Paris HHMM: ${HHMM} | DOW: ${DOW}"
+
+          if [ "${DOW}" -lt 6 ]; then
+            echo "⏭️ Pas week-end → stop."
+            exit 0
+          fi
+
+          if [ "${HHMM}" != "1030" ]; then
+            echo "⏭️ Pas 10:30 Paris → stop (run technique DST)."
+            exit 0
+          fi
+
+      - name: Apply retention (keep last 300 complete pairs)
+        run: |
+          set -euo pipefail
+
+          KEEP=300
+          POSTS_DIR="docs/posts"
+          IMAGES_DIR="docs/images"
+          PAYLOAD_DIR="docs/payload"
+
+          echo "🔎 Scanning complete pairs…"
+
+          mapfile -t DATES < <(
+            ls -1 "${POSTS_DIR}"/*_post.txt 2>/dev/null \
+              | sed -E 's|.*/([0-9]{4}-[0-9]{2}-[0-9]{2})_post\.txt|\1|' \
+              | sort
+          )
+
+          COMPLETE=()
+          for d in "${DATES[@]}"; do
+            if [ -f "${IMAGES_DIR}/${d}_image.png" ]; then
+              COMPLETE+=("$d")
+            fi
+          done
+
+          TOTAL=${#COMPLETE[@]}
+          echo "✅ Complete pairs found: ${TOTAL}"
+
+          if [ "${TOTAL}" -le "${KEEP}" ]; then
+            echo "✅ Nothing to delete (<= ${KEEP})."
+            exit 0
+          fi
+
+          mapfile -t KEEP_SET < <(printf "%s\n" "${COMPLETE[@]}" | sort -r | head -n "${KEEP}" | sort)
+
+          echo "🧹 Deleting older than last ${KEEP} complete pairs…"
+          mapfile -t TO_DELETE < <(
+            comm -23 <(printf "%s\n" "${COMPLETE[@]}" | sort) <(printf "%s\n" "${KEEP_SET[@]}" | sort)
+          )
+
+          for d in "${TO_DELETE[@]}"; do
+            rm -f "${POSTS_DIR}/${d}_post.txt"
+            rm -f "${IMAGES_DIR}/${d}_image.png"
+            rm -f "${PAYLOAD_DIR}/${d}.json"
+            echo "  - deleted: ${d}"
+          done
+
+      - name: Rebuild history.json
+        run: |
+          node scripts/generate-history.js
+
+      - name: Commit & push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          if git status --porcelain | grep -q .; then
+            git add docs/posts docs/images docs/payload docs/history.json
+            git commit -m "chore: retention keep last 300 complete posts"
+            git push
+          else
+            echo "No changes to commit."
+          fi
