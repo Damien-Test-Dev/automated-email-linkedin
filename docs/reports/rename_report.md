@@ -1,21 +1,13 @@
 # Rapport de renommage et conversion
-Généré le Tue Feb 10 08:53:26 UTC 2026
+Généré le Sat Feb 14 09:39:30 CET 2026
+
+
+## Date de départ : 2026-02-15
 
 ## Conversion des images en PNG
 
-## Dossier : docs/posts
-- ⏭️ Skip (déjà conforme) : 2026-02-09_post.txt
-- ⏭️ Skip (déjà conforme) : 2026-02-04_post.txt
-- ⏭️ Skip (déjà conforme) : 2026-02-05_post.txt
-- ⏭️ Skip (déjà conforme) : 2026-02-10_post.txt
-- ⏭️ Skip (déjà conforme) : 2026-02-06_post.txt
-- ⏭️ Skip (déjà conforme) : 2026-02-11_post.txt
+## Détection des fichiers non conformes
+- 📝 Posts non conformes: 0
+- 🖼️ Images non conformes: 0
 
-## Dossier : docs/images
-- ⏭️ Skip (déjà conforme) : 2026-02-09_image.png
-- ⏭️ Skip (déjà conforme) : 2026-02-05_image.png
-- ⏭️ Skip (déjà conforme) : 2026-02-06_image.png
-- ⏭️ Skip (déjà conforme) : 2026-02-11_image.png
-- ⏭️ Skip (déjà conforme) : 2026-02-04_image.png
-- ⏭️ Skip (déjà conforme) : 2026-02-10_image.png
-
+✅ Rien à renommer (tout conforme).
