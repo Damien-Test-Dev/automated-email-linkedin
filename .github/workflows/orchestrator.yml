@@ -1,70 +1,106 @@
-name: Orchestrator - publier contenu existant
+name: Orchestrator - publish daily content (Issue-as-Payload)
 
 on:
   schedule:
-    # Tous les jours du lundi au vendredi à 9h (heure de Paris)
-    # 8h UTC = 9h CET
-    - cron: "0 8 * * 1-5"
+    # Lun–Ven à 09:05 Paris (DST inclus) via double cron + guard
+    # Été (Paris UTC+2)  => 07:05 UTC
+    # Hiver (Paris UTC+1)=> 08:05 UTC
+    - cron: "5 7 * * 1-5"
+    - cron: "5 8 * * 1-5"
   workflow_dispatch: {}
 
-# ✅ IMPORTANT : on donne le droit d’écrire dans Issues + de push du contenu
 permissions:
   contents: write
   issues: write
 
 jobs:
-  publish_existing_content:
+  publish:
     runs-on: ubuntu-latest
 
-    # ✅ Empêche 2 runs en parallèle (stabilité)
     concurrency:
-      group: ucflow-orchestrator
+      group: ucflow-maintenance
       cancel-in-progress: false
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Déterminer la date du jour (heure de Paris)
+      - name: Guard — uniquement Lun–Ven à 09:05 Paris
+        run: |
+          HHMM=$(TZ="Europe/Paris" date +"%H%M")
+          DOW=$(TZ="Europe/Paris" date +"%u") # 1..7
+          echo "Paris HHMM: ${HHMM} | DOW: ${DOW}"
+
+          if [ "${DOW}" -gt 5 ]; then
+            echo "⏭️ Week-end → stop."
+            exit 0
+          fi
+
+          if [ "${HHMM}" != "0905" ]; then
+            echo "⏭️ Pas 09:05 Paris → stop (run technique DST)."
+            exit 0
+          fi
+
+      - name: Determine date (Paris)
         run: |
           TZ="Europe/Paris" date +"DATE=%Y-%m-%d" >> "$GITHUB_ENV"
+          echo "DATE is $DATE"
 
-      - name: Construire les chemins des fichiers du jour
+      - name: Define expected files
         run: |
           echo "POST_FILE=docs/posts/${DATE}_post.txt" >> "$GITHUB_ENV"
           echo "IMAGE_FILE=docs/images/${DATE}_image.png" >> "$GITHUB_ENV"
 
-      - name: Vérifier l’existence des fichiers du jour
+      - name: Validate daily content exists and is not empty
         run: |
-          echo "Date du jour : $DATE"
-          echo "Post attendu : $POST_FILE"
-          echo "Image attendue : $IMAGE_FILE"
+          set -euo pipefail
+
+          echo "Post:  $POST_FILE"
+          echo "Image: $IMAGE_FILE"
 
           if [ ! -f "$POST_FILE" ]; then
-            echo "⚠ Post introuvable → stop (pas de publication)."
+            echo "⏭️ Missing post file → stop."
             exit 0
           fi
 
           if [ ! -f "$IMAGE_FILE" ]; then
-            echo "⚠ Image introuvable → stop (pas de publication)."
+            echo "⏭️ Missing image file → stop."
             exit 0
           fi
 
-          echo "✅ Post + image OK."
+          # ✅ Post non vide (évite Issue vide)
+          if [ ! -s "$POST_FILE" ]; then
+            echo "⏭️ Post is empty → stop."
+            exit 0
+          fi
 
-      - name: Construire l’URL publique de l’image (RAW + Pages)
+          # ✅ Option: post "blanc" (espaces) -> stop
+          if [ -z "$(tr -d '[:space:]' < "$POST_FILE")" ]; then
+            echo "⏭️ Post contains only whitespace → stop."
+            exit 0
+          fi
+
+          echo "✅ Daily content OK."
+
+      - name: Build public image URLs (RAW + Pages)
         run: |
           OWNER="${GITHUB_REPOSITORY%%/*}"
           REPO="${GITHUB_REPOSITORY##*/}"
 
-          echo "IMAGE_URL_RAW=https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/docs/images/${DATE}_image.png" >> "$GITHUB_ENV"
-          echo "IMAGE_URL_PAGES=https://${OWNER}.github.io/${REPO}/images/${DATE}_image.png" >> "$GITHUB_ENV"
+          IMAGE_URL_RAW="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/docs/images/${DATE}_image.png"
+          IMAGE_URL_PAGES="https://${OWNER}.github.io/${REPO}/images/${DATE}_image.png"
 
-          echo "➡️ IMAGE_URL_RAW : $IMAGE_URL_RAW"
-          echo "➡️ IMAGE_URL_PAGES: $IMAGE_URL_PAGES"
+          echo "IMAGE_URL_RAW=${IMAGE_URL_RAW}" >> "$GITHUB_ENV"
+          echo "IMAGE_URL_PAGES=${IMAGE_URL_PAGES}" >> "$GITHUB_ENV"
 
-      - name: Générer le payload JSON (archive / intégrations futures)
+          echo "RAW  : ${IMAGE_URL_RAW}"
+          echo "PAGES: ${IMAGE_URL_PAGES}"
+
+      - name: Generate payload JSON (archive)
         run: |
+          set -euo pipefail
           mkdir -p docs/payload
 
           python << 'PY'
@@ -92,10 +128,10 @@ jobs:
 
           out = Path(f"docs/payload/{date}.json")
           out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-          print(f"✅ Payload généré : {out}")
+          print(f"✅ Payload generated: {out}")
           PY
 
-      - name: Créer une Issue (payload métier pour Zapier/Buffer)
+      - name: Create Issue (Zapier payload) with label ucflow
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -105,8 +141,11 @@ jobs:
           repo = os.environ["GITHUB_REPOSITORY"]
           token = os.environ["GH_TOKEN"]
 
-          title = os.environ["IMAGE_URL_RAW"]      # ✅ va dans Buffer “Photo URL”
-          body_path = os.environ["POST_FILE"]       # ✅ va dans Buffer “Text”
+          # Title = image URL (Buffer Photo URL)
+          title = os.environ["IMAGE_URL_RAW"]
+
+          # Body = full post text (Buffer Text)
+          body_path = os.environ["POST_FILE"]
           body = open(body_path, "r", encoding="utf-8").read().rstrip("\n")
 
           def gh_request(url, method="GET", data=None):
@@ -122,39 +161,34 @@ jobs:
             with urllib.request.urlopen(req) as r:
               return json.loads(r.read().decode("utf-8"))
 
-          # 1) Anti-duplication : si une issue a déjà EXACTEMENT ce title, on ne recrée pas
+          # Anti-dup: if title already exists (same image URL), skip
           issues = gh_request(f"https://api.github.com/repos/{repo}/issues?state=all&per_page=100")
-          issues = [i for i in issues if "pull_request" not in i]  # exclut PR
+          issues = [i for i in issues if "pull_request" not in i]
 
           if any(i.get("title") == title for i in issues):
-            print("ℹ️ Issue déjà existante (même image URL) → skip.")
+            print("ℹ️ Issue already exists (same title) → skip.")
             raise SystemExit(0)
 
-          # 2) Créer l’issue
-          payload = json.dumps({"title": title, "body": body}).encode("utf-8")
-          created = gh_request(f"https://api.github.com/repos/{repo}/issues", method="POST", data=payload)
+          payload = json.dumps({
+            "title": title,
+            "body": body,
+            "labels": ["ucflow"]
+          }).encode("utf-8")
 
-          print("✅ Issue créée :", created.get("html_url"))
+          created = gh_request(f"https://api.github.com/repos/{repo}/issues", method="POST", data=payload)
+          print("✅ Issue created:", created.get("html_url"))
           PY
 
-      - name: Vérifier s'il y a des changements à committer
+      - name: Commit and push payload (if changed)
         run: |
-          if git diff --quiet; then
-            echo "Aucun changement à committer."
-            exit 0
+          set -e
+
+          if git status --porcelain | grep -q .; then
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git add docs/payload/
+            git commit -m "auto: payload ${DATE}"
+            git push
+          else
+            echo "No changes to commit."
           fi
-
-      - name: Commit et push des changements
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
-          git add docs/payload/
-
-          if git diff --cached --quiet; then
-            echo "Aucun changement à committer (staging vide)."
-            exit 0
-          fi
-
-          git commit -m "auto: payload + issue ${DATE}"
-          git push
