@@ -33,8 +33,7 @@ jobs:
           HOUR_PARIS=$(TZ="Europe/Paris" date +"%H")
           DOW_PARIS=$(TZ="Europe/Paris" date +"%u") # 1..7 (6=Sam,7=Dim)
 
-          echo "Heure Paris: ${HOUR_PARIS}"
-          echo "Jour Paris : ${DOW_PARIS}"
+          echo "Heure Paris: ${HOUR_PARIS} | Jour Paris: ${DOW_PARIS}"
 
           if [ "${DOW_PARIS}" -le 5 ]; then
             echo "⏭️ Pas le week-end → stop."
@@ -54,192 +53,185 @@ jobs:
       - name: Prepare report directory
         run: |
           mkdir -p docs/reports
-          echo "# Rapport de renommage et conversion" > docs/reports/rename_report.md
+          echo "# Rapport de renommage & alignement" > docs/reports/rename_report.md
           echo "Généré le $(TZ="Europe/Paris" date)" >> docs/reports/rename_report.md
           echo "" >> docs/reports/rename_report.md
 
-      - name: Rename (pairs + fill gaps) + PNG conversion
+      - name: Rename logic (robust) — convert + fill gaps + (optional) draft pairs
         run: |
           set -euo pipefail
+          python3 << 'PY'
+          from __future__ import annotations
 
-          echo "## Contexte" >> docs/reports/rename_report.md
-          echo "- Run: $(TZ="Europe/Paris" date)" >> docs/reports/rename_report.md
-          echo "" >> docs/reports/rename_report.md
+          import re
+          import sys
+          import subprocess
+          from pathlib import Path
+          from datetime import datetime, timedelta
+          from zoneinfo import ZoneInfo
 
-          START_DATE=$(TZ="Europe/Paris" date -d "+1 day" "+%Y-%m-%d")
-          echo "## Date de départ (pairs): $START_DATE" >> docs/reports/rename_report.md
-          echo "" >> docs/reports/rename_report.md
+          ROOT = Path(".")
+          POSTS_DIR = ROOT / "docs" / "posts"
+          IMAGES_DIR = ROOT / "docs" / "images"
+          REPORT = ROOT / "docs" / "reports" / "rename_report.md"
 
-          next_business_day() {
-            local d="$1"
-            while true; do
-              local dow
-              dow=$(date -d "$d" +%u)
-              if [ "$dow" -le 5 ]; then
-                echo "$d"
-                return
-              fi
-              d=$(date -d "$d + 1 day" +%Y-%m-%d)
-            done
-          }
+          dated_post_re = re.compile(r"^(\d{4}-\d{2}-\d{2})_post\.txt$")
+          dated_img_re  = re.compile(r"^(\d{4}-\d{2}-\d{2})_image\.png$")
 
-          next_day() { date -d "$1 + 1 day" +%Y-%m-%d; }
+          def log(msg: str) -> None:
+            print(msg)
+            REPORT.write_text(REPORT.read_text(encoding="utf-8") + msg + "\n", encoding="utf-8")
 
-          ###############################################
-          # 1) Conversion images -> PNG
-          ###############################################
-          echo "## Conversion images → PNG" >> docs/reports/rename_report.md
+          def list_files(d: Path) -> list[Path]:
+            if not d.exists():
+              return []
+            return sorted([p for p in d.iterdir() if p.is_file() and p.name != ".gitkeep"], key=lambda p: p.name)
 
-          cd docs/images
-          find . -maxdepth 1 -type f ! -name ".gitkeep" -print0 | \
-          while IFS= read -r -d '' img; do
-            img="${img#./}"
-            ext="${img##*.}"
-            ext_lc="$(echo "$ext" | tr '[:upper:]' '[:lower:]')"
-            base="${img%.*}"
+          def paris_today() -> datetime:
+            return datetime.now(ZoneInfo("Europe/Paris"))
 
-            if [[ "$ext_lc" =~ ^(jpg|jpeg|webp)$ ]]; then
-              echo "- 🖼️ $img → ${base}.png" >> ../reports/rename_report.md
-              convert -- "$img" "${base}.png"
-              rm -- "$img"
-            fi
-          done
-          cd - > /dev/null
-          echo "" >> docs/reports/rename_report.md
+          def next_business_day(d: datetime) -> datetime:
+            # 0=Mon..6=Sun ; business = Mon..Fri
+            while d.weekday() >= 5:
+              d += timedelta(days=1)
+            return d
 
-          ###############################################
-          # 2) Renommage par paires UNIQUEMENT si posts non datés existent
-          ###############################################
-          echo "## Renommage par paires (drafts non datés)" >> docs/reports/rename_report.md
+          # --- Header
+          log("## Contexte")
+          log(f"- Run: {paris_today().isoformat(timespec='seconds')}")
+          log("")
 
-          mapfile -d '' -t POSTS_NONCONF < <(
-            find docs/posts -maxdepth 1 -type f ! -name ".gitkeep" \
-              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_post\.txt' \
-              -print0 | sort -z
-          )
+          # --- 1) Convert images to PNG where needed
+          log("## 1) Conversion images → PNG (si besoin)")
+          converted = 0
 
-          mapfile -d '' -t IMAGES_NONCONF < <(
-            find docs/images -maxdepth 1 -type f ! -name ".gitkeep" \
-              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_image\.png' \
-              -print0 | sort -z
-          )
+          for img in list_files(IMAGES_DIR):
+            ext = img.suffix.lower()
+            if ext in [".jpg", ".jpeg", ".webp"]:
+              target = img.with_suffix(".png")
+              log(f"- 🖼️ convert: {img.name} → {target.name}")
+              subprocess.run(["convert", str(img), str(target)], check=True)
+              img.unlink()
+              converted += 1
 
-          echo "- 📝 Posts non conformes: ${#POSTS_NONCONF[@]}" >> docs/reports/rename_report.md
-          echo "- 🖼️ Images non conformes: ${#IMAGES_NONCONF[@]}" >> docs/reports/rename_report.md
+          if converted == 0:
+            log("- ✅ aucune conversion nécessaire")
+          log("")
 
-          # ✅ CHANGEMENT CLÉ :
-          # On ne bloque plus si on a seulement des images non datées (cas ChatGPT Image…)
-          if [ "${#POSTS_NONCONF[@]}" -gt 0 ]; then
-            if [ "${#IMAGES_NONCONF[@]}" -eq 0 ]; then
-              echo "❌ Posts non datés présents MAIS aucune image non datée correspondante." >> docs/reports/rename_report.md
-              echo "➡️ Ajoute les images drafts puis relance." >> docs/reports/rename_report.md
-              exit 1
-            fi
+          # Re-scan after conversion
+          posts_files  = list_files(POSTS_DIR)
+          images_files = list_files(IMAGES_DIR)
 
-            if [ "${#POSTS_NONCONF[@]}" -ne "${#IMAGES_NONCONF[@]}" ]; then
-              echo "❌ Désalignement drafts: ${#POSTS_NONCONF[@]} posts vs ${#IMAGES_NONCONF[@]} images" >> docs/reports/rename_report.md
-              echo "➡️ Stop (sécurité planning)." >> docs/reports/rename_report.md
-              exit 1
-            fi
+          # --- 2) Build maps of dated posts/images
+          posts_by_date: dict[str, Path] = {}
+          imgs_by_date: dict[str, Path] = {}
 
-            CURRENT_DATE="$START_DATE"
-            for idx in "${!POSTS_NONCONF[@]}"; do
-              CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
+          for p in posts_files:
+            m = dated_post_re.match(p.name)
+            if m:
+              posts_by_date[m.group(1)] = p
 
-              post="${POSTS_NONCONF[$idx]}"
-              img="${IMAGES_NONCONF[$idx]}"
+          for i in images_files:
+            m = dated_img_re.match(i.name)
+            if m:
+              imgs_by_date[m.group(1)] = i
 
-              post_name="${post##*/}"
-              img_name="${img##*/}"
+          post_dates = sorted(posts_by_date.keys())
+          img_dates  = sorted(imgs_by_date.keys())
 
-              target_post="docs/posts/${CURRENT_DATE}_post.txt"
-              target_img="docs/images/${CURRENT_DATE}_image.png"
+          # Unassigned images = not dated-image.png
+          unassigned_images = [p for p in images_files if not dated_img_re.match(p.name)]
 
-              while [ -f "$target_post" ] || [ -f "$target_img" ]; do
-                CURRENT_DATE=$(next_day "$CURRENT_DATE")
-                CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
-                target_post="docs/posts/${CURRENT_DATE}_post.txt"
-                target_img="docs/images/${CURRENT_DATE}_image.png"
-              done
+          # Missing dates = dates with a post but no image
+          missing_dates = [d for d in post_dates if d not in imgs_by_date]
 
-              echo "- 🔄 Pair(draft) $((idx+1))" >> docs/reports/rename_report.md
-              echo "  - 📝 $post_name → ${CURRENT_DATE}_post.txt" >> docs/reports/rename_report.md
-              echo "  - 🖼️ $img_name → ${CURRENT_DATE}_image.png" >> docs/reports/rename_report.md
+          log("## 2) Diagnostic")
+          log(f"- 📝 posts datés: {len(post_dates)}")
+          log(f"- 🖼️ images datées: {len(img_dates)}")
+          log(f"- 🧩 dates post sans image: {len(missing_dates)}")
+          log(f"- 📦 images non assignées (non datées): {len(unassigned_images)}")
+          log("")
 
-              mv -- "$post" "$target_post"
-              mv -- "$img"  "$target_img"
+          # --- 3) Fill gaps: rename unassigned images to missing post dates
+          log("## 3) Remplissage des trous (post daté sans image)")
+          if len(missing_dates) == 0:
+            log("- ✅ aucun trou à combler")
+          else:
+            if len(unassigned_images) < len(missing_dates):
+              log("❌ Pas assez d'images non assignées pour combler les dates manquantes.")
+              log("➡️ Ajoute des images (ou supprime des posts) puis relance.")
+              sys.exit(1)
 
-              CURRENT_DATE=$(next_day "$CURRENT_DATE")
-            done
-          else
-            echo "- ✅ Aucun post draft non daté → pas de renommage par paires." >> docs/reports/rename_report.md
-          fi
+            # Stable pairing: missing dates in chronological order, images by filename order
+            for d, img in zip(missing_dates, unassigned_images):
+              target = IMAGES_DIR / f"{d}_image.png"
+              if target.exists():
+                log(f"❌ cible déjà existante: {target.name} (stop sécurité)")
+                sys.exit(1)
+              log(f"- 🔧 fill-gap: {img.name} → {target.name}")
+              img.rename(target)
 
-          echo "" >> docs/reports/rename_report.md
+            log("- ✅ trous comblés")
 
-          ###############################################
-          # 3) Remplir les trous: posts datés sans image datée
-          ###############################################
-          echo "## Remplissage des trous (posts datés sans image)" >> docs/reports/rename_report.md
+          log("")
 
-          mapfile -t POST_DATES < <(
-            find docs/posts -maxdepth 1 -type f -regextype posix-extended \
-              -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_post\.txt' -printf '%f\n' \
-              | sed -E 's/^([0-9]{4}-[0-9]{2}-[0-9]{2})_post\.txt$/\1/' \
-              | sort
-          )
+          # --- 4) Optional: if you ever drop NON-dated posts, pair-rename them with remaining unassigned images
+          # (This keeps the old 'pairs strict' behavior, but only triggers when posts drafts exist.)
+          log("## 4) Draft pairs (uniquement si posts non datés existent)")
 
-          mapfile -t IMG_DATES < <(
-            find docs/images -maxdepth 1 -type f -regextype posix-extended \
-              -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_image\.png' -printf '%f\n' \
-              | sed -E 's/^([0-9]{4}-[0-9]{2}-[0-9]{2})_image\.png$/\1/' \
-              | sort
-          )
+          # Re-scan after fill-gap
+          posts_files  = list_files(POSTS_DIR)
+          images_files = list_files(IMAGES_DIR)
 
-          mapfile -t MISSING_DATES < <(
-            comm -23 <(printf "%s\n" "${POST_DATES[@]}") <(printf "%s\n" "${IMG_DATES[@]}")
-          )
+          draft_posts = [p for p in posts_files if not dated_post_re.match(p.name)]
+          draft_images = [p for p in images_files if not dated_img_re.match(p.name)]
 
-          echo "- 📅 Dates post sans image: ${#MISSING_DATES[@]}" >> docs/reports/rename_report.md
+          log(f"- 📝 drafts posts: {len(draft_posts)}")
+          log(f"- 🖼️ drafts images: {len(draft_images)}")
 
-          # Images non assignées (non conformes) restantes
-          mapfile -d '' -t UNASSIGNED < <(
-            find docs/images -maxdepth 1 -type f ! -name ".gitkeep" \
-              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_image\.png' \
-              -print0 | sort -z
-          )
+          if len(draft_posts) == 0:
+            log("- ✅ aucun post draft → skip")
+            log("")
+            log("✅ Terminé.")
+            sys.exit(0)
 
-          echo "- 🖼️ Images non assignées dispo: ${#UNASSIGNED[@]}" >> docs/reports/rename_report.md
+          if len(draft_images) < len(draft_posts):
+            log("❌ posts drafts présents mais pas assez d'images drafts pour faire des paires.")
+            log("➡️ Ajoute des images drafts puis relance.")
+            sys.exit(1)
 
-          if [ "${#MISSING_DATES[@]}" -eq 0 ]; then
-            echo "- ✅ Aucun trou à combler." >> docs/reports/rename_report.md
-          else
-            if [ "${#UNASSIGNED[@]}" -lt "${#MISSING_DATES[@]}" ]; then
-              echo "❌ Pas assez d'images non assignées pour combler les dates manquantes." >> docs/reports/rename_report.md
-              echo "➡️ Ajoute des images, puis relance (manuel)." >> docs/reports/rename_report.md
-              exit 1
-            fi
+          start = paris_today().date() + timedelta(days=1)
+          cur = datetime.combine(start, datetime.min.time(), tzinfo=ZoneInfo("Europe/Paris"))
 
-            for idx in "${!MISSING_DATES[@]}"; do
-              d="${MISSING_DATES[$idx]}"
-              img="${UNASSIGNED[$idx]}"
-              img_name="${img##*/}"
-              target="docs/images/${d}_image.png"
+          for idx in range(len(draft_posts)):
+            cur = next_business_day(cur)
+            d = cur.date().isoformat()
 
-              echo "- 🔧 Fill gap: $img_name → ${d}_image.png" >> docs/reports/rename_report.md
-              mv -- "$img" "$target"
-            done
+            post_src = draft_posts[idx]
+            img_src  = draft_images[idx]
 
-            if [ "${#UNASSIGNED[@]}" -gt "${#MISSING_DATES[@]}" ]; then
-              EXTRA=$(( ${#UNASSIGNED[@]} - ${#MISSING_DATES[@]} ))
-              echo "- ℹ️ Images non assignées restantes: ${EXTRA} (laissées telles quelles)" >> docs/reports/rename_report.md
-            fi
-          fi
+            post_dst = POSTS_DIR / f"{d}_post.txt"
+            img_dst  = IMAGES_DIR / f"{d}_image.png"
 
-          echo "" >> docs/reports/rename_report.md
-          echo "✅ Workflow rename terminé." >> docs/reports/rename_report.md
+            # If already used, move forward until free
+            while post_dst.exists() or img_dst.exists():
+              cur += timedelta(days=1)
+              cur = next_business_day(cur)
+              d = cur.date().isoformat()
+              post_dst = POSTS_DIR / f"{d}_post.txt"
+              img_dst  = IMAGES_DIR / f"{d}_image.png"
 
-      - name: Commit and push changes
+            log(f"- 🔄 pair-draft #{idx+1}: {post_src.name} → {post_dst.name} | {img_src.name} → {img_dst.name}")
+            post_src.rename(post_dst)
+            img_src.rename(img_dst)
+
+            cur += timedelta(days=1)
+
+          log("")
+          log("✅ Terminé.")
+          PY
+
+      - name: Commit and push changes (if any)
         run: |
           set -euo pipefail
 
@@ -248,7 +240,7 @@ jobs:
 
           if git status --porcelain | grep -q .; then
             git add docs/posts docs/images docs/reports/rename_report.md
-            git commit -m "chore: rename posts/images + fill missing image dates"
+            git commit -m "chore: rename/fill-gaps posts-images + report"
             git push
           else
             echo "Aucun changement à committer."
