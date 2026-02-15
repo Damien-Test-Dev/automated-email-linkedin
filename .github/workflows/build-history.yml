@@ -2,29 +2,58 @@ name: Build History JSON
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+    # ✅ Ne déclenche que si le contenu utile change
+    paths:
+      - "docs/posts/**"
+      - "docs/images/**"
+      - "scripts/generate-history.js"
+
+  # ✅ Permet un test manuel quand tu veux
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   build-history:
     runs-on: ubuntu-latest
 
+    # ✅ Évite les runs en parallèle (conflits de push)
+    concurrency:
+      group: ucflow-build-history
+      cancel-in-progress: false
+
+    # ✅ Évite la boucle: si c'est un commit auto, on skip le job
+    if: ${{ !contains(github.event.head_commit.message, 'Auto-update history.json') && !contains(github.event.head_commit.message, 'chore: retention') }}
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          # pour pouvoir push
+          fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Generate history.json
         run: node scripts/generate-history.js
 
-      - name: Commit and push updated history.json
+      - name: Commit and push updated history.json (if changed)
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          set -e
+
+          if git diff --quiet; then
+            echo "No changes in docs/history.json"
+            exit 0
+          fi
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
           git add docs/history.json
-          git commit -m "Auto-update history.json" || echo "No changes to commit"
+          git commit -m "Auto-update history.json"
           git push
