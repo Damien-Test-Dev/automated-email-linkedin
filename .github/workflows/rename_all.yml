@@ -16,7 +16,6 @@ jobs:
   rename-all:
     runs-on: ubuntu-latest
 
-    # ✅ Evite les collisions avec d'autres workflows qui pushent
     concurrency:
       group: ucflow-maintenance
       cancel-in-progress: false
@@ -30,18 +29,18 @@ jobs:
       - name: Guard — uniquement Week-end à 10h Paris (schedule) / toujours OK en manuel
         if: ${{ github.event_name == 'schedule' }}
         run: |
+          set -euo pipefail
           HOUR_PARIS=$(TZ="Europe/Paris" date +"%H")
           DOW_PARIS=$(TZ="Europe/Paris" date +"%u") # 1..7 (1=Lun, 6=Sam, 7=Dim)
-          echo "Heure Paris détectée: ${HOUR_PARIS}"
-          echo "Jour semaine Paris détecté: ${DOW_PARIS}"
 
-          # ✅ On ne garde QUE samedi(6) / dimanche(7)
+          echo "Heure Paris: ${HOUR_PARIS}"
+          echo "Jour Paris : ${DOW_PARIS}"
+
           if [ "${DOW_PARIS}" -le 5 ]; then
             echo "⏭️ Pas le week-end → stop."
             exit 0
           fi
 
-          # ✅ On ne garde QUE 10h Paris
           if [ "${HOUR_PARIS}" != "10" ]; then
             echo "⏭️ Pas 10h Paris → stop (run technique DST)."
             exit 0
@@ -59,22 +58,23 @@ jobs:
           echo "Généré le $(TZ="Europe/Paris" date)" >> docs/reports/rename_report.md
           echo "" >> docs/reports/rename_report.md
 
-      - name: Rename posts + images by pairs (aligned) + PNG conversion
+      - name: Rename (pairs + fill gaps) + PNG conversion
         run: |
           set -euo pipefail
+
+          echo "## Contexte" >> docs/reports/rename_report.md
+          echo "- Run: $(TZ="Europe/Paris" date)" >> docs/reports/rename_report.md
+          echo "" >> docs/reports/rename_report.md
 
           ###############################################
           # Date automatique = demain (base de planification)
           ###############################################
           START_DATE=$(TZ="Europe/Paris" date -d "+1 day" "+%Y-%m-%d")
-          echo "Date de départ automatique : $START_DATE"
-          echo "" >> docs/reports/rename_report.md
-          echo "## Date de départ : $START_DATE" >> docs/reports/rename_report.md
+          echo "## Date de départ (pairs): $START_DATE" >> docs/reports/rename_report.md
           echo "" >> docs/reports/rename_report.md
 
           ###############################################
-          # Helpers: jour ouvré + next date
-          # (On planifie les fichiers sur des jours ouvrés)
+          # Helpers
           ###############################################
           next_business_day() {
             local d="$1"
@@ -96,17 +96,18 @@ jobs:
           ###############################################
           # 1) Conversion images -> PNG (avant renommage)
           ###############################################
-          echo "## Conversion des images en PNG" >> docs/reports/rename_report.md
+          echo "## Conversion images → PNG" >> docs/reports/rename_report.md
 
           cd docs/images
           find . -maxdepth 1 -type f ! -name ".gitkeep" -print0 | \
           while IFS= read -r -d '' img; do
             img="${img#./}"
             ext="${img##*.}"
+            ext_lc="$(echo "$ext" | tr '[:upper:]' '[:lower:]')"
             base="${img%.*}"
 
-            if [[ "$ext" =~ ^(jpg|jpeg|webp)$ ]]; then
-              echo "- 🖼️ Conversion : $img → ${base}.png" >> ../reports/rename_report.md
+            if [[ "$ext_lc" =~ ^(jpg|jpeg|webp)$ ]]; then
+              echo "- 🖼️ $img → ${base}.png" >> ../reports/rename_report.md
               convert -- "$img" "${base}.png"
               rm -- "$img"
             fi
@@ -115,105 +116,144 @@ jobs:
           echo "" >> docs/reports/rename_report.md
 
           ###############################################
-          # 2) Collecte des fichiers NON conformes
+          # 2) Renommage par paires pour fichiers NON conformes
+          #    (si tu drop des drafts non datés côté posts + images)
           ###############################################
-          echo "## Détection des fichiers non conformes" >> docs/reports/rename_report.md
+          echo "## Renommage par paires (fichiers non conformes)" >> docs/reports/rename_report.md
 
-          mapfile -d '' -t POSTS < <(
+          mapfile -d '' -t POSTS_NONCONF < <(
             find docs/posts -maxdepth 1 -type f ! -name ".gitkeep" \
-              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_.*' \
+              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_post\.txt' \
               -print0 | sort -z
           )
 
-          mapfile -d '' -t IMAGES < <(
+          mapfile -d '' -t IMAGES_NONCONF < <(
             find docs/images -maxdepth 1 -type f ! -name ".gitkeep" \
-              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_.*' \
+              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_image\.png' \
               -print0 | sort -z
           )
 
-          echo "- 📝 Posts non conformes: ${#POSTS[@]}" >> docs/reports/rename_report.md
-          echo "- 🖼️ Images non conformes: ${#IMAGES[@]}" >> docs/reports/rename_report.md
-          echo "" >> docs/reports/rename_report.md
+          echo "- 📝 Posts non conformes: ${#POSTS_NONCONF[@]}" >> docs/reports/rename_report.md
+          echo "- 🖼️ Images non conformes: ${#IMAGES_NONCONF[@]}" >> docs/reports/rename_report.md
 
-          ###############################################
-          # 3) Garde-fou alignment (OBLIGATOIRE)
-          ###############################################
-          if [ "${#POSTS[@]}" -ne "${#IMAGES[@]}" ]; then
-            echo "❌ Désalignement détecté: ${#POSTS[@]} posts vs ${#IMAGES[@]} images" >> docs/reports/rename_report.md
-            echo "➡️ Stop pour éviter de casser le calendrier." >> docs/reports/rename_report.md
-            echo "" >> docs/reports/rename_report.md
-
-            echo "Détails posts:" >> docs/reports/rename_report.md
-            for p in "${POSTS[@]}"; do echo "- $p" >> docs/reports/rename_report.md; done
-
-            echo "" >> docs/reports/rename_report.md
-            echo "Détails images:" >> docs/reports/rename_report.md
-            for i in "${IMAGES[@]}"; do echo "- $i" >> docs/reports/rename_report.md; done
-
-            exit 1
-          fi
-
-          if [ "${#POSTS[@]}" -eq 0 ]; then
-            echo "✅ Rien à renommer (tout conforme)." >> docs/reports/rename_report.md
-            exit 0
-          fi
-
-          ###############################################
-          # 4) Renommage par paires (post + image)
-          ###############################################
-          echo "## Renommage par paires (post + image)" >> docs/reports/rename_report.md
-
-          CURRENT_DATE="$START_DATE"
-          for idx in "${!POSTS[@]}"; do
-            CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
-
-            post="${POSTS[$idx]}"
-            img="${IMAGES[$idx]}"
-
-            post_name="${post##*/}"
-            img_name="${img##*/}"
-
-            target_post="docs/posts/${CURRENT_DATE}_post.txt"
-            target_img="docs/images/${CURRENT_DATE}_image.png"
-
-            while [ -f "$target_post" ] || [ -f "$target_img" ]; do
-              CURRENT_DATE=$(next_day "$CURRENT_DATE")
-              CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
-              target_post="docs/posts/${CURRENT_DATE}_post.txt"
-              target_img="docs/images/${CURRENT_DATE}_image.png"
-            done
-
-            echo "- 🔄 Pair $((idx+1))" >> docs/reports/rename_report.md
-            echo "  - 📝 $post_name → ${CURRENT_DATE}_post.txt" >> docs/reports/rename_report.md
-            echo "  - 🖼️ $img_name → ${CURRENT_DATE}_image.png" >> docs/reports/rename_report.md
-
-            mv -- "$post" "$target_post"
-
-            if [[ "${img##*.}" =~ ^(jpg|jpeg|webp)$ ]]; then
-              tmp_png="docs/images/${img_name%.*}.png"
-              convert -- "$img" "$tmp_png"
-              rm -- "$img"
-              mv -- "$tmp_png" "$target_img"
-            else
-              mv -- "$img" "$target_img"
+          # Si tu as des drafts post+image non datés, on exige un pairing strict
+          if [ "${#POSTS_NONCONF[@]}" -gt 0 ] || [ "${#IMAGES_NONCONF[@]}" -gt 0 ]; then
+            if [ "${#POSTS_NONCONF[@]}" -ne "${#IMAGES_NONCONF[@]}" ]; then
+              echo "" >> docs/reports/rename_report.md
+              echo "❌ Désalignement NON CONFORMES: ${#POSTS_NONCONF[@]} posts vs ${#IMAGES_NONCONF[@]} images" >> docs/reports/rename_report.md
+              echo "➡️ Stop pour éviter de casser le calendrier." >> docs/reports/rename_report.md
+              exit 1
             fi
 
-            CURRENT_DATE=$(next_day "$CURRENT_DATE")
-          done
+            CURRENT_DATE="$START_DATE"
+            for idx in "${!POSTS_NONCONF[@]}"; do
+              CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
+
+              post="${POSTS_NONCONF[$idx]}"
+              img="${IMAGES_NONCONF[$idx]}"
+
+              post_name="${post##*/}"
+              img_name="${img##*/}"
+
+              target_post="docs/posts/${CURRENT_DATE}_post.txt"
+              target_img="docs/images/${CURRENT_DATE}_image.png"
+
+              while [ -f "$target_post" ] || [ -f "$target_img" ]; do
+                CURRENT_DATE=$(next_day "$CURRENT_DATE")
+                CURRENT_DATE=$(next_business_day "$CURRENT_DATE")
+                target_post="docs/posts/${CURRENT_DATE}_post.txt"
+                target_img="docs/images/${CURRENT_DATE}_image.png"
+              done
+
+              echo "- 🔄 Pair(nonconforme) $((idx+1))" >> docs/reports/rename_report.md
+              echo "  - 📝 $post_name → ${CURRENT_DATE}_post.txt" >> docs/reports/rename_report.md
+              echo "  - 🖼️ $img_name → ${CURRENT_DATE}_image.png" >> docs/reports/rename_report.md
+
+              mv -- "$post" "$target_post"
+              mv -- "$img"  "$target_img"
+
+              CURRENT_DATE=$(next_day "$CURRENT_DATE")
+            done
+          else
+            echo "- ✅ Aucun fichier non conforme à renommer par paires." >> docs/reports/rename_report.md
+          fi
 
           echo "" >> docs/reports/rename_report.md
-          echo "✅ Renommage terminé." >> docs/reports/rename_report.md
 
-      - name: Commit and push renamed files
+          ###############################################
+          # 3) Remplir les trous: posts datés sans image datée
+          ###############################################
+          echo "## Remplissage des trous (posts datés sans image)" >> docs/reports/rename_report.md
+
+          # Dates posts conformes
+          mapfile -t POST_DATES < <(
+            ls -1 docs/posts/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]_post.txt 2>/dev/null \
+              | sed -E 's|.*/([0-9]{4}-[0-9]{2}-[0-9]{2})_post\.txt|\1|' \
+              | sort
+          )
+
+          # Dates images conformes
+          mapfile -t IMG_DATES < <(
+            ls -1 docs/images/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]_image.png 2>/dev/null \
+              | sed -E 's|.*/([0-9]{4}-[0-9]{2}-[0-9]{2})_image\.png|\1|' \
+              | sort
+          )
+
+          # Dates manquantes = dates présentes dans posts mais pas dans images
+          mapfile -t MISSING_DATES < <(
+            comm -23 <(printf "%s\n" "${POST_DATES[@]}") <(printf "%s\n" "${IMG_DATES[@]}")
+          )
+
+          echo "- 📅 Dates post sans image: ${#MISSING_DATES[@]}" >> docs/reports/rename_report.md
+
+          # Images non assignées = images NON conformes restantes
+          mapfile -d '' -t UNASSIGNED < <(
+            find docs/images -maxdepth 1 -type f ! -name ".gitkeep" \
+              ! -regextype posix-extended -regex '.*/[0-9]{4}-[0-9]{2}-[0-9]{2}_image\.png' \
+              -print0 | sort -z
+          )
+
+          echo "- 🖼️ Images non assignées dispo: ${#UNASSIGNED[@]}" >> docs/reports/rename_report.md
+
+          if [ "${#MISSING_DATES[@]}" -eq 0 ]; then
+            echo "- ✅ Aucun trou à combler." >> docs/reports/rename_report.md
+          else
+            if [ "${#UNASSIGNED[@]}" -lt "${#MISSING_DATES[@]}" ]; then
+              echo "❌ Pas assez d'images non assignées pour combler les dates manquantes." >> docs/reports/rename_report.md
+              echo "➡️ Ajoute des images, puis relance le workflow (manuel)." >> docs/reports/rename_report.md
+              exit 1
+            fi
+
+            for idx in "${!MISSING_DATES[@]}"; do
+              d="${MISSING_DATES[$idx]}"
+              img="${UNASSIGNED[$idx]}"
+              img_name="${img##*/}"
+              target="docs/images/${d}_image.png"
+
+              echo "- 🔧 Fill gap: $img_name → ${d}_image.png" >> docs/reports/rename_report.md
+              mv -- "$img" "$target"
+            done
+
+            # Si extras, on les laisse, mais on le note
+            if [ "${#UNASSIGNED[@]}" -gt "${#MISSING_DATES[@]}" ]; then
+              EXTRA=$(( ${#UNASSIGNED[@]} - ${#MISSING_DATES[@]} ))
+              echo "- ℹ️ Images non assignées restantes: ${EXTRA} (laissées telles quelles)" >> docs/reports/rename_report.md
+            fi
+          fi
+
+          echo "" >> docs/reports/rename_report.md
+          echo "✅ Workflow rename terminé." >> docs/reports/rename_report.md
+
+      - name: Commit and push changes
         run: |
-          set -e
+          set -euo pipefail
 
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
           if git status --porcelain | grep -q .; then
             git add docs/posts docs/images docs/reports/rename_report.md
-            git commit -m "✨ Auto-rename (pairs) weekend@10h Paris + report ✨"
+            git commit -m "chore: rename posts/images + fill missing image dates"
             git push
           else
             echo "Aucun changement à committer."
