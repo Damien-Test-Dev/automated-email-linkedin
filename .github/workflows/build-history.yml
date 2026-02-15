@@ -19,19 +19,26 @@ jobs:
   build-history:
     runs-on: ubuntu-latest
 
-    # ✅ Évite les runs en parallèle (conflits de push)
+    # ✅ Aligne la concurrence avec les workflows qui pushent (rename/retention/cleanup/orchestrator)
     concurrency:
-      group: ucflow-build-history
+      group: ucflow-maintenance
       cancel-in-progress: false
 
-    # ✅ Évite la boucle: si c'est un commit auto, on skip le job
-    if: ${{ !contains(github.event.head_commit.message, 'Auto-update history.json') && !contains(github.event.head_commit.message, 'chore: retention') }}
+    # ✅ Évite de tourner sur certains commits "maintenance" (push event uniquement)
+    # (workflow_dispatch n'a pas head_commit -> on autorise toujours)
+    if: >-
+      ${{
+        github.event_name != 'push' ||
+        (
+          !contains(github.event.head_commit.message, 'chore: retention') &&
+          !contains(github.event.head_commit.message, 'chore: cleanup')
+        )
+      }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # pour pouvoir push
           fetch-depth: 0
 
       - name: Setup Node
@@ -44,9 +51,10 @@ jobs:
 
       - name: Commit and push updated history.json (if changed)
         run: |
-          set -e
+          set -euo pipefail
 
-          if git diff --quiet; then
+          # ✅ On vérifie spécifiquement history.json
+          if git diff --quiet -- docs/history.json; then
             echo "No changes in docs/history.json"
             exit 0
           fi
