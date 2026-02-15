@@ -1,42 +1,72 @@
 name: Cleanup All System Data
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   cleanup:
     runs-on: ubuntu-latest
 
+    # ✅ Empêche les collisions avec les autres workflows qui pushent
+    concurrency:
+      group: ucflow-maintenance
+      cancel-in-progress: false
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configure Git user
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-      - name: Delete all posts, images, payloads, and reset history.json
+      - name: Prepare reports directory
         run: |
-          echo "Deleting all files in docs/posts/, docs/images/, docs/payload/..."
-          rm -f docs/posts/* || true
-          rm -f docs/images/* || true
-          rm -f docs/payload/* || true
+          mkdir -p docs/reports
+          echo "# Cleanup report" > docs/reports/cleanup_report.md
+          echo "Generated: $(TZ="Europe/Paris" date)" >> docs/reports/cleanup_report.md
+          echo "" >> docs/reports/cleanup_report.md
 
-          echo "Resetting docs/history.json..."
-          cat > docs/history.json << 'EOF'
-          {
-            "entries": []
-          }
-          EOF
-
-      - name: Commit and push cleanup
+      - name: Delete all posts, images, payloads and reset history.json
         run: |
-          if git diff --quiet; then
-            echo "Nothing to commit."
-            exit 0
+          set -euo pipefail
+
+          echo "## Deletions" >> docs/reports/cleanup_report.md
+
+          # ✅ Supprime tous les fichiers SAUF .gitkeep (si présent)
+          if [ -d "docs/posts" ]; then
+            find docs/posts -maxdepth 1 -type f ! -name ".gitkeep" -print -delete >> docs/reports/cleanup_report.md || true
           fi
 
-          git add docs/posts docs/images docs/payload docs/history.json
-          git commit -m "Cleanup: reset posts, images, payload, and history"
-          git push
+          if [ -d "docs/images" ]; then
+            find docs/images -maxdepth 1 -type f ! -name ".gitkeep" -print -delete >> docs/reports/cleanup_report.md || true
+          fi
+
+          if [ -d "docs/payload" ]; then
+            find docs/payload -maxdepth 1 -type f ! -name ".gitkeep" -print -delete >> docs/reports/cleanup_report.md || true
+          fi
+
+          echo "" >> docs/reports/cleanup_report.md
+          echo "## history.json reset" >> docs/reports/cleanup_report.md
+
+          # ✅ FORMAT UNIQUE: history.json = tableau
+          echo "[]" > docs/history.json
+          echo "- docs/history.json reset to []" >> docs/reports/cleanup_report.md
+
+      - name: Commit and push cleanup (if changed)
+        run: |
+          set -e
+
+          if git status --porcelain | grep -q .; then
+            git add docs/posts docs/images docs/payload docs/history.json docs/reports/cleanup_report.md
+            git commit -m "chore: cleanup reset posts/images/payload + history"
+            git push
+          else
+            echo "Nothing to commit."
+          fi
