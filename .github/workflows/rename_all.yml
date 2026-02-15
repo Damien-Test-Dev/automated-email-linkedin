@@ -1,4 +1,4 @@
-name: Rename all posts and images (Weekend 10:00 Paris)
+name: Rename all posts and images (Weekend 10:00 Paris + Manual)
 
 on:
   schedule:
@@ -7,21 +7,28 @@ on:
     # Hiver (Paris UTC+1)=> 09:00 UTC
     - cron: "0 8 * * 6,0"
     - cron: "0 9 * * 6,0"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   rename-all:
     runs-on: ubuntu-latest
 
-    # ✅ Evite les runs simultanés (stabilité)
+    # ✅ Evite les collisions avec d'autres workflows qui pushent
     concurrency:
-      group: ucflow-rename-all
+      group: ucflow-maintenance
       cancel-in-progress: false
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Guard — uniquement Week-end à 10h Paris
+      - name: Guard — uniquement Week-end à 10h Paris (schedule) / toujours OK en manuel
+        if: ${{ github.event_name == 'schedule' }}
         run: |
           HOUR_PARIS=$(TZ="Europe/Paris" date +"%H")
           DOW_PARIS=$(TZ="Europe/Paris" date +"%u") # 1..7 (1=Lun, 6=Sam, 7=Dim)
@@ -109,7 +116,6 @@ jobs:
 
           ###############################################
           # 2) Collecte des fichiers NON conformes
-          # Conformes = commencent par YYYY-MM-DD_
           ###############################################
           echo "## Détection des fichiers non conformes" >> docs/reports/rename_report.md
 
@@ -154,7 +160,6 @@ jobs:
 
           ###############################################
           # 4) Renommage par paires (post + image)
-          # Planification sur jours ouvrés via next_business_day()
           ###############################################
           echo "## Renommage par paires (post + image)" >> docs/reports/rename_report.md
 
@@ -201,12 +206,14 @@ jobs:
 
       - name: Commit and push renamed files
         run: |
+          set -e
+
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
           if git status --porcelain | grep -q .; then
             git add docs/posts docs/images docs/reports/rename_report.md
-            git commit -m "✨ Auto-rename (pairs) @10h Paris (weekend) + PNG conversion + report ✨"
+            git commit -m "✨ Auto-rename (pairs) weekend@10h Paris + report ✨"
             git push
           else
             echo "Aucun changement à committer."
