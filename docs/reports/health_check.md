@@ -1,5 +1,5 @@
 # 🔍 Health Check Report
-Généré le Sun Feb 15 23:53:10 UTC 2026
+Généré le Tue Feb 17 21:23:50 UTC 2026
 
 ## 📁 Vérification de la structure
 - 🟢 OK : dossier présent → docs/posts
@@ -11,30 +11,44 @@ Généré le Sun Feb 15 23:53:10 UTC 2026
 - 🟢 OK : fichier présent → docs/app.js
 
 ## 📝 Vérification des posts & images
-- 🟢 OK : post valide → 2026-02-04_post.txt
-  - 🟢 Image trouvée : 2026-02-04_image.png
-- 🟢 OK : post valide → 2026-02-05_post.txt
-  - 🟢 Image trouvée : 2026-02-05_image.png
-- 🟢 OK : post valide → 2026-02-06_post.txt
-  - 🟢 Image trouvée : 2026-02-06_image.png
-- 🟢 OK : post valide → 2026-02-09_post.txt
-  - 🟢 Image trouvée : 2026-02-09_image.png
-- 🟢 OK : post valide → 2026-02-10_post.txt
-  - 🟢 Image trouvée : 2026-02-10_image.png
-- 🟢 OK : post valide → 2026-02-11_post.txt
-  - 🟢 Image trouvée : 2026-02-11_image.png
-- 🟢 OK : post valide → 2026-02-12_post.txt
-  - 🟢 Image trouvée : 2026-02-12_image.png
-- 🟢 OK : post valide → 2026-02-13_post.txt
-  - 🟢 Image trouvée : 2026-02-13_image.png
-- 🟢 OK : post valide → 2026-02-14_post.txt
-  - 🟢 Image trouvée : 2026-02-14_image.png
-- 🟢 OK : post valide → 2026-02-15_post.txt
-  - 🟢 Image trouvée : 2026-02-15_image.png
-- 🟢 OK : post valide → 2026-02-16_post.txt
-  - 🟢 Image trouvée : 2026-02-16_image.png
+- 🟢 OK : post valide → 2026-02-18_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-18
+- 🟢 OK : post valide → 2026-02-19_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-19
+- 🟢 OK : post valide → 2026-02-20_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-20
+- 🟢 OK : post valide → 2026-02-23_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-23
+- 🟢 OK : post valide → 2026-02-24_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-24
+- 🟢 OK : post valide → 2026-02-25_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-25
+- 🟢 OK : post valide → 2026-02-26_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-26
+- 🟢 OK : post valide → 2026-02-27_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-02-27
+- 🟢 OK : post valide → 2026-03-02_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-02
+- 🟢 OK : post valide → 2026-03-03_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-03
+- 🟢 OK : post valide → 2026-03-04_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-04
+- 🟢 OK : post valide → 2026-03-05_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-05
+- 🟢 OK : post valide → 2026-03-06_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-06
+- 🟢 OK : post valide → 2026-03-09_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-09
+- 🟢 OK : post valide → 2026-03-10_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-10
+- 🟢 OK : post valide → 2026-03-11_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-11
+- 🟢 OK : post valide → 2026-03-12_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-12
+- 🟢 OK : post valide → 2026-03-13_post.txt
+  - 🔴 ERREUR : image manquante pour 2026-03-13
 
 ## 📚 Vérification de history.json
 - 🟢 OK : JSON valide
-- Nombre d'entrées : 11
+- Nombre d'entrées : 0
 
