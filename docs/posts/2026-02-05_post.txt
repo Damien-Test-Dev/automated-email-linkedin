@@ -1,4 +1,0 @@
-﻿1) **Royaumes divins / entités cosmiques**
-Dans l’endgame cosmique, l’automatisation te donne de la vélocité… mais elle facture la maintenance.
-Traque le flakiness, coupe les fausses alertes, et rembourse la dette d’automatisation avant qu’elle n’explose.
-Ton levier : des tests stables, observables, et un pipeline qui inspire confiance.

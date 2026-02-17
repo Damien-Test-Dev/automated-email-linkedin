@@ -1,8 +1,0 @@
-{
-  "date": "2026-02-12",
-  "id": "UCFlow-20260212-001",
-  "text": "En banque d’investissement, la QA n’est pas un “contrôle qualité”.  \nC’est un **mécanisme de maîtrise du risque**. 🛡️\n\nLe piège classique en Agile/Scrum :  \n➡️ “On testera à la fin du sprint.”  \nDans un SI de marché, “la fin” arrive toujours **après** que le risque se soit propagé.\n\n✅ Mon cadre de référence (simple, mais dur à tenir) : **Quality by Design**\n\n1) **User Story = contrat**  \n   Critères d’acceptation testables, règles de pricing/booking explicites, jeux de données identifiés.  \n   Sans ça, le backlog est “ambitieux”, pas “ready”.\n\n2) **Pyramide de tests orientée valeur**  \n   Unit + component pour sécuriser les calculs, API/contract tests pour la chaîne, E2E uniquement sur les parcours critiques STP. 🔍\n\n3) **Definition of Done = confiance mesurable**  \n   Couverture de régression ciblée + risques résiduels explicités + preuve d’exécution (CI) → décision rapide.\n\n🎯 Objectif : réduire le **time-to-confidence** sans ralentir la delivery.\n\nQuestion terrain : dans vos squads, la QA est-elle un **pilote de risque** (au quotidien) ou une **barrière** (à la fin) ? ✅\n\n#SoftwareTesting #QualityAssurance #Agile #Scrum #InvestmentBanking #RiskManagement #DevOps #FinTech",
-  "image_file": "docs/images/2026-02-12_image.png",
-  "image_url": "https://raw.githubusercontent.com/Damien-Test-Dev/automated-email-linkedin/main/docs/images/2026-02-12_image.png",
-  "image_url_pages": "https://Damien-Test-Dev.github.io/automated-email-linkedin/images/2026-02-12_image.png"
-}

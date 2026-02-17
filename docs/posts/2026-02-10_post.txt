@@ -1,4 +1,0 @@
-﻿2) **Théâtre / opéra / scène et coulisses**
-Sur scène : le test dynamique montre les défaillances à l’exécution ; en coulisses : le statique révèle les défauts dans l’artefact.
-Deux angles, un seul objectif : réduire l’incertitude avant la première.
-Fais jouer les deux disciplines, et tu passes de “show” à “quality show”.
