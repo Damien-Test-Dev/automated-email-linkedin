@@ -7,13 +7,6 @@
     "links": []
   },
   {
-    "date": "2026-02-24",
-    "id": "UCFlow-20260224-001",
-    "image": "images/2026-02-24_image.png",
-    "text": "✨Test end-to-end · OMS (système de gestion des ordres) · modification d’ordre : changer un détail, c’est changer une promesse.\nEt une promesse incohérente finit toujours en incident.\n\nEn banque d’investissement, un ordre vit : exécution partielle, ajustement, reprise.\nLe piège, c’est quand l’écran dit “modifié” mais qu’un autre système voit autre chose.\nVu en prod : quantité ajustée pendant une exécution partielle → statuts divergents selon les outils.\n\n🎯 En tant que Product Owner, je veux :\nUn parcours qui montre ce qui est déjà exécuté et ce qui reste modifiable.\nUne Definition of Done qui impose “historique clair + statuts alignés partout”.\n\n🛠️ En tant que Developer, je veux :\nUne gestion robuste des changements quand plusieurs événements arrivent en même temps.\nUne traçabilité E2E : ordre → exécution partielle → modification → validation serveur → statuts cohérents.\n\n🙂 En tant que End User, je veux :\nSavoir exactement ce que je peux encore modifier, sans deviner.\nRecevoir une information claire si c’est trop tard, avec la bonne action suivante.\n\n🛡️ En tant que QA, j’interviens afin de :\nDéfinir un E2E “exécution partielle → modification → acceptée/refusée → cohérence sur tous les écrans”.\nAppliquer une analyse de risque ISTQB sur les états intermédiaires et les incohérences de statut.\nExiger des preuves auditables : historique horodaté, décision serveur, état final identique partout.\n\nDans vos équipes, vous vérifiez quoi : l’écran qui affiche la modification… ou la preuve que tous les systèmes racontent la même version de l’ordre ?\n\n📌 Zone technique.\nOMS (Order Management System) : système de gestion des ordres (création, suivi, statuts).\nExécution partielle : une partie est exécutée, le reste continue.\nCohérence multi-systèmes : mêmes statuts partout, sans contradiction.\nPreuves : traces serveur + statuts + horodatage.\n\n#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #BanqueDInvestissement #OMS #TradingTech\n\nTest tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.\nSuivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.",
-    "links": []
-  },
-  {
     "date": "2026-02-25",
     "id": "UCFlow-20260225-001",
     "image": "images/2026-02-25_image.png",
