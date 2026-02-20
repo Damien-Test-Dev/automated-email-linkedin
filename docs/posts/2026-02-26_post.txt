@@ -1,0 +1,36 @@
+✨Test end-to-end · OMS (système de gestion des ordres) · rejet : le problème, ce n’est pas “refusé”.
+Le problème, c’est “refusé”… et personne ne sait quoi faire ensuite.
+
+En banque d’investissement, un rejet est normal : limites, règles, horaires, conformité.
+Mais un message flou pousse l’utilisateur à insister… et à aggraver le risque.
+Vu en prod : “ordre invalide”, aucune explication, puis cinq tentatives identiques derrière.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui explique le rejet avec des mots simples et propose l’action suivante.
+Une Definition of Done qui impose “rejet compris → correction possible”.
+
+🛠️ En tant que Developer, je veux :
+Des rejets structurés : cause claire + action recommandée + traçabilité côté serveur.
+Une traçabilité E2E : règle déclenchée → rejet → guidance → correction → nouvel essai.
+
+🙂 En tant que End User, je veux :
+Savoir quoi corriger du premier coup, sans tâtonner.
+Ne pas me sentir fautif quand la règle est côté système.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “dépassement limite → rejet clair → correction → ordre accepté”.
+Appliquer une analyse de risque ISTQB sur les rejets critiques et leur compréhension.
+Exiger des preuves auditables : règle déclenchée, décision serveur horodatée, statut final.
+
+Dans vos équipes, vous vérifiez quoi : que le rejet existe… ou la preuve qu’un utilisateur peut corriger et réussir sans tourner en rond ?
+
+📌 Zone technique.
+OMS (Order Management System) : système de gestion des ordres (création, suivi, statuts).
+Rejet structuré : rejet compréhensible + action suivante.
+Guidance : expliquer sans culpabiliser.
+Preuves : décision serveur + horodatage + statut final.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #BanqueDInvestissement #OMS #UserExperience
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

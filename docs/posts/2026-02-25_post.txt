@@ -1,0 +1,36 @@
+✨Test end-to-end · OMS (système de gestion des ordres) · annulation : “annulé” à l’écran ne veut pas dire “impossible à exécuter”.
+Et c’est exactement comme ça que les incidents démarrent.
+
+En banque d’investissement, tout va vite : latence, marché, confirmations.
+L’illusion est dangereuse : l’utilisateur se croit couvert… alors que l’exécution peut encore arriver.
+Vu en prod : annulation demandée, écran rassurant, puis exécution quelques secondes plus tard.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui dit clairement si l’annulation est acceptée, refusée, ou trop tard.
+Une Definition of Done qui impose la preuve “annulation confirmée côté serveur”.
+
+🛠️ En tant que Developer, je veux :
+Un état final solide : si c’est annulé, rien ne doit pouvoir s’exécuter après.
+Une traçabilité E2E : demande d’annulation → réponse serveur → état final → traces.
+
+🙂 En tant que End User, je veux :
+Savoir immédiatement si je suis encore à temps, sans interpréter.
+Avoir une alternative claire si c’est trop tard : quoi faire maintenant.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “annulation → trop tard → message clair → état final cohérent partout”.
+Appliquer une analyse de risque ISTQB sur latence et courses de statuts.
+Exiger des preuves auditables : réponse serveur horodatée, motif, état final identique partout.
+
+Dans vos équipes, vous vérifiez quoi : le “annulé” à l’écran… ou la preuve qu’aucune exécution ne peut encore arriver après l’annulation ?
+
+📌 Zone technique.
+OMS (Order Management System) : système de gestion des ordres (création, suivi, statuts).
+Latence : délai entre action utilisateur et réalité côté système/marché.
+État final : statut irréversible (annulé, exécuté).
+Preuves : réponse serveur + horodatage + état final cohérent.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #BanqueDInvestissement #OMS #TradingTech
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

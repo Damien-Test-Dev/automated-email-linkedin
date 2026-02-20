@@ -1,0 +1,36 @@
+✨Test end-to-end · OMS (système de gestion des ordres) · modification d’ordre : changer un détail, c’est changer une promesse.
+Et une promesse incohérente finit toujours en incident.
+
+En banque d’investissement, un ordre vit : exécution partielle, ajustement, reprise.
+Le piège, c’est quand l’écran dit “modifié” mais qu’un autre système voit autre chose.
+Vu en prod : quantité ajustée pendant une exécution partielle → statuts divergents selon les outils.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui montre ce qui est déjà exécuté et ce qui reste modifiable.
+Une Definition of Done qui impose “historique clair + statuts alignés partout”.
+
+🛠️ En tant que Developer, je veux :
+Une gestion robuste des changements quand plusieurs événements arrivent en même temps.
+Une traçabilité E2E : ordre → exécution partielle → modification → validation serveur → statuts cohérents.
+
+🙂 En tant que End User, je veux :
+Savoir exactement ce que je peux encore modifier, sans deviner.
+Recevoir une information claire si c’est trop tard, avec la bonne action suivante.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “exécution partielle → modification → acceptée/refusée → cohérence sur tous les écrans”.
+Appliquer une analyse de risque ISTQB sur les états intermédiaires et les incohérences de statut.
+Exiger des preuves auditables : historique horodaté, décision serveur, état final identique partout.
+
+Dans vos équipes, vous vérifiez quoi : l’écran qui affiche la modification… ou la preuve que tous les systèmes racontent la même version de l’ordre ?
+
+📌 Zone technique.
+OMS (Order Management System) : système de gestion des ordres (création, suivi, statuts).
+Exécution partielle : une partie est exécutée, le reste continue.
+Cohérence multi-systèmes : mêmes statuts partout, sans contradiction.
+Preuves : traces serveur + statuts + horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #BanqueDInvestissement #OMS #TradingTech
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

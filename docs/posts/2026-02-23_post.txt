@@ -1,0 +1,36 @@
+✨Test end-to-end · OMS (système de gestion des ordres) · ordre “envoyé” : le danger, c’est le faux sentiment de sécurité.
+L’écran rassure… pendant que l’ordre n’existe pas (ou existe deux fois).
+
+En banque d’investissement, un ordre traverse plusieurs systèmes avant d’être réel.
+Et un utilisateur fait confiance à ce qu’il voit : “c’est parti”.
+Vu en prod : micro-coupure + double clic → soit doublon, soit ordre perdu, avec un statut pourtant “OK”.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement “envoyé”, “reçu”, “enregistré”, “en marché”.
+Une Definition of Done qui impose la preuve “un seul ordre créé et confirmé par le serveur” de bout en bout.
+
+🛠️ En tant que Developer, je veux :
+Un contrôle côté serveur qui empêche les doublons, même si l’utilisateur insiste.
+Une traçabilité E2E : création → envoi → réception → enregistrement → visibilité.
+
+🙂 En tant que End User, je veux :
+Savoir si mon ordre existe vraiment, pas juste si j’ai cliqué.
+Avoir une action claire quand ça bloque : attendre, relancer proprement, ou contacter.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “micro-coupure → double clic → un seul ordre → confirmation serveur → ordre visible”.
+Appliquer une analyse de risque ISTQB sur doublons, pertes silencieuses, statuts trompeurs.
+Exiger des preuves auditables : identifiant de suivi, statuts horodatés, logs serveur, historique d’actions.
+
+Dans vos équipes, vous vérifiez quoi : le “envoyé” à l’écran… ou la preuve qu’un seul ordre a été créé et réellement enregistré ?
+
+📌 Zone technique.
+OMS (Order Management System) : système de gestion des ordres (création, suivi, statuts).
+Confirmation serveur : accusé fiable que l’ordre est bien enregistré.
+Anti-doublon (idempotence) : répéter une action ne crée pas deux ordres.
+Preuves : logs, statuts, horodatage — ce qui raconte la réalité.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #BanqueDInvestissement #OMS #TradingTech
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

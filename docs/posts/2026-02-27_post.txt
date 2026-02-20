@@ -1,0 +1,36 @@
+✨Test end-to-end · OMS (système de gestion des ordres) · panne partielle : le bug le plus dangereux, c’est celui qui “passe quand même”.
+Quand un contrôle tombe, le parcours doit s’arrêter proprement. Pas continuer en silence.
+
+En banque d’investissement, un ordre dépend de plusieurs briques : contrôle de risque, référentiels, conformité.
+Si une brique manque, tout se joue là.
+Vu en prod : contrôle indisponible quelques minutes… et selon les cas l’ordre passe, se perd, ou se duplique. Sans logique claire.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui explique ce qui est bloqué et quoi faire maintenant.
+Une Definition of Done qui impose “panne gérée proprement + reprise maîtrisée”.
+
+🛠️ En tant que Developer, je veux :
+Un blocage côté serveur quand un contrôle critique n’est pas disponible.
+Une traçabilité E2E : contrôle indisponible → blocage → reprise → décision finale.
+
+🙂 En tant que End User, je veux :
+Ne jamais réussir une action qui ne devrait pas passer.
+Savoir si je dois attendre, relancer, ou contacter, avec une instruction claire.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “ordre → contrôle indisponible → blocage clair → reprise → accepté/refusé”.
+Appliquer une analyse de risque ISTQB sur pannes partielles (passer, perdre, dupliquer).
+Exiger des preuves auditables : état des contrôles, décision serveur, statuts horodatés, trace de reprise.
+
+Dans vos équipes, vous vérifiez quoi : que l’OMS “répond”… ou la preuve que les contrôles critiques tiennent, même quand une brique tombe ?
+
+📌 Zone technique.
+OMS (Order Management System) : système de gestion des ordres (création, suivi, statuts).
+Panne partielle : un système est indisponible, le reste continue.
+Reprise : repartir proprement sans perdre ni dupliquer.
+Preuves : état des contrôles + décision serveur + horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #BanqueDInvestissement #OMS #RiskControls
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.
