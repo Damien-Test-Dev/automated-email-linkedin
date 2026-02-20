@@ -2,11 +2,11 @@ name: Orchestrator - publish daily content (Issue-as-Payload)
 
 on:
   schedule:
-    # Lun–Ven à 09:05 Paris (DST inclus) via double cron + guard
-    # Été (Paris UTC+2)  => 07:05 UTC
-    # Hiver (Paris UTC+1)=> 08:05 UTC
-    - cron: "5 7 * * 1-5"
-    - cron: "5 8 * * 1-5"
+    # Lun–Ven à 07:00 Paris (DST inclus) via double cron + guard
+    # Été (Paris UTC+2)  => 05:00 UTC
+    # Hiver (Paris UTC+1)=> 06:00 UTC
+    - cron: "0 5 * * 1-5"
+    - cron: "0 6 * * 1-5"
   workflow_dispatch: {}
 
 permissions:
@@ -27,7 +27,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Guard — uniquement Lun–Ven à 09:05 Paris
+      - name: Guard — uniquement Lun–Ven à 07:00 Paris
         run: |
           HHMM=$(TZ="Europe/Paris" date +"%H%M")
           DOW=$(TZ="Europe/Paris" date +"%u") # 1..7
@@ -38,8 +38,8 @@ jobs:
             exit 0
           fi
 
-          if [ "${HHMM}" != "0905" ]; then
-            echo "⏭️ Pas 09:05 Paris → stop (run technique DST)."
+          if [ "${HHMM}" != "0700" ]; then
+            echo "⏭️ Pas 07:00 Paris → stop (run technique DST)."
             exit 0
           fi
 
