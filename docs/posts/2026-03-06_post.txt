@@ -1,0 +1,35 @@
+✨Test end-to-end · Données de référence (Reference Data) · gouvernance : le vrai luxe, c’est la preuve.
+Qui a modifié la donnée ? Quand ? Et avec quelle validation ?
+
+En banque d’investissement, la donnée de référence est une autorité.
+Sans historique clair, tu perds le contrôle : tu ne corriges pas, tu devines.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours de modification encadré : proposition, validation, application, historique.
+Une Definition of Done qui impose “historique retrouvable” sur les champs sensibles.
+
+🛠️ En tant que Developer, je veux :
+Des changements traçables et corrélables : qui, quoi, quand, résultat.
+Un contrôle serveur qui bloque la modification hors workflow.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi la donnée a changé, sans ouvrir un ticket.
+Avoir une marche à suivre simple pour corriger.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “proposition → validation → application → vérification historique”.
+Appliquer une analyse de risque ISTQB sur les champs sensibles et les accès.
+Exiger des preuves auditables : historique, horodatage, décision.
+
+Vous testez quoi : que la donnée “se met à jour”… ou la preuve qu’elle est gouvernée et retrouvable ?
+
+📌 Zone technique.
+Gouvernance : règles + validations + responsabilités.
+Historique : qui/quoi/quand, sans ambiguïté.
+Workflow : parcours encadré pour changer une donnée.
+Preuves : traces, horodatage, décisions.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ReferenceData #BanqueDInvestissement #Governance
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

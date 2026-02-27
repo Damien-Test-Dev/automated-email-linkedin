@@ -1,0 +1,34 @@
+✨Test end-to-end · Données de référence (Reference Data) · instructions de règlement : le fail le plus rageant est le plus simple.
+Tout le monde a “fait son job”… sauf la donnée.
+
+En banque d’investissement, une instruction de règlement erronée crée du bruit : échecs, reprises, pénalités, stress.
+Et le parcours E2E doit prouver que la bonne instruction est utilisée… au bon moment.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui rend visible l’instruction utilisée et son statut (active, obsolète, remplacée).
+Une Definition of Done qui impose “instruction correcte utilisée” sur le parcours complet.
+
+🛠️ En tant que Developer, je veux :
+Un contrôle serveur qui bloque si l’instruction est obsolète ou incohérente.
+Une traçabilité E2E : instruction sélectionnée → contrôle → décision → résultat.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi ça échoue, et comment corriger rapidement.
+Ne pas repartir de zéro à chaque reprise.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “instruction obsolète → rejet clair → mise à jour → succès”.
+Appliquer une analyse de risque ISTQB sur les reprises et les statuts ambigus.
+Exiger des preuves auditables : instruction utilisée, décision serveur, horodatage.
+
+Vous testez quoi : la réussite “nominale”… ou la preuve que la donnée tient quand ça dégrade ?
+
+📌 Zone technique.
+Instruction de règlement : données qui guident le règlement-livraison.
+Obsolète : existe encore mais ne doit plus être utilisée.
+Preuves : sélection, décision serveur, historique.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ReferenceData #PostTrade #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

@@ -1,0 +1,34 @@
+✨Test end-to-end · Données de référence (Reference Data) · instrument : le bug le plus dangereux est “silencieux”.
+La donnée a l’air correcte… mais elle est rattachée au mauvais instrument.
+
+En banque d’investissement, un instrument mal référencé, c’est une avalanche :
+prix, risque, limites, exécution, reporting… tout peut diverger sans casser “techniquement”.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui rend visible l’identité de l’instrument (référence, marché, attributs clés) avant toute action sensible.
+Une Definition of Done qui impose “contrôle de cohérence des attributs” sur le parcours complet.
+
+🛠️ En tant que Developer, je veux :
+Des contrôles côté serveur qui bloquent une action si l’instrument est incohérent (marché/devise/produit).
+Une traçabilité E2E : instrument sélectionné → attributs utilisés → décision serveur → action.
+
+🙂 En tant que End User, je veux :
+Comprendre en 10 secondes si je suis sur le bon instrument, sans deviner.
+Avoir une correction claire quand ce n’est pas le bon.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “instrument proche → attribut incohérent → blocage clair → instrument correct proposé”.
+Appliquer une analyse de risque ISTQB sur les erreurs “presque justes”.
+Exiger des preuves auditables : attributs utilisés, décision serveur, horodatage.
+
+Vous testez quoi : l’écran qui “affiche un nom”… ou la preuve que tout le parcours utilise le bon instrument ?
+
+📌 Zone technique.
+Données de référence : données qui font foi (instruments, marchés, contreparties, comptes).
+Cohérence : attributs alignés (marché, type produit, devise, statut).
+Preuves : traces, horodatage, décision serveur, historique.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ReferenceData #BanqueDInvestissement #DataQuality
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

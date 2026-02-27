@@ -1,0 +1,34 @@
+✨Test end-to-end · Données de référence (Reference Data) · contrepartie : le bug ne casse pas l’appli.
+Il casse la conformité… et tu le découvres trop tard.
+
+En banque d’investissement, une contrepartie mal identifiée (entité, statut, identifiant) peut faire passer un parcours “vert”…
+puis déclencher rejets, escalades, ou corrections en urgence.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui rend l’identité contrepartie non ambiguë : entité, statut, et contrôles clés visibles.
+Une Definition of Done qui impose “identité validée” avant action sensible.
+
+🛠️ En tant que Developer, je veux :
+Un contrôle serveur qui refuse toute action si l’identité est incomplète ou incohérente.
+Une traçabilité E2E : contrepartie → contrôles → décision → action.
+
+🙂 En tant que End User, je veux :
+Savoir immédiatement ce qui manque, sans jargon.
+Avoir l’action suivante : compléter, corriger, ou escalader.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “contrepartie incomplète → refus clair → correction guidée → validation”.
+Appliquer une analyse de risque ISTQB sur les identités “presque bonnes”.
+Exiger des preuves auditables : champs utilisés, décision serveur, horodatage.
+
+Vous testez quoi : que ça passe aujourd’hui… ou la preuve que l’identité tient sous contrôle demain ?
+
+📌 Zone technique.
+Contrepartie : l’entité en face (client, broker, banque).
+Identité non ambiguë : une seule entité possible, pas d’interprétation.
+Preuves : décision serveur + champs de référence + horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ReferenceData #Compliance #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

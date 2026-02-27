@@ -1,0 +1,36 @@
+✨Test end-to-end · Données de référence (Reference Data) · multi-apps : la donnée change… mais pas partout.
+Et c’est là que l’erreur devient “métier”.
+
+En banque d’investissement, un même parcours vit dans plusieurs outils.
+Si la donnée de référence n’est pas identique partout, tu obtiens deux réalités :
+une qui “passe”, une qui “refuse”, et un utilisateur coincé entre les deux.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la mise à jour est cohérente sur tous les outils critiques.
+Une Definition of Done qui impose “même donnée = même décision” sur le E2E.
+
+🛠️ En tant que Developer, je veux :
+Une source d’autorité + une propagation fiable + des contrôles côté serveur.
+Une traçabilité E2E : mise à jour → propagation → vérification multi-apps.
+
+🙂 En tant que End User, je veux :
+Ne pas perdre du temps parce que deux outils se contredisent.
+Avoir un message clair quand un outil est “en retard”.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “mise à jour → un outil à jour / un outil en retard → blocage maîtrisé → reprise”.
+Appliquer une analyse de risque ISTQB sur les divergences multi-systèmes.
+Exiger des preuves auditables : états par outil, horodatage, décision serveur.
+
+Vous testez quoi : un outil isolé… ou la preuve que tout le parcours reste cohérent multi-apps ?
+
+📌 Zone technique.
+Source d’autorité : système qui fait foi.
+Propagation : diffusion vers les autres outils.
+Cohérence : mêmes règles, mêmes décisions.
+Preuves : états, horodatage, traces.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ReferenceData #BanqueDInvestissement #MultiApps
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.
