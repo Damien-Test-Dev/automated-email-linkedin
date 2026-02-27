@@ -1,0 +1,36 @@
+✨Test end-to-end · ECM (Equity Capital Markets) · séparation des tâches (SoD) : la gouvernance casse toujours en “urgence”.
+Le vrai risque n’est pas l’accès. C’est l’accès “temporaire” qui ne s’arrête jamais.
+
+En ECM, il y a des moments où “il faut débloquer”.
+Délégation, remplacement, astreinte, accès d’urgence.
+Si le parcours ne borne pas le temps et les responsabilités, l’exception devient la nouvelle norme.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours de délégation simple, encadré, et limité dans le temps.
+Une Definition of Done qui impose “création → validation → expiration → retour à la normale”.
+
+🛠️ En tant que Developer, je veux :
+Des délégations qui expirent automatiquement et se retirent sans bricolage manuel.
+Une traçabilité complète : qui demande, qui valide, quand ça démarre, quand ça finit.
+
+🙂 En tant que End User, je veux :
+Pouvoir remplacer quelqu’un sans contournement.
+Savoir exactement ce que je peux faire, et jusqu’à quand.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “demande délégation → approbation → accès temporaire → expiration → accès retiré”.
+Tester les cas limites : fin de fenêtre, changement de rôle, retour arrière.
+Exiger des preuves auditables : journal de délégation, horodatage, état final.
+
+Dans votre organisation, l’accès temporaire est-il vraiment temporaire… ou juste “oublié” ?
+
+📌 Zone technique.
+Délégation : droits donnés pour remplacer un rôle, sur une durée limitée.
+Expiration : retrait automatique des droits à la fin de la fenêtre.
+Traçabilité : reconstituer le film complet d’une décision.
+Preuves : logs, journaux, horodatage, états finaux.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ECM #Governance
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

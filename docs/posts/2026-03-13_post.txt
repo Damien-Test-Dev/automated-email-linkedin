@@ -1,0 +1,36 @@
+✨Test end-to-end · ECM (Equity Capital Markets) · séparation des tâches (SoD) : “avoir le droit” ne prouve rien.
+La seule vérité : qui a consulté quoi, quand, et comment.
+
+En ECM, en audit, on demande rarement “qui pouvait”.
+On demande “qui a fait” et “qui a vu”.
+Si ton système ne produit pas un journal exploitable, tu es aveugle au moment où ça compte.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque consultation sensible laisse une trace claire et exploitable.
+Une Definition of Done qui inclut “journal de consultation” sur les écrans à risque.
+
+🛠️ En tant que Developer, je veux :
+Un journal d’audit (audit trail) non ambigu : consultation, export, tentative refusée, contexte.
+Des traces corrélables E2E : session → action → ressource → décision serveur.
+
+🙂 En tant que End User, je veux :
+Être protégé : pas le droit = bloqué, droit = traçable.
+Ne pas être exposé parce que le système n’arrive pas à raconter ce qui s’est passé.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “consultation sensible → trace créée → vérification journal d’audit → preuve retrouvable”.
+Tester aussi les refus, parce qu’un refus sans trace, c’est une faille de gouvernance.
+Exiger des preuves auditables : journal consultable, horodatage, corrélation des actions.
+
+Quand l’audit arrive, vous sortez quoi : une liste de droits… ou l’historique réel des consultations ?
+
+📌 Zone technique.
+Journal d’audit : journal des actions utilisable en contrôle interne.
+Corrélation : relier session, action et ressource, sans ambiguïté.
+Ressource sensible : donnée critique (deal, allocations, documents).
+Preuves : journaux, horodatage, traces corrélées.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ECM #Audit
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

@@ -1,0 +1,36 @@
+✨Test end-to-end · ECM (Equity Capital Markets) · séparation des tâches (SoD) : l’UI cache… mais l’export révèle.
+Le bouton “télécharger” fuit plus que l’écran.
+
+En ECM, on protège l’affichage… puis on oublie l’export.
+Résultat : un rôle “lecture limitée” ne voit pas un champ sensible à l’écran,
+mais récupère tout dans un fichier téléchargé. Proprement. Légalement. Dangereusement.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où l’export respecte exactement les mêmes règles que l’écran.
+Une Definition of Done qui impose “écran et export alignés” sur les données sensibles.
+
+🛠️ En tant que Developer, je veux :
+Un filtrage côté serveur identique pour UI, API et export.
+Une traçabilité E2E : qui a demandé l’export, quoi a été servi, et pourquoi.
+
+🙂 En tant que End User, je veux :
+Pouvoir exporter ce que j’ai le droit d’exploiter, pas plus.
+Ne pas devenir, sans le savoir, la source d’une fuite interne.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “affichage limité → export → vérification des champs → refus/masquage côté serveur”.
+Tester les canaux : écran, export, accès indirect, car la fuite change de forme.
+Exiger des preuves auditables : journal d’export, règles appliquées, horodatage.
+
+Sur vos parcours, vous testez quoi vraiment : la page… ou tout ce qui sort de la page ?
+
+📌 Zone technique.
+Export : génération d’un fichier à partir des données affichées (ou non).
+Alignement des règles : mêmes filtres de droits sur tous les canaux.
+Données sensibles : informations qui ne doivent pas être vues hors rôle.
+Preuves : logs, journal d’export, horodatage, règles appliquées.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ECM #DataSecurity
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

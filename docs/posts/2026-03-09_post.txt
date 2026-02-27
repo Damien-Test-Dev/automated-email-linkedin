@@ -1,0 +1,36 @@
+✨Test end-to-end · ECM (Equity Capital Markets) · séparation des tâches (SoD) : l’attaque la plus simple, c’est l’URL.
+Interface propre. Serveur permissif. Fuite silencieuse.
+
+En ECM, la confidentialité n’est pas une option : c’est la base du deal.
+Et un junior ne “pirate” rien : il clique, il essaye, il copie-colle une URL.
+Si le serveur ne verrouille pas, l’application ouvre la porte.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les zones sensibles sont impossibles à atteindre sans le bon rôle, même avec un lien direct.
+Une Definition of Done qui inclut “accès direct par URL” dans les critères d’acceptation.
+
+🛠️ En tant que Developer, je veux :
+Des contrôles côté serveur qui refusent l’accès, même si l’UI n’affiche pas le bouton.
+Des traces claires : tentative, refus, raison, et horodatage.
+
+🙂 En tant que End User, je veux :
+Ne jamais tomber sur une page qui n’est pas pour moi.
+Comprendre immédiatement quoi demander (habilitation) au lieu de chercher une astuce.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “rôle junior → lien direct zone sensible → refus net → demande d’habilitation → accès contrôlé”.
+Tester la même action via UI et via URL, parce que l’attaque la plus réaliste est souvent la plus bête.
+Exiger des preuves auditables : code de refus, logs serveur, journal d’accès.
+
+Quand vous validez la séparation des tâches, vous sécurisez quoi en premier : l’écran… ou le serveur ?
+
+📌 Zone technique.
+ECM : opérations actions (émissions, placements, syndication).
+SoD : une même personne ne doit pas pouvoir tout faire sur une action sensible.
+Contrôle côté serveur : règle appliquée par le système, pas par l’écran.
+Preuves : logs, traces, horodatage, journal d’accès.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #SecurityTesting #ECM
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

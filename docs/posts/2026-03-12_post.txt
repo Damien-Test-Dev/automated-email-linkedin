@@ -1,0 +1,36 @@
+✨Test end-to-end · ECM (Equity Capital Markets) · séparation des tâches (SoD) : le drift des droits entre applis.
+Un rôle change. Un écran s’aligne. L’autre non. Et la fuite s’installe.
+
+En ECM, on travaille souvent sur plusieurs outils.
+Un utilisateur change d’équipe, de mission, de périmètre.
+Si les droits ne se synchronisent pas partout, tu crées un monstre : trop de droits ici, pas assez là.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours “changement de rôle” qui met à jour les accès sur toutes les applications concernées.
+Une Definition of Done qui impose “même rôle = mêmes droits partout” sur les parcours critiques.
+
+🛠️ En tant que Developer, je veux :
+Une source d’autorité unique pour les droits, et une propagation fiable.
+Une traçabilité E2E : demande → validation → mise à jour → vérification sur chaque application.
+
+🙂 En tant que End User, je veux :
+Ne pas perdre du temps à redemander des accès en boucle.
+Ne pas garder des droits qui ne sont plus justifiés, sans le savoir.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “changement de rôle → droits mis à jour → contrôles serveur → vérification multi-apps”.
+Tester le cas réaliste : une appli à jour, l’autre en retard.
+Exiger des preuves auditables : journal de changement, états par application, horodatage.
+
+Vous sécurisez quoi en priorité : le rôle sur le papier… ou la réalité des droits dans chaque outil ?
+
+📌 Zone technique.
+Multi-apps : parcours réparti sur plusieurs applications.
+Source d’autorité : système qui fait foi pour les droits.
+Propagation : diffusion des droits vers les autres systèmes.
+Preuves : états par application, logs, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ECM #AccessControl
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.
