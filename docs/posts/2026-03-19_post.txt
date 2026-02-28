@@ -1,0 +1,36 @@
+✨Test end-to-end · Collatéral · substitution : remplacer n’est pas échanger.
+C’est préserver le risque… sans casser la traçabilité.
+
+En banque d’investissement, on remplace parfois une garantie (liquidité, concentration, règles).
+Le piège : “remplacé” sur un outil, mais pas propagé partout.
+Et tu te retrouves avec deux vérités en parallèle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la substitution est lisible, validée, et cohérente sur tous les systèmes.
+Une Definition of Done qui impose “avant/après” avec historique complet.
+
+🛠️ En tant que Developer, je veux :
+Une substitution atomique : pas de double état, pas de zone grise.
+Une traçabilité E2E : ancien collatéral → validation → nouveau collatéral → propagation → état final.
+
+🙂 En tant que End User, je veux :
+Savoir ce qui a été remplacé, et ce qui est actif maintenant.
+Ne pas perdre l’historique au passage.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “demande substitution → validation → propagation multi-systèmes → vérification état final”.
+Appliquer une analyse de risque ISTQB sur les incohérences multi-apps.
+Exiger des preuves auditables : avant/après, horodatage, journal.
+
+Dans vos équipes, vous vérifiez quoi : que la substitution est visible… ou la preuve que tous les systèmes portent la même réalité après remplacement ?
+
+📌 Zone technique.
+Substitution : remplacement d’une garantie par une autre.
+Propagation : mise à jour sur tous les systèmes.
+État final : une seule vérité.
+Preuves : historique avant/après + horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #Collateral #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

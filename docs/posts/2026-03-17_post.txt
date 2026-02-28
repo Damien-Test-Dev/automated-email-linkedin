@@ -1,0 +1,36 @@
+✨Test end-to-end · Appel de marge · cutoffs : le marché ne pardonne pas les retards.
+Une minute de flou, et l’action devient un incident.
+
+En banque d’investissement, un appel de marge n’est pas qu’un calcul.
+C’est une fenêtre de temps, des statuts, et des responsabilités.
+Le junior voit “en cours”. Le risque voit “en retard”.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui rend visible le délai restant, et ce qui se passe si c’est dépassé.
+Une Definition of Done qui impose “avant / pendant / après cutoff” sur ce parcours.
+
+🛠️ En tant que Developer, je veux :
+Des règles de temps cohérentes, non ambiguës, et identiques sur tous les systèmes.
+Une traçabilité E2E : appel → notification → action → validation → statut final.
+
+🙂 En tant que End User, je veux :
+Savoir si je suis encore à temps, sans interpréter un statut flou.
+Avoir une action claire si c’est trop tard : escalade, alternative, reprise.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “appel → délai presque atteint → action → cutoff dépassé → refus clair → alternative”.
+Appliquer une analyse de risque ISTQB sur fuseaux, calendriers, et statuts qui “mentent”.
+Exiger des preuves auditables : horodatage, statut final, décision serveur.
+
+Dans vos équipes, vous vérifiez quoi : que “ça avance”… ou la preuve que le timing est respecté jusqu’au statut final ?
+
+📌 Zone technique.
+Appel de marge : demande de collatéral supplémentaire.
+Cutoff : heure limite.
+Statut final : état non ambigu (accepté/refusé/trop tard).
+Preuves : horodatage + décision serveur + historique.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #MarginCall #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

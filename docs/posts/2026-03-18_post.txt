@@ -1,0 +1,36 @@
+✨Test end-to-end · Dispute · collatéral : le risque, c’est la discussion sans piste.
+Quand personne ne sait “qui décide”, l’exception devient une escalade infinie.
+
+En banque d’investissement, une dispute sur la marge arrive.
+La question n’est pas “si”. C’est “comment on la traite proprement”.
+Et ce parcours doit être testable, traçable, et compréhensible.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours clair : ouvrir une dispute, fournir la preuve, obtenir une décision.
+Une Definition of Done qui impose “création → revue → décision → clôture”.
+
+🛠️ En tant que Developer, je veux :
+Des statuts stables, sans “en cours” éternel, et une attribution explicite.
+Une traçabilité E2E : dispute → pièces → décision → clôture.
+
+🙂 En tant que End User, je veux :
+Savoir quoi fournir, et à qui ça revient.
+Pouvoir clôturer sans perdre l’historique.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “désaccord → ouverture → preuves → décision → clôture”.
+Appliquer une analyse de risque ISTQB sur les boucles et les statuts ambigus.
+Exiger des preuves auditables : journal, horodatage, décision.
+
+Dans vos équipes, vous vérifiez quoi : que la dispute “existe”… ou la preuve qu’elle se clôture proprement, avec une décision traçable ?
+
+📌 Zone technique.
+Dispute : désaccord formalisé sur montant/décision.
+Statut stable : état qui a du sens pour un humain.
+Attribution : responsable identifié.
+Preuves : décision + horodatage + historique.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #Collateral #Dispute #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.

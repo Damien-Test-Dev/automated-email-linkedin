@@ -1,0 +1,35 @@
+✨Test end-to-end · Collatéral (garanties) · éligibilité : le risque n’est pas le refus.
+Le risque, c’est l’acceptation silencieuse… puis le rejet en aval.
+
+En banque d’investissement, une garantie peut être “présentée” correctement… et être inutilisable en réalité.
+Le junior voit “OK”. Le système voit “non éligible”. Et la marge explose au pire moment.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui rend l’éligibilité lisible : accepté, refusé, sous condition.
+Une Definition of Done qui impose “proposition → contrôle → décision → preuve” sur le parcours complet.
+
+🛠️ En tant que Developer, je veux :
+Un contrôle côté serveur qui bloque l’usage d’un collatéral non éligible, quel que soit le canal.
+Une traçabilité E2E : actif proposé → règles appliquées → décision → usage autorisé/refusé.
+
+🙂 En tant que End User, je veux :
+Comprendre immédiatement pourquoi c’est refusé, et quoi proposer à la place.
+Ne pas apprendre la vérité après coup, quand il est trop tard.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “collatéral proposé → actif non éligible → refus clair → alternative proposée → validation”.
+Appliquer une analyse de risque ISTQB sur les règles d’éligibilité et les écarts multi-systèmes.
+Exiger des preuves auditables : règle déclenchée, décision serveur, horodatage, historique.
+
+Dans vos équipes, vous vérifiez quoi : l’écran qui dit “accepté”… ou la preuve que l’actif est réellement utilisable jusqu’au bout ?
+
+📌 Zone technique.
+Collatéral : garanties déposées pour couvrir un risque.
+Éligibilité : règles qui disent si un actif peut être accepté.
+Contrôle serveur : non contournable, même via API/export.
+Preuves : logs + horodatage + décision + règles appliquées.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #Collateral #Margin #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.
