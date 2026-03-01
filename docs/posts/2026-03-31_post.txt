@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · payment status : un ACK peut être un faux confort.
+ACK dit “accepté”. Il ne dit pas “cash moved”.
+
+En cash management, beaucoup confondent :
+ACK = reçu/accepté, exécuté = mouvement réellement passé.
+Et c’est entre les deux que naissent les surprises.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui sépare clairement “accepté” et “exécuté”, avec horodatage.
+Une Definition of Done qui impose “preuve d’exécution” et pas juste “ACK”.
+
+🛠️ En tant que Developer, je veux :
+Des statuts serveur basés sur événements réels (pas sur hypothèses).
+Une corrélation E2E : ACK → traitement → exécution → solde mis à jour.
+
+🙂 En tant que End User, je veux :
+Savoir si je peux compter sur le cash maintenant, pas “bientôt”.
+Être guidé si ça reste en attente : quoi faire, qui alerter.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “ACK reçu → traitement retardé → cutoff atteint → exécution reportée → statut final clair”.
+Tester les statuts “en attente” : ce sont eux qui créent la panique.
+Exiger des preuves auditables : timestamps, état final, journal d’exécution.
+
+Votre angle mort : vous célébrez l’ACK… ou vous vérifiez l’exécution ?
+
+📌 Zone technique.
+Accepté (ACK) : reçu/validé techniquement ou métier.
+Exécuté : mouvement effectué, impact cash réel.
+Corrélation : relier intention → événements → résultat final.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Payments #Risk
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
