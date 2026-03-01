@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · doublons : le bug le plus cher, c’est l’action répétée.
+Un double clic ne devrait jamais devenir deux paiements.
+
+En cash management, l’utilisateur ne cherche pas à frauder.
+Il doute, il relance, il clique encore.
+Si le serveur ne verrouille pas, le système transforme une intention en incident.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui rend l’état clair : “reçu”, “en cours”, “final”, avec un identifiant de suivi visible.
+Une Definition of Done qui impose “1 intention = 1 paiement réel”, même en cas de relance.
+
+🛠️ En tant que Developer, je veux :
+Une protection côté serveur contre les doublons (idempotence) sur les actions sensibles.
+Une traçabilité E2E : intention → requête → décision serveur → paiement unique.
+
+🙂 En tant que End User, je veux :
+Savoir si ma demande est prise en compte sans relancer “au hasard”.
+Être protégé même quand je fais l’erreur la plus humaine : insister.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “double clic → 1 seul paiement → statut final cohérent → preuve retrouvable”.
+Tester en conditions réelles : latence, timeout, rafraîchissement page.
+Exiger des preuves auditables : identifiant unique, horodatage, journal d’exécution.
+
+Votre point de rupture : vous gérez le doublon à l’écran… ou vous l’empêchez côté serveur ?
+
+📌 Zone technique.
+Idempotence : répéter la même action ne crée pas un second paiement.
+Doublon : deux paiements créés pour une seule intention.
+Preuves : identifiant unique + logs + horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · retry : le retry non maîtrisé, c’est du cash en roulette.
+Relancer, oui. Rejouer, non.
+
+En banque d’investissement, les réseaux ont des trous. Les timeouts arrivent.
+Le système doit offrir une reprise propre, pas une duplication déguisée.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours “relance” explicite : même intention, même paiement, même suivi.
+Une Definition of Done qui impose “reprise sans duplication” en cas de timeout.
+
+🛠️ En tant que Developer, je veux :
+Des clés d’idempotence côté serveur et un traitement “exactly-once” au maximum réaliste.
+Une traçabilité E2E : premier envoi → timeout → relance → même paiement → statut final.
+
+🙂 En tant que End User, je veux :
+Relancer sans peur de créer un doublon.
+Voir clairement ce qui est déjà parti et ce qui ne l’est pas.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “timeout → relance → même résultat → aucune duplication”.
+Tester la latence, les erreurs réseau et la reprise après rafraîchissement.
+Exiger des preuves auditables : même identifiant, même trace, décision serveur.
+
+Votre risque numéro un : le retry qui rassure l’utilisateur… ou le retry qui duplique en silence ?
+
+📌 Zone technique.
+Retry : relancer une demande après un échec/timeout.
+Exactly-once : traiter une intention une seule fois (objectif).
+Preuves : corrélation des traces, identifiant unique, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

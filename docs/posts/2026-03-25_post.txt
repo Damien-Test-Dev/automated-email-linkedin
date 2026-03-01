@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · multi-canal : le doublon naît quand les canaux ne parlent pas la même vérité.
+Portail, API, fichier… une intention, une seule réalité.
+
+En cash management, on initie parfois un paiement via un portail, puis on renvoie via fichier “par sécurité”.
+Si le serveur ne corrèle pas, tu crées deux paiements “valides”.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui garantit l’unicité même quand l’utilisateur change de canal.
+Une Definition of Done qui impose “anti-doublon multi-canal”.
+
+🛠️ En tant que Developer, je veux :
+Un mécanisme serveur de déduplication basé sur une clé fonctionnelle.
+Une traçabilité E2E : canal A → canal B → décision serveur → paiement unique.
+
+🙂 En tant que End User, je veux :
+Pouvoir basculer de canal sans risque de doublon.
+Comprendre immédiatement si “c’est déjà en cours”.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “paiement portail → envoi fichier → détection doublon → blocage clair”.
+Tester la bascule de canal sous pression (cutoff proche).
+Exiger des preuves auditables : clé fonctionnelle, journal de décision, horodatage.
+
+Vous testez quoi : l’unicité sur un écran… ou l’unicité réelle sur tous les canaux ?
+
+📌 Zone technique.
+Multi-canal : portail, API, fichier, batch.
+Clé fonctionnelle : empreinte métier pour reconnaître la même intention.
+Preuves : logs de déduplication, décision serveur, horodatage.
+
+#SlashingDefectsWithAQualitySword #Agile #Scrum #ISTQB #E2E #CashManagement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

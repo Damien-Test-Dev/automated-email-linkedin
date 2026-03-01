@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · cutoff : le doublon de panique est un doublon “humain”.
+Plus la fenêtre se ferme, plus l’utilisateur insiste.
+
+À l’approche du cutoff, un statut ambigu déclenche un réflexe : relancer.
+Si le système ne protège pas, la pression crée le défaut.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui dit clairement : “pris en compte”, “trop tard”, “à reprendre demain”.
+Une Definition of Done qui impose un scénario “cutoff proche + relance”.
+
+🛠️ En tant que Developer, je veux :
+Un serveur qui bloque la duplication même sous rafale d’actions.
+Une traçabilité E2E : fenêtre temps → action → décision serveur → état final.
+
+🙂 En tant que End User, je veux :
+Savoir si je dois attendre, relancer, ou escalader.
+Ne pas être puni pour une réaction normale sous pression.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “cutoff proche → relance → anti-doublon → statut final clair”.
+Tester fuseaux, jours fériés, délais réseau.
+Exiger des preuves auditables : horodatage, décision serveur, état final.
+
+Votre point faible : le cutoff lui-même… ou les statuts qui déclenchent la relance ?
+
+📌 Zone technique.
+Cutoff : heure limite de traitement.
+Statut final : état non ambigu (accepté/rejeté/reporté).
+Preuves : horodatage + décision serveur + traces corrélées.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Payments
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

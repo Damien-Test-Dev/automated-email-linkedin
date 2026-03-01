@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · audit : “on pense que ce n’est pas dupliqué” ne suffit pas.
+En banque, tu dois pouvoir le prouver.
+
+Quand un incident arrive, la question n’est pas “qui a cliqué”.
+C’est : combien de paiements ont réellement été créés, et pourquoi.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où l’unicité est prouvable : historique, décisions, statuts finaux.
+Une Definition of Done qui inclut “preuve d’unicité retrouvable”.
+
+🛠️ En tant que Developer, je veux :
+Des traces corrélables : intention → paiement → exécution → résultat final.
+Un audit trail qui montre la déduplication et ses décisions.
+
+🙂 En tant que End User, je veux :
+Être protégé : si ça duplique, je le vois; si ça ne duplique pas, c’est prouvable.
+Ne pas subir un flou qui crée des accusations.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “relances multiples → 1 paiement réel → preuve d’unicité”.
+Tester aussi les quasi-doublons (champs proches) pour éviter les faux positifs.
+Exiger des preuves auditables : corrélation, horodatage, journal de déduplication.
+
+Vous pilotez l’anti-doublon comme une feature… ou comme un contrôle bancaire audit-ready ?
+
+📌 Zone technique.
+Audit trail : historique exploitable en contrôle.
+Corrélation : relier intention et résultat sans ambiguïté.
+Preuves : journal de déduplication + horodatage + statut final.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #CashManagement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
