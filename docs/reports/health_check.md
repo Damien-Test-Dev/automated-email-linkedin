@@ -1,5 +1,5 @@
 # 🔍 Health Check Report
-Généré le Sat Feb 28 14:46:24 UTC 2026
+Généré le Sat Mar  7 17:49:04 UTC 2026
 
 ## 📁 Vérification de la structure
 - 🟢 OK : dossier présent → docs/posts
@@ -41,6 +41,10 @@ Généré le Sat Feb 28 14:46:24 UTC 2026
   - 🟢 Image trouvée : 2026-03-12_image.png
 - 🟢 OK : post valide → 2026-03-13_post.txt
   - 🟢 Image trouvée : 2026-03-13_image.png
+- 🟢 OK : post valide → 2026-03-14_post.txt
+  - 🟢 Image trouvée : 2026-03-14_image.png
+- 🟢 OK : post valide → 2026-03-15_post.txt
+  - 🟢 Image trouvée : 2026-03-15_image.png
 - 🟢 OK : post valide → 2026-03-16_post.txt
   - 🟢 Image trouvée : 2026-03-16_image.png
 - 🟢 OK : post valide → 2026-03-17_post.txt
@@ -51,8 +55,28 @@ Généré le Sat Feb 28 14:46:24 UTC 2026
   - 🟢 Image trouvée : 2026-03-19_image.png
 - 🟢 OK : post valide → 2026-03-20_post.txt
   - 🟢 Image trouvée : 2026-03-20_image.png
+- 🟢 OK : post valide → 2026-03-23_post.txt
+  - 🟢 Image trouvée : 2026-03-23_image.png
+- 🟢 OK : post valide → 2026-03-24_post.txt
+  - 🟢 Image trouvée : 2026-03-24_image.png
+- 🟢 OK : post valide → 2026-03-25_post.txt
+  - 🟢 Image trouvée : 2026-03-25_image.png
+- 🟢 OK : post valide → 2026-03-26_post.txt
+  - 🟢 Image trouvée : 2026-03-26_image.png
+- 🟢 OK : post valide → 2026-03-27_post.txt
+  - 🟢 Image trouvée : 2026-03-27_image.png
+- 🟢 OK : post valide → 2026-03-30_post.txt
+  - 🟢 Image trouvée : 2026-03-30_image.png
+- 🟢 OK : post valide → 2026-03-31_post.txt
+  - 🟢 Image trouvée : 2026-03-31_image.png
+- 🟢 OK : post valide → 2026-04-01_post.txt
+  - 🟢 Image trouvée : 2026-04-01_image.png
+- 🟢 OK : post valide → 2026-04-02_post.txt
+  - 🟢 Image trouvée : 2026-04-02_image.png
+- 🟢 OK : post valide → 2026-04-03_post.txt
+  - 🟢 Image trouvée : 2026-04-03_image.png
 
 ## 📚 Vérification de history.json
 - 🟢 OK : JSON valide
-- Nombre d'entrées : 20
+- Nombre d'entrées : 32
 
