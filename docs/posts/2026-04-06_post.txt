@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · rejets : NACK et Return, ce n’est pas la même blessure.
+Confondre les deux, c’est piloter le cash avec une boussole cassée.
+
+En cash management, NACK = rejet immédiat (à la réception).
+Return = retour après coup (le paiement est “revenu” plus tard).
+Et côté utilisateur, les deux se ressemblent… alors que les actions ne sont pas les mêmes.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui différencie clairement NACK vs Return, avec statut final et horodatage.
+Une Definition of Done qui impose “catégorie de rejet + action suivante” sur le parcours complet.
+
+🛠️ En tant que Developer, je veux :
+Des statuts serveur non ambigus : rejet immédiat vs retour tardif, sans mélange.
+Une traçabilité E2E : envoi → ACK/NACK → (exécution) → return éventuel → statut final.
+
+🙂 En tant que End User, je veux :
+Comprendre si je dois corriger tout de suite ou gérer un retour après exécution.
+Savoir quoi faire sans ouvrir 3 tickets.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “paiement → ACK → exécuté → return → statut final clair → guidance”.
+Tester les libellés et la logique : c’est là que naît la confusion.
+Exiger des preuves auditables : horodatage, identifiant de suivi, raison, décision serveur.
+
+Votre point de rupture : vous traitez tous les rejets pareil… ou vous distinguez NACK et Return dans le parcours ?
+
+📌 Zone technique.
+NACK : rejet immédiat.
+Return : retour après traitement/exécution.
+Preuves : tracking ID + logs + timestamps + statut final.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

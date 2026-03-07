@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · rejets : le bug le plus toxique, c’est le rejet muet.
+Un “rejeté” sans prochaine action, c’est une machine à incidents.
+
+En cash management, un rejet arrive souvent sous pression (cutoff, urgence, trésorerie).
+Si le message ne dit pas quoi corriger et comment repartir, l’utilisateur relance à l’aveugle. Et le défaut s’amplifie.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours de rejet qui guide : raison claire + action suivante + canal de correction.
+Une Definition of Done qui impose “rejet actionnable” (pas juste un statut).
+
+🛠️ En tant que Developer, je veux :
+Des raisons de rejet structurées côté serveur (catégories), pas des textes aléatoires.
+Une traçabilité E2E : rejet → raison → correction → nouvelle tentative → statut final.
+
+🙂 En tant que End User, je veux :
+Comprendre en 10 secondes quoi faire.
+Corriger sans repartir de zéro, et sans créer un doublon.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “rejet → message clair → correction guidée → reprise → succès”.
+Tester la psychologie du rejet : guider, pas culpabiliser.
+Exiger des preuves auditables : raison codifiée, horodatage, décision serveur.
+
+Votre standard : un rejet “informatif”… ou un rejet actionnable ?
+
+📌 Zone technique.
+Rejet actionnable : raison + prochaine action claire.
+Raison codifiée : catégorie stable (pas un texte libre).
+Preuves : raison + décision serveur + timestamps.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Payments
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

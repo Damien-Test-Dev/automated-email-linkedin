@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · cutoff : le rejet tardif est une bombe à retardement.
+Parce qu’il arrive quand il est trop tard pour “juste relancer”.
+
+En cash management, un paiement peut paraître “en bonne voie”… puis revenir après le cutoff.
+Si ton parcours ne propose pas une alternative claire, tu laisses l’utilisateur improviser.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui prévoit le “rejet tardif” : statut final, impact, et options (report, urgence, escalade).
+Une Definition of Done qui impose “return après cutoff” dans les scénarios E2E.
+
+🛠️ En tant que Developer, je veux :
+Des règles serveur cohérentes : après cutoff, pas de fausse relance automatique.
+Une traçabilité E2E : timeline → rejet tardif → décision → option proposée → état final.
+
+🙂 En tant que End User, je veux :
+Savoir si je peux encore agir aujourd’hui, ou si c’est reporté.
+Avoir une marche à suivre simple, pas un statut ambigu.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “ACK → en attente → cutoff → return → statut final clair → alternative”.
+Tester fuseaux, jours fériés, et délais réseau.
+Exiger des preuves auditables : horodatage, décision serveur, état final.
+
+Quand le cutoff est passé, votre système fait quoi : il guide… ou il laisse l’utilisateur deviner ?
+
+📌 Zone technique.
+Rejet tardif / Return : retour après un traitement initial.
+Alternative : report, urgence, escalade, canal différent.
+Preuves : timeline + logs + statut final.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Cutoff #Payments
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

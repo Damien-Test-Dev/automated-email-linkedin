@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · correction : le piège n’est pas de corriger.
+Le piège, c’est de corriger en créant un nouveau paiement qui casse le tracking.
+
+En cash management, sous stress, l’utilisateur fait simple : il recrée un paiement “propre”.
+Mais si tu perds le lien avec l’original, tu perds la preuve, l’audit trail, et la maîtrise du risque.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours de correction qui conserve le tracking : même intention, même fil, nouvelle tentative propre.
+Une Definition of Done qui impose “correction sans perte d’historique”.
+
+🛠️ En tant que Developer, je veux :
+Un mécanisme serveur de reprise : correction → nouvelle soumission liée → statut final.
+Une traçabilité E2E : paiement initial → rejet → correction → resoumission liée → résultat.
+
+🙂 En tant que End User, je veux :
+Corriger vite, sans reconstruire tout le dossier.
+Voir clairement ce qui a changé entre la tentative 1 et 2.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “NACK → correction guidée → resoumission liée → succès → preuve retrouvable”.
+Tester les champs “presque identiques” : c’est là que naissent les doublons.
+Exiger des preuves auditables : tracking continu, diff des changements, horodatage.
+
+Vous préférez une correction “rapide”… ou une correction traçable ?
+
+📌 Zone technique.
+Tracking : fil de suivi de bout en bout.
+Resoumission liée : nouvelle tentative attachée à l’original (même dossier).
+Preuves : historique + timestamps + lien entre tentatives.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Audit
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
