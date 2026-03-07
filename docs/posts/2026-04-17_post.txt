@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · audit : “on pensait être dans les temps” n’a aucune valeur.
+En banque, il faut prouver pourquoi le paiement est passé, bloqué, ou reporté.
+
+Quand un cutoff est raté, la vraie question n’est pas “qui a cliqué trop tard”.
+C’est : quelle règle temps a été appliquée, avec quel calendrier, dans quel fuseau, et avec quelle décision finale.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque décision temps est retrouvable, lisible, et défendable.
+Une Definition of Done qui impose “audit-ready time decision”.
+
+🛠️ En tant que Developer, je veux :
+Un audit trail complet : heure user → heure serveur → calendrier → cutoff → décision.
+Des logs corrélables sans ambiguïté.
+
+🙂 En tant que End User, je veux :
+Être protégé par un système qui sait expliquer sa décision.
+Ne pas subir un “trop tard” impossible à vérifier.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “soumission → conversion temps → règle calendrier → décision → preuve retrouvable”.
+Tester les cas limites : cutoff exact, fuseaux croisés, report J+1.
+Exiger des preuves auditables : timestamps, fuseau, calendrier appliqué, statut final.
+
+Votre standard : une décision “compréhensible”… ou une décision audit-ready ?
+
+📌 Zone technique.
+Audit-ready : décision prouvable, horodatée, non ambiguë.
+Report J+1 : traitement décalé au prochain jour ouvré.
+Preuves : timestamps + fuseau + calendrier + décision finale.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Audit #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
