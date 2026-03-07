@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · fuseaux horaires : un paiement peut être “à l’heure” pour toi… et déjà trop tard pour l’autre.
+Le temps local rassure. Le temps métier tranche.
+
+En banque d’investissement, un paiement ne reste pas dans un seul fuseau.
+Front, serveur, banque correspondante, centre de traitement : chacun peut vivre dans une horloge différente.
+Si ton parcours ne réconcilie pas ces temps, tu crées une fausse sécurité.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui explicite le fuseau de référence sur la décision.
+Une Definition of Done qui impose “test multi-timezone” sur les paiements critiques.
+
+🛠️ En tant que Developer, je veux :
+Une logique serveur basée sur un temps de référence clair et cohérent.
+Une traçabilité E2E : heure locale user → heure serveur → heure système aval → décision.
+
+🙂 En tant que End User, je veux :
+Comprendre si le paiement est jugé selon mon heure ou celle du canal bancaire.
+Ne pas être piégé par une interface rassurante mais fausse.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “paiement saisi avant cutoff local → cutoff aval dépassé → rejet clair → report”.
+Tester les décalages de fuseaux entre user, serveur et système externe.
+Exiger des preuves auditables : timestamps multi-zones, décision finale, statut final.
+
+Votre risque numéro un : le paiement en retard… ou le fuseau qui le cache ?
+
+📌 Zone technique.
+Fuseau de référence : heure qui fait foi pour décider.
+Temps local : heure vue par l’utilisateur.
+Preuves : timestamps par système + décision + statut final.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Payments #TimeZones
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

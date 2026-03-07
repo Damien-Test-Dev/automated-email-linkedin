@@ -1,36 +1,34 @@
-✨Test end-to-end · Appel de marge · cutoffs : le marché ne pardonne pas les retards.
-Une minute de flou, et l’action devient un incident.
+✨Test end-to-end · Cash Management · audit : “on pensait être dans les temps” n’a aucune valeur.
+En banque, il faut prouver pourquoi le paiement est passé, bloqué, ou reporté.
 
-En banque d’investissement, un appel de marge n’est pas qu’un calcul.
-C’est une fenêtre de temps, des statuts, et des responsabilités.
-Le junior voit “en cours”. Le risque voit “en retard”.
+Quand un cutoff est raté, la vraie question n’est pas “qui a cliqué trop tard”.
+C’est : quelle règle temps a été appliquée, avec quel calendrier, dans quel fuseau, et avec quelle décision finale.
 
 🎯 En tant que Product Owner, je veux :
-Un parcours qui rend visible le délai restant, et ce qui se passe si c’est dépassé.
-Une Definition of Done qui impose “avant / pendant / après cutoff” sur ce parcours.
+Un parcours où chaque décision temps est retrouvable, lisible, et défendable.
+Une Definition of Done qui impose “audit-ready time decision”.
 
 🛠️ En tant que Developer, je veux :
-Des règles de temps cohérentes, non ambiguës, et identiques sur tous les systèmes.
-Une traçabilité E2E : appel → notification → action → validation → statut final.
+Un audit trail complet : heure user → heure serveur → calendrier → cutoff → décision.
+Des logs corrélables sans ambiguïté.
 
 🙂 En tant que End User, je veux :
-Savoir si je suis encore à temps, sans interpréter un statut flou.
-Avoir une action claire si c’est trop tard : escalade, alternative, reprise.
+Être protégé par un système qui sait expliquer sa décision.
+Ne pas subir un “trop tard” impossible à vérifier.
 
 🛡️ En tant que QA, j’interviens afin de :
-Définir un E2E “appel → délai presque atteint → action → cutoff dépassé → refus clair → alternative”.
-Appliquer une analyse de risque ISTQB sur fuseaux, calendriers, et statuts qui “mentent”.
-Exiger des preuves auditables : horodatage, statut final, décision serveur.
+Définir un E2E “soumission → conversion temps → règle calendrier → décision → preuve retrouvable”.
+Tester les cas limites : cutoff exact, fuseaux croisés, report J+1.
+Exiger des preuves auditables : timestamps, fuseau, calendrier appliqué, statut final.
 
-Dans vos équipes, vous vérifiez quoi : que “ça avance”… ou la preuve que le timing est respecté jusqu’au statut final ?
+Votre standard : une décision “compréhensible”… ou une décision audit-ready ?
 
 📌 Zone technique.
-Appel de marge : demande de collatéral supplémentaire.
-Cutoff : heure limite.
-Statut final : état non ambigu (accepté/refusé/trop tard).
-Preuves : horodatage + décision serveur + historique.
+Audit-ready : décision prouvable, horodatée, non ambiguë.
+Report J+1 : traitement décalé au prochain jour ouvré.
+Preuves : timestamps + fuseau + calendrier + décision finale.
 
-#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #MarginCall #BanqueDInvestissement
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Audit #Treasury
 
 Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
-Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,36 +1,35 @@
-✨Test end-to-end · ECM (Equity Capital Markets) · séparation des tâches (SoD) : “avoir le droit” ne prouve rien.
-La seule vérité : qui a consulté quoi, quand, et comment.
+✨Test end-to-end · Cash Management · cutoff : le bug le plus dangereux, c’est l’heure “officielle” qui ne dit pas la vérité.
+Un cutoff affiché ne protège rien si le système ne l’applique pas réellement.
 
-En ECM, en audit, on demande rarement “qui pouvait”.
-On demande “qui a fait” et “qui a vu”.
-Si ton système ne produit pas un journal exploitable, tu es aveugle au moment où ça compte.
+En cash management, un paiement vit dans plusieurs couches : écran, moteur, validation, banque correspondante, exécution.
+Le piège classique : l’utilisateur voit “avant cutoff”, mais le serveur ou le canal aval considère déjà que c’est trop tard.
+Et c’est là que naît l’incident silencieux.
 
 🎯 En tant que Product Owner, je veux :
-Un parcours où chaque consultation sensible laisse une trace claire et exploitable.
-Une Definition of Done qui inclut “journal de consultation” sur les écrans à risque.
+Un parcours où le cutoff affiché correspond exactement à la règle réellement appliquée.
+Une Definition of Done qui impose “heure affichée = heure de décision serveur” sur le parcours complet.
 
 🛠️ En tant que Developer, je veux :
-Un journal d’audit (audit trail) non ambigu : consultation, export, tentative refusée, contexte.
-Des traces corrélables E2E : session → action → ressource → décision serveur.
+Des règles serveur uniques, non ambiguës, qui font foi pour l’acceptation ou le rejet.
+Une traçabilité E2E : heure de soumission → règle cutoff → décision → statut final.
 
 🙂 En tant que End User, je veux :
-Être protégé : pas le droit = bloqué, droit = traçable.
-Ne pas être exposé parce que le système n’arrive pas à raconter ce qui s’est passé.
+Savoir immédiatement si je suis encore dans la fenêtre utile.
+Ne pas découvrir “trop tard” après avoir tout saisi.
 
 🛡️ En tant que QA, j’interviens afin de :
-Définir un E2E “consultation sensible → trace créée → vérification journal d’audit → preuve retrouvable”.
-Tester aussi les refus, parce qu’un refus sans trace, c’est une faille de gouvernance.
-Exiger des preuves auditables : journal consultable, horodatage, corrélation des actions.
+Définir un E2E “paiement avant heure affichée → cutoff serveur dépassé → rejet clair → alternative proposée”.
+Tester le décalage entre affichage, serveur, et système aval.
+Exiger des preuves auditables : horodatage, règle appliquée, décision serveur, statut final.
 
-Quand l’audit arrive, vous sortez quoi : une liste de droits… ou l’historique réel des consultations ?
+Votre point de rupture : vous testez l’heure affichée… ou l’heure réellement appliquée ?
 
 📌 Zone technique.
-Journal d’audit : journal des actions utilisable en contrôle interne.
-Corrélation : relier session, action et ressource, sans ambiguïté.
-Ressource sensible : donnée critique (deal, allocations, documents).
-Preuves : journaux, horodatage, traces corrélées.
+Cutoff : heure limite de prise en charge.
+Décision serveur : règle qui fait foi, pas le libellé écran.
+Preuves : timestamps + règle appliquée + statut final.
 
-#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #Agile #Scrum #E2E #ECM #Audit
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Treasury #BanqueDInvestissement
 
 Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
-Suivez-moi : chaque jour, une vision 360° sur un cas concret pour des releases maîtrisées.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
