@@ -1,5 +1,5 @@
 # 🔍 Health Check Report
-Généré le Sat Mar  7 22:43:47 UTC 2026
+Généré le Sat Mar  7 23:31:42 UTC 2026
 
 ## 📁 Vérification de la structure
 - 🟢 OK : dossier présent → docs/posts
@@ -85,8 +85,18 @@ Généré le Sat Mar  7 22:43:47 UTC 2026
   - 🟢 Image trouvée : 2026-04-09_image.png
 - 🟢 OK : post valide → 2026-04-10_post.txt
   - 🟢 Image trouvée : 2026-04-10_image.png
+- 🟢 OK : post valide → 2026-04-13_post.txt
+  - 🟢 Image trouvée : 2026-04-13_image.png
+- 🟢 OK : post valide → 2026-04-14_post.txt
+  - 🟢 Image trouvée : 2026-04-14_image.png
+- 🟢 OK : post valide → 2026-04-15_post.txt
+  - 🟢 Image trouvée : 2026-04-15_image.png
+- 🟢 OK : post valide → 2026-04-16_post.txt
+  - 🟢 Image trouvée : 2026-04-16_image.png
+- 🟢 OK : post valide → 2026-04-17_post.txt
+  - 🟢 Image trouvée : 2026-04-17_image.png
 
 ## 📚 Vérification de history.json
 - 🟢 OK : JSON valide
-- Nombre d'entrées : 37
+- Nombre d'entrées : 42
 
