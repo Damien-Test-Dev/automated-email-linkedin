@@ -105,6 +105,20 @@
     "links": []
   },
   {
+    "date": "2026-03-14",
+    "id": "UCFlow-20260314-001",
+    "image": "images/2026-03-14_image.png",
+    "text": "✨Test end-to-end · Cash Management · fuseaux horaires : un paiement peut être “à l’heure” pour toi… et déjà trop tard pour l’autre.\nLe temps local rassure. Le temps métier tranche.\n\nEn banque d’investissement, un paiement ne reste pas dans un seul fuseau.\nFront, serveur, banque correspondante, centre de traitement : chacun peut vivre dans une horloge différente.\nSi ton parcours ne réconcilie pas ces temps, tu crées une fausse sécurité.\n\n🎯 En tant que Product Owner, je veux :\nUn parcours qui explicite le fuseau de référence sur la décision.\nUne Definition of Done qui impose “test multi-timezone” sur les paiements critiques.\n\n🛠️ En tant que Developer, je veux :\nUne logique serveur basée sur un temps de référence clair et cohérent.\nUne traçabilité E2E : heure locale user → heure serveur → heure système aval → décision.\n\n🙂 En tant que End User, je veux :\nComprendre si le paiement est jugé selon mon heure ou celle du canal bancaire.\nNe pas être piégé par une interface rassurante mais fausse.\n\n🛡️ En tant que QA, j’interviens afin de :\nDéfinir un E2E “paiement saisi avant cutoff local → cutoff aval dépassé → rejet clair → report”.\nTester les décalages de fuseaux entre user, serveur et système externe.\nExiger des preuves auditables : timestamps multi-zones, décision finale, statut final.\n\nVotre risque numéro un : le paiement en retard… ou le fuseau qui le cache ?\n\n📌 Zone technique.\nFuseau de référence : heure qui fait foi pour décider.\nTemps local : heure vue par l’utilisateur.\nPreuves : timestamps par système + décision + statut final.\n\n#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Payments #TimeZones\n\nTest tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.\nChaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.",
+    "links": []
+  },
+  {
+    "date": "2026-03-15",
+    "id": "UCFlow-20260315-001",
+    "image": "images/2026-03-15_image.png",
+    "text": "✨Test end-to-end · Cash Management · calendrier bancaire : le bug invisible, c’est le jour non ouvré que personne n’a vu venir.\nLe paiement “part” aujourd’hui. Le cash, lui, attend demain.\n\nEn cash management, un calendrier n’est pas un décor.\nC’est une règle de décision.\nSi le système ignore un jour férié local, un pays, une devise, ou un canal spécifique, le parcours ment sur la date réelle.\n\n🎯 En tant que Product Owner, je veux :\nUn parcours qui tient compte des jours ouvrés réels selon pays, devise, et canal.\nUne Definition of Done qui impose “cas jour férié local” sur les paiements sensibles.\n\n🛠️ En tant que Developer, je veux :\nUn moteur calendrier fiable, partagé, et appliqué côté serveur.\nUne traçabilité E2E : date de soumission → calendrier appliqué → date effective → statut final.\n\n🙂 En tant que End User, je veux :\nSavoir si le paiement sera traité aujourd’hui ou reporté.\nNe pas décider sur une date “théorique”.\n\n🛡️ En tant que QA, j’interviens afin de :\nDéfinir un E2E “paiement saisi jour ouvré local → jour férié canal aval → report clair → nouvelle date visible”.\nTester les calendriers croisés : devise, pays, banque correspondante.\nExiger des preuves auditables : calendrier appliqué, date effective, décision serveur.\n\nVous testez quoi : la date saisie… ou la date réellement opérable ?\n\n📌 Zone technique.\nJour ouvré : jour réellement traitable pour le canal concerné.\nCalendrier bancaire : règles de jours ouvrés/non ouvrés.\nPreuves : calendrier appliqué + date effective + timestamps.\n\n#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Calendars\n\nTest tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.\nChaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.",
+    "links": []
+  },
+  {
     "date": "2026-03-16",
     "id": "UCFlow-20260316-001",
     "image": "images/2026-03-16_image.png",
