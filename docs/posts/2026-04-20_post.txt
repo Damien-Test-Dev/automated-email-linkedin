@@ -1,0 +1,36 @@
+✨Test end-to-end · Cash Management · cash pooling : le bug le plus dangereux n’est pas le seuil trop bas.
+C’est le seuil mal compris, que tout le monde pense maîtriser.
+
+En cash management, une règle de pooling ne sert pas à “faire joli” dans un paramétrage.
+Elle décide quand le cash doit bouger, combien, et dans quel ordre.
+Vu en production : le métier comprend le seuil comme un “solde minimum garanti”, alors que le moteur l’utilise comme un simple “seuil de déclenchement”.
+Résultat : la trésorerie est rassurée, mais le cash ne bouge pas.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la règle de pooling est lisible : seuil, logique de déclenchement, priorité et impact attendu.
+Une Definition of Done qui impose une compréhension identique de la règle par le métier et par le système.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur non ambiguës, avec une seule signification possible.
+Une traçabilité E2E : solde observé → seuil appliqué → décision de sweep → statut final.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi le sweep part… ou pourquoi il ne part pas.
+Ne pas découvrir après coup que le seuil ne voulait pas dire ce que je croyais.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “solde proche du seuil → interprétation métier → décision moteur → résultat réel”.
+Tester les zones grises : seuil atteint, seuil dépassé, seuil presque atteint.
+Exiger des preuves auditables : règle appliquée, valeur observée, décision serveur, horodatage.
+
+Votre point de rupture : vous testez la présence du seuil… ou la compréhension réelle de sa logique ?
+
+📌 Zone technique.
+Cash pooling : mécanisme d’optimisation de trésorerie entre comptes.
+Seuil : niveau à partir duquel une règle de sweep se déclenche ou non.
+Preuves : solde observé + règle appliquée + décision + horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #CashPooling #Treasury #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

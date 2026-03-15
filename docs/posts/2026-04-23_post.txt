@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · multi-entités : le même pooling peut être juste ici… et faux juste à côté.
+Une règle cohérente sur un compte ne garantit rien sur tout le périmètre.
+
+En cash management, le pooling traverse souvent plusieurs comptes, entités, devises, périmètres, banques et contraintes locales.
+Le piège : une règle “bonne” sur un compte maître, mais incohérente sur une filiale, une devise ou un compte local.
+Et là, tu ne crées pas seulement un bug. Tu crées une fausse vision consolidée.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la logique de pooling reste cohérente entre comptes, entités et règles locales.
+Une Definition of Done qui impose la cohérence multi-entités / multi-comptes sur le flux complet.
+
+🛠️ En tant que Developer, je veux :
+Une règle côté serveur capable de gérer les écarts de périmètre sans créer de contradictions.
+Une traçabilité E2E : compte source → entité → règle locale → sweep → compte cible → statut final.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi un sweep passe pour une entité et pas pour une autre.
+Ne pas voir un périmètre “au vert” alors qu’un autre est bloqué sans visibilité.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “même règle de pooling → entité A OK / entité B rejetée → explication claire → cohérence consolidée”.
+Tester les cas multi-devises, multi-pays et multi-périmètres.
+Exiger des preuves auditables : règle appliquée par entité, horodatage, décision serveur, état final consolidé.
+
+Vous testez quoi : un compte isolé… ou la cohérence réelle du pooling sur tout le périmètre ?
+
+📌 Zone technique.
+Multi-entités : plusieurs sociétés ou périmètres juridiques.
+Compte maître : compte central recevant ou redistribuant les flux.
+Preuves : règle par entité + état final + consolidation + horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #CashPooling #Treasury #MultiEntity
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

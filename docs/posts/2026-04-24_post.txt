@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · audit : “le pooling a tourné” n’est pas une preuve.
+En banque, il faut pouvoir raconter le film complet, sans angle mort.
+
+La vraie question n’est pas “est-ce qu’un sweep a eu lieu ?”.
+La vraie question, c’est : pourquoi il a été déclenché, selon quelle règle, sur quel solde, avec quel résultat, et avec quel impact cash final.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque sweep laisse une preuve retrouvable : règle, seuil, décision, exécution, statut final.
+Une Definition of Done qui impose “audit-ready pooling” sur les règles critiques.
+
+🛠️ En tant que Developer, je veux :
+Un audit trail complet : solde observé → règle appliquée → décision → sweep → confirmation → cash disponible.
+Des logs corrélables sans ambiguïté.
+
+🙂 En tant que End User, je veux :
+Être protégé par un système qui sait expliquer son propre comportement.
+Ne pas devoir reconstruire à la main ce qui s’est passé.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “seuil observé → décision de pooling → sweep exécuté → cash disponible → preuve retrouvable”.
+Tester aussi les cas d’absence de sweep : pas de mouvement, mais décision prouvable.
+Exiger des preuves auditables : tracking, horodatage, règle appliquée, cash final.
+
+Votre niveau de maturité : voir que “ça a tourné”… ou prouver pourquoi et comment ça a tourné ?
+
+📌 Zone technique.
+Audit trail : historique corrélable de bout en bout.
+Cash final : disponibilité réellement obtenue après exécution.
+Preuves : seuil + règle + décision + mouvement + confirmation + horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #CashPooling #Audit #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
