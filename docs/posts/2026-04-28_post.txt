@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · intraday liquidity : le cash peut exister… et être déjà indisponible.
+Le vrai piège, c’est la réserve que personne ne voit.
+
+En trésorerie, un montant affiché peut déjà être “pris” par un paiement prioritaire, une couverture, une exigence réglementaire, ou un mouvement en attente.
+Si cette réservation n’est pas visible dans le parcours, tu prends une décision sur une illusion.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les réservations qui impactent la liquidité sont visibles et compréhensibles.
+Une Definition of Done qui impose “cash réservé visible avant décision sensible”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui séparent clairement cash brut, cash réservé, et cash réellement disponible.
+Une traçabilité E2E : liquidité totale → montants réservés → solde disponible → décision.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi un solde élevé ne signifie pas toujours “je peux lancer ce paiement”.
+Savoir ce qui bloque, sans devoir reconstruire la situation à la main.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “cash visible → réservation active → disponibilité réduite → paiement correctement refusé ou re-priorisé”.
+Tester les cas où la réservation existe côté serveur, mais pas dans l’interface.
+Exiger des preuves auditables : montant réservé, cause de réservation, horodatage, décision finale.
+
+Votre angle mort : vous regardez le cash total… ou le cash encore libre ?
+
+📌 Zone technique.
+Réservation : montant déjà affecté à un usage prioritaire ou bloqué.
+Cash libre : cash restant après déduction des réservations.
+Décision serveur : calcul qui fait foi sur la disponibilité réelle.
+Preuves : montant réservé, motif, calcul, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #IntradayLiquidity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

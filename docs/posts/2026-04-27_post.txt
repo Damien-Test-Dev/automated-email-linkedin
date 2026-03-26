@@ -1,0 +1,36 @@
+✨Test end-to-end · Cash Management · intraday liquidity : le chiffre le plus dangereux est parfois le bon… au mauvais moment.
+Un solde affiché ne dit pas toujours ce que tu peux réellement utiliser.
+
+En cash management, le tableau de bord rassure vite.
+Mais entre le cash comptable, le cash réservé, le cash en transit, et le cash réellement mobilisable, il y a parfois un monde.
+Et ce monde, c’est là que les mauvaises décisions naissent.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement solde affiché, cash disponible, et cash mobilisable.
+Une Definition of Done qui impose “vision cash exploitable” sur les écrans et sur la logique métier.
+
+🛠️ En tant que Developer, je veux :
+Des calculs côté serveur qui exposent un cash disponible réel, pas une simple photographie comptable.
+Une traçabilité E2E : solde brut → réservations → mouvements en cours → cash disponible final.
+
+🙂 En tant que End User, je veux :
+Savoir immédiatement ce que je peux utiliser, sans interpréter un chiffre trompeur.
+Ne pas engager un paiement sur un cash qui existe à l’écran, mais pas dans la réalité opérationnelle.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “solde affiché élevé → réservations invisibles → cash disponible réduit → décision correcte”.
+Tester les écarts entre vision comptable et vision opérationnelle.
+Exiger des preuves auditables : horodatage, règles de calcul, solde brut, cash réservé, cash disponible final.
+
+Votre point de rupture : vous pilotez le solde affiché… ou le cash réellement utilisable ?
+
+📌 Zone technique.
+Intraday liquidity : liquidité disponible au cours de la journée.
+Cash disponible : cash réellement utilisable à un instant donné.
+Cash mobilisable : cash qui peut être engagé sans créer de risque immédiat.
+Preuves : soldes, réservations, calcul appliqué, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #IntradayLiquidity #Treasury #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
