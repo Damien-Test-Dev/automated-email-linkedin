@@ -1,0 +1,36 @@
+✨Test end-to-end · Cash Management · instructions de paiement : “actif” ne veut pas dire “encore valide”.
+Une instruction encore visible peut déjà être trop vieille pour être sûre.
+
+En cash management, beaucoup d’incidents viennent d’une donnée qui n’aurait plus dû servir.
+Le piège classique : une instruction apparaît comme active dans l’outil, alors qu’elle a été remplacée, suspendue, ou rendue inutilisable dans la chaîne réelle.
+Résultat : le paiement part avec une confiance artificielle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement ce qui est visible, actif, valide, et utilisable maintenant.
+Une Definition of Done qui impose “instruction active mais obsolète” dans les scénarios critiques.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui bloquent l’usage d’une instruction obsolète, même si elle reste affichée.
+Une traçabilité E2E : instruction affichée → statut réel → décision serveur → action possible.
+
+🙂 En tant que End User, je veux :
+Comprendre immédiatement si une instruction peut encore être utilisée.
+Ne pas découvrir après coup qu’une donnée visible ne devait plus servir.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “instruction visible → statut réel obsolète → blocage clair → choix d’une instruction valide”.
+Tester les cas où l’interface rassure, mais où le serveur doit protéger.
+Exiger des preuves auditables : statut réel, date de validité, décision serveur, horodatage.
+
+Votre standard : afficher ce qui existe… ou permettre uniquement ce qui est encore valide ?
+
+📌 Zone technique.
+Actif : visible ou référencé dans le système.
+Valide : encore autorisé à l’usage, au moment de la décision.
+Obsolète : donnée présente mais qui ne doit plus être utilisée.
+Preuves : statut réel, date, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Payments #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

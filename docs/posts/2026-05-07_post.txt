@@ -1,0 +1,36 @@
+✨Test end-to-end · Cash Management · instructions de paiement : la bonne donnée dans un outil ne suffit pas.
+Si le reste de la chaîne n’est pas aligné, ton paiement part avec une vérité locale.
+
+En cash management, une instruction peut être corrigée dans un référentiel, mais rester ancienne dans le moteur de paiement, dans le portail, ou dans un traitement aval.
+Le piège n’est pas la mise à jour.
+Le piège, c’est la propagation incomplète.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la même instruction fait foi sur tout le flux, pas seulement dans l’écran principal.
+Une Definition of Done qui impose “propagation multi-systèmes vérifiée” pour toute mise à jour critique.
+
+🛠️ En tant que Developer, je veux :
+Une source d’autorité claire et une propagation fiable des instructions de paiement.
+Une traçabilité E2E : mise à jour → diffusion → synchronisation → instruction réellement utilisée.
+
+🙂 En tant que End User, je veux :
+Ne pas voir une instruction “corrigée” d’un côté et encore fausse de l’autre.
+Pouvoir faire confiance à la chaîne complète, pas à un seul outil.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “instruction mise à jour → système A aligné / système B en retard → paiement bloqué proprement ou corrigé”.
+Tester les écarts de propagation et les retards de synchronisation.
+Exiger des preuves auditables : source d’autorité, état par système, décision finale, horodatage.
+
+Vous testez quoi : la mise à jour locale… ou la vérité de l’instruction sur toute la chaîne ?
+
+📌 Zone technique.
+Source d’autorité : système qui fait foi pour une donnée.
+Propagation : diffusion de la bonne donnée vers les autres systèmes.
+Synchronisation : alignement réel entre les outils.
+Preuves : état par système, source de référence, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Payments #MultiApps #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
