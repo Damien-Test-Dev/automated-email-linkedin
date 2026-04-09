@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · nostro : une vision correcte sur un compte ne garantit rien sur l’ensemble.
+Le cash consolidé devient dangereux quand les sources ne racontent pas la même réalité.
+
+En cash management, la vue nostro traverse souvent plusieurs banques, plusieurs comptes, plusieurs devises, plusieurs fuseaux.
+Le piège n’est pas seulement l’écart local.
+Le piège, c’est la consolidation trompeuse : un périmètre semble juste, pendant qu’un autre est en retard, incomplet, ou faux.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la consolidation n’efface jamais l’état réel de chaque compte.
+Une Definition of Done qui impose “cohérence multi-banques / multi-comptes” sur la vision cash.
+
+🛠️ En tant que Developer, je veux :
+Une source d’autorité claire par compte, avec une consolidation qui respecte les écarts et retards de chaque source.
+Une traçabilité E2E : compte source → banque → devise → état local → consolidation → vision finale.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi la vue globale semble saine alors qu’un compte local ne l’est pas.
+Pouvoir identifier le point exact de divergence sans naviguer partout.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “compte A aligné / compte B en retard / compte C en écart → consolidation prudente → visibilité claire”.
+Tester les cas multi-banques, multi-devises, multi-horaires.
+Exiger des preuves auditables : état par compte, source d’autorité, consolidation, horodatage.
+
+Vous testez quoi : la somme affichée… ou la cohérence réelle des comptes qui la composent ?
+
+📌 Zone technique.
+Consolidation : agrégation de plusieurs comptes dans une vue globale.
+Source d’autorité : système ou banque qui fait foi pour un compte donné.
+Preuves : état par compte, règle de consolidation, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Nostro #Treasury #MultiEntity
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · nostro : le chiffre le plus dangereux est parfois celui qui a l’air exact.
+Un solde affiché ne vaut rien s’il n’est pas confirmé par la réalité bancaire.
+
+En cash management, un compte nostro ne sert pas à rassurer un écran.
+Il sert à savoir ce qui est réellement disponible chez la banque correspondante, à un instant précis.
+Le piège classique : l’outil affiche un solde “propre”, alors que le dernier mouvement n’est pas encore confirmé, ou qu’un écart dort dans la chaîne.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement solde affiché, solde confirmé, et solde réellement exploitable.
+Une Definition of Done qui impose “solde nostro confirmé” sur les décisions sensibles.
+
+🛠️ En tant que Developer, je veux :
+Des statuts côté serveur qui séparent affichage interne, confirmation externe, et état final exploitable.
+Une traçabilité E2E : mouvement attendu → message envoyé → confirmation bancaire → solde nostro mis à jour.
+
+🙂 En tant que End User, je veux :
+Savoir si le solde que je vois est fiable maintenant, pas “probablement correct”.
+Ne pas engager une décision sur un cash qui n’est pas encore confirmé.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “mouvement lancé → solde écran mis à jour → confirmation bancaire absente → solde non confirmé visible”.
+Tester les cas où l’affichage va plus vite que la réalité bancaire.
+Exiger des preuves auditables : horodatage, confirmation externe, solde avant, solde après, décision serveur.
+
+Votre point de rupture : vous pilotez le solde affiché… ou le solde confirmé ?
+
+📌 Zone technique.
+Compte nostro : compte détenu auprès d’une autre banque pour gérer des flux et positions de cash.
+Solde confirmé : solde validé par la réalité bancaire externe.
+Preuves : message envoyé, confirmation reçue, soldes, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Nostro #Treasury #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

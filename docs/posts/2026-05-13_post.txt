@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · nostro : le paiement “passé” n’existe pas tant qu’il n’apparaît pas là où il doit apparaître.
+Un mouvement attendu mais absent n’est pas un détail. C’est un risque cash.
+
+En banque, un flux peut être validé, envoyé, voire annoncé comme exécuté… et pourtant rester invisible sur le compte nostro.
+Le problème n’est pas seulement l’absence.
+Le problème, c’est l’illusion de complétude : tout semble fini, sauf là où la vérité cash se voit.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement “mouvement attendu”, “mouvement reçu”, et “mouvement confirmé”.
+Une Definition of Done qui impose un scénario “flux annoncé, mais absent du compte nostro”.
+
+🛠️ En tant que Developer, je veux :
+Des contrôles côté serveur qui bloquent les conclusions trop rapides tant que le mouvement n’est pas confirmé là où il doit l’être.
+Une traçabilité E2E : instruction → exécution annoncée → attente nostro → confirmation ou écart.
+
+🙂 En tant que End User, je veux :
+Savoir si un paiement est réellement arrivé sur le compte concerné.
+Ne pas traiter comme “terminé” un mouvement qui n’a pas encore de réalité bancaire visible.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “paiement annoncé comme exécuté → mouvement absent sur le nostro → alerte claire → investigation guidée”.
+Tester les cas où le statut amont est rassurant, mais la preuve cash est absente.
+Exiger des preuves auditables : référence du flux, état amont, état nostro, horodatage, décision finale.
+
+Votre angle mort : vous testez l’exécution annoncée… ou la présence réelle du mouvement ?
+
+📌 Zone technique.
+Mouvement attendu : flux théorique ou annoncé par un système amont.
+Mouvement confirmé : flux réellement visible et validé sur le compte concerné.
+Preuves : référence du flux, état amont, état bancaire, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Nostro #Payments #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
