@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · réconciliations cash : détecter un écart ne suffit pas.
+Un écart connu, sans cause claire, reste un risque non traité.
+
+En cash management, beaucoup d’équipes savent voir qu’il y a un problème.
+Moins nombreuses sont celles qui savent dire précisément d’où il vient.
+Et quand la cause reste floue, la clôture devient une décision de confort, pas une décision de contrôle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque écart mène à une qualification exploitable.
+Une Definition of Done qui impose “écart détecté + cause identifiée ou escalade explicite”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui classent les écarts selon leur nature : retard, doublon, montant partiel, donnée manquante, mouvement absent.
+Une traçabilité E2E : écart détecté → qualification → traitement → clôture ou escalade.
+
+🙂 En tant que End User, je veux :
+Comprendre si l’écart vient d’un retard, d’une erreur de donnée, ou d’un vrai défaut de cash.
+Ne pas recevoir un statut “à analyser” sans direction claire.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “écart détecté → qualification → cause probable → action suivante → statut final”.
+Tester les cas où l’écart est visible, mais la cause reste ambiguë.
+Exiger des preuves auditables : nature de l’écart, classification, décision serveur, horodatage.
+
+Votre angle mort : vous détectez l’écart… ou vous prouvez sa cause ?
+
+📌 Zone technique.
+Qualification : catégorisation de l’écart pour guider l’action.
+Escalade : transfert explicite d’un écart non résolu vers un niveau adapté.
+Preuves : écart détecté, cause qualifiée, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Reconciliation #Payments #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
