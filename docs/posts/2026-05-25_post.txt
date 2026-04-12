@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · 4-eyes : le vrai contrôle commence quand une seule personne ne peut pas tout faire.
+Initier, valider, libérer : si tout tient dans la même main, le risque tient aussi dans la même main.
+
+En cash management, un paiement sensible ne devrait jamais dépendre d’un seul utilisateur du début à la fin.
+Le piège classique : une séparation des rôles “visible” dans l’outil, mais contournable dans le parcours réel.
+Et quand la pression monte, cette fausse séparation devient une faille de gouvernance.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque étape sensible a un rôle clair : initier, valider, libérer.
+Une Definition of Done qui impose “aucun utilisateur ne peut exécuter seul la chaîne complète”.
+
+🛠️ En tant que Developer, je veux :
+Des contrôles côté serveur qui empêchent réellement le cumul des rôles interdits.
+Une traçabilité E2E : création → validation → libération → exécution, avec identité de chaque acteur.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi je peux faire une action et pas une autre.
+Ne pas découvrir au dernier moment qu’un paiement reste bloqué à cause d’un rôle mal conçu.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “même utilisateur tente d’initier puis de valider puis de libérer → blocage serveur propre → parcours conforme”.
+Tester les permissions réelles, pas seulement les boutons visibles.
+Exiger des preuves auditables : rôle de l’utilisateur, décision serveur, identité des validateurs, horodatage.
+
+Votre point de rupture : vous testez les écrans… ou la vraie séparation des rôles ?
+
+📌 Zone technique.
+4-eyes : principe selon lequel une action sensible doit être contrôlée par au moins deux personnes.
+Libérer : autoriser l’exécution finale du paiement.
+Preuves : identités, rôles, décision serveur, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Treasury #RiskControl
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

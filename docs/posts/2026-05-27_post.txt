@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · délégations : le vrai risque n’est pas l’exception.
+C’est l’exception qui ne s’éteint jamais.
+
+En cash management, les délégations temporaires sont parfois indispensables : absence, urgence, pic d’activité, incident.
+Le piège commence quand un droit “provisoire” reste actif après la situation exceptionnelle.
+Et là, une mesure de continuité devient une dette de contrôle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque délégation a une durée claire, une justification, et une extinction automatique.
+Une Definition of Done qui impose “délégation temporaire traçable et révocable”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui appliquent une date de fin réelle aux délégations sensibles.
+Une traçabilité E2E : délégation accordée → période active → actions réalisées → expiration → retrait effectif.
+
+🙂 En tant que End User, je veux :
+Comprendre ce que je peux faire, jusqu’à quand, et pourquoi.
+Ne pas rester par erreur avec un droit que je ne devrais plus avoir.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “délégation créée pour urgence → usage autorisé → date dépassée → action interdite”.
+Tester les expirations réelles, pas seulement l’affichage d’une date.
+Exiger des preuves auditables : justification, date de fin, décision serveur, actions réalisées, horodatage.
+
+Votre angle mort : vous gérez l’urgence… ou la fin de l’urgence ?
+
+📌 Zone technique.
+Délégation temporaire : droit accordé pour une période limitée.
+Expiration : fin effective du droit côté serveur.
+Preuves : justification, période, actions, retrait, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Payments #Governance #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
