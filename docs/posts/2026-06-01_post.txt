@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · résilience : le vrai danger n’est pas toujours la panne.
+C’est le paiement qui continue alors qu’un contrôle critique ne fonctionne plus.
+
+En cash management, un système peut perdre un contrôle clé : sanction screening, validation serveur, vérification de rôle, contrôle de seuil, moteur de décision.
+Le piège n’est pas l’arrêt visible.
+Le piège, c’est le passage silencieux d’un flux qui n’aurait jamais dû avancer.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui bloque proprement dès qu’un contrôle critique devient indisponible.
+Une Definition of Done qui impose “pas de continuité dégradée sur un contrôle bloquant”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui empêchent tout contournement quand un contrôle obligatoire est indisponible.
+Une traçabilité E2E : paiement initié → appel au contrôle → indisponibilité détectée → blocage propre → statut explicite.
+
+🙂 En tant que End User, je veux :
+Savoir immédiatement que le paiement est bloqué pour une raison de sécurité ou de conformité.
+Ne pas croire qu’il est parti alors qu’il a été retenu à juste titre.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “contrôle critique indisponible → paiement bloqué → message clair → aucune exécution cachée”.
+Tester les pannes franches et les dégradations partielles.
+Exiger des preuves auditables : type de contrôle indisponible, décision serveur, absence d’exécution, horodatage.
+
+Votre point de rupture : vous gérez la panne visible… ou le flux qui passe quand il ne devrait pas ?
+
+📌 Zone technique.
+Contrôle critique : contrôle sans lequel un paiement ne doit pas avancer.
+Blocage propre : arrêt explicite, traçable, sans exécution silencieuse.
+Preuves : appel au contrôle, décision, statut final, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Resilience #Payments #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

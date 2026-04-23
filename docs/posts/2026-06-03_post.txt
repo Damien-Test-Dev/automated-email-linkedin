@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · résilience : une panne en plein workflow ne doit pas effacer la gouvernance.
+Le 4-eyes n’a de valeur que s’il survit aussi à l’incident.
+
+En cash management, un paiement peut être en attente de validation, validé mais non libéré, ou libéré mais non confirmé quand la panne survient.
+Le piège : reprendre vite, mais perdre au passage la séparation des rôles, les validations acquises, ou les étapes encore dues.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la reprise respecte intégralement les validations déjà faites et celles encore requises.
+Une Definition of Done qui impose “workflow d’approbation résilient à la panne”.
+
+🛠️ En tant que Developer, je veux :
+Des états serveur capables de conserver précisément où en était le paiement dans sa chaîne d’approbation.
+Une traçabilité E2E : initiation → validation partielle → panne → reprise → contrôles maintenus → exécution.
+
+🙂 En tant que End User, je veux :
+Savoir si je dois revalider, attendre, ou reprendre à une étape précise.
+Ne pas perdre la visibilité sur ce qui a déjà été approuvé.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “paiement en cours de validation → panne → reprise → aucune perte de gouvernance → état cohérent”.
+Tester les pannes entre validation et libération.
+Exiger des preuves auditables : étape atteinte, identités des validateurs, décision de reprise, horodatage.
+
+Votre angle mort : vous reprenez le paiement… ou vous reprenez aussi sa gouvernance ?
+
+📌 Zone technique.
+Workflow d’approbation : chaîne initier / valider / libérer.
+État persistant : état conservé malgré une panne ou un redémarrage.
+Preuves : étape atteinte, validateurs, décision de reprise, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #4Eyes #Resilience #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

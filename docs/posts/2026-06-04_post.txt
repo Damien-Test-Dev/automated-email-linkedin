@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · reprise : un système “up” ne veut pas dire que le parcours est revenu.
+Le vrai danger, c’est la reprise partielle qui donne l’illusion du retour à la normale.
+
+En cash management, le portail peut revenir avant le moteur de paiement, le moteur avant le screening, le monitoring avant la source d’autorité.
+Le piège n’est pas l’indisponibilité complète.
+Le piège, c’est la disponibilité inégale qui autorise une action alors que la chaîne reste cassée.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui indique clairement quand la reprise est partielle et ce qui reste indisponible.
+Une Definition of Done qui impose “statut de reprise lisible sur toute la chaîne”.
+
+🛠️ En tant que Developer, je veux :
+Des règles serveur qui empêchent un retour prématuré à la normale tant que tous les composants critiques ne sont pas revenus.
+Une traçabilité E2E : composant A revenu → composant B indisponible → action tentée → blocage ou dégradation contrôlée.
+
+🙂 En tant que End User, je veux :
+Comprendre si le système est vraiment revenu, ou seulement partiellement.
+Ne pas relancer un paiement parce qu’un seul écran semble de nouveau disponible.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “portail revenu / moteur encore indisponible → action tentée → décision prudente → statut clair”.
+Tester les reprises dissymétriques entre composants.
+Exiger des preuves auditables : composants disponibles, composants indisponibles, décision prise, horodatage.
+
+Vous testez quoi : le retour d’un écran… ou le retour réel du parcours complet ?
+
+📌 Zone technique.
+Reprise partielle : retour inégal des composants d’une chaîne.
+Composant critique : brique nécessaire à une décision fiable ou à une exécution sûre.
+Preuves : état des composants, décision, impact utilisateur, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Resilience #MultiApps #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
