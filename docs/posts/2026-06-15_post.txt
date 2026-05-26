@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · funding cash : le vrai piège n’est pas le manque de cash.
+C’est le cash qui existe à l’écran, mais qui n’est pas finançable au moment critique.
+
+En trésorerie, un montant peut apparaître disponible alors qu’il n’est pas réellement mobilisable pour couvrir un besoin immédiat.
+Le problème n’est pas seulement la liquidité.
+Le problème, c’est la confusion entre cash visible, cash mobilisable, et cash réellement finançable maintenant.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement cash affiché, cash mobilisable, et capacité réelle de financement.
+Une Definition of Done qui impose “vision finançable réelle” sur les écrans de décision.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui calculent la capacité de financement à partir de données réellement exploitables.
+Une traçabilité E2E : solde affiché → contraintes → capacité mobilisable → décision de financement.
+
+🙂 En tant que End User, je veux :
+Savoir si je peux réellement financer le besoin maintenant.
+Ne pas découvrir trop tard qu’un cash “visible” ne pouvait pas être mobilisé.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “cash affiché suffisant → contraintes réelles → capacité finançable réduite → décision correcte”.
+Tester les écarts entre visibilité écran et capacité réelle.
+Exiger des preuves auditables : soldes, contraintes appliquées, capacité calculée, horodatage.
+
+Votre point de rupture : vous pilotez le cash affiché… ou le cash réellement finançable ?
+
+📌 Zone technique.
+Funding cash : capacité à mobiliser du cash pour couvrir un besoin donné.
+Cash mobilisable : cash réellement activable sans créer un autre risque immédiat.
+Preuves : soldes, contraintes, calcul, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #TreasuryFinancing #Liquidity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
