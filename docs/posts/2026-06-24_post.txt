@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · correlation IDs : le même paiement avec plusieurs identifiants, c’est le début du chaos.
+Pas parce que le flux casse tout de suite. Parce qu’il devient illisible.
+
+En cash management, un paiement peut avoir un ID front, un ID backend, un ID moteur, un ID bancaire, un ID de monitoring.
+Le problème n’est pas d’avoir plusieurs identifiants.
+Le problème, c’est de ne pas savoir les relier proprement quand il faut expliquer, investiguer, ou auditer.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les identifiants techniques et métier sont reliés de façon exploitable et compréhensible.
+Une Definition of Done qui impose “chaîne d’identifiants corrélée et retrouvable”.
+
+🛠️ En tant que Developer, je veux :
+Une table de correspondance fiable entre identifiants, sans ambiguïté ni perte de lien.
+Une traçabilité E2E : ID métier → ID technique → ID aval → ID retour → vue corrélée unique.
+
+🙂 En tant que End User, je veux :
+Pouvoir partir d’une seule référence et retrouver toutes les autres sans enquête artisanale.
+Ne pas subir une fragmentation de l’information dès qu’un incident apparaît.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “paiement créé avec plusieurs IDs → incident aval → reconstruction complète du flux via corrélation”.
+Tester les ruptures de mapping, les IDs orphelins, et les collisions.
+Exiger des preuves auditables : IDs liés, système source, système cible, horodatage.
+
+Votre angle mort : vous stockez plusieurs identifiants… ou vous garantissez leur relation exploitable ?
+
+📌 Zone technique.
+Correlation ID : identifiant servant à relier des événements ou objets entre systèmes.
+Mapping : lien explicite entre plusieurs identifiants d’un même flux.
+Preuves : table de correspondance, événements liés, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Observability #CorrelationID #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
