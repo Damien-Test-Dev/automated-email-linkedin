@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · intérêts : le danger n’est pas seulement le mauvais résultat.
+C’est le résultat qui semble plausible… avec une convention fausse derrière.
+
+En cash management, les intérêts dépendent rarement d’un simple taux.
+Ils dépendent aussi d’une convention de calcul, d’une base jours, d’une période, d’une date de valeur, d’une logique métier.
+Le piège : obtenir un chiffre crédible, mais par un raisonnement incorrect. Et ce bug-là est premium.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la convention de calcul est visible, comprise, et défendable.
+Une Definition of Done qui impose “résultat juste + convention juste”.
+
+🛠️ En tant que Developer, je veux :
+Des moteurs de calcul côté serveur qui appliquent la bonne convention selon le produit, le pays, ou la règle métier.
+Une traçabilité E2E : base de calcul → convention choisie → formule appliquée → résultat final.
+
+🙂 En tant que End User, je veux :
+Savoir sur quelle base le coût a été calculé.
+Ne pas devoir faire confiance à un chiffre que personne ne sait expliquer.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “même taux → deux conventions possibles → résultat attendu selon la bonne règle”.
+Tester les cas où le chiffre paraît correct, mais la logique est fausse.
+Exiger des preuves auditables : convention retenue, formule, résultat, horodatage.
+
+Votre angle mort : vous vérifiez le chiffre final… ou le raisonnement qui l’a produit ?
+
+📌 Zone technique.
+Convention de calcul : règle métier ou financière qui définit comment calculer un coût ou un intérêt.
+Base jours : nombre de jours retenu comme référence dans le calcul.
+Preuves : convention, formule, paramètres, résultat, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Interest #Treasury #DataQuality
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

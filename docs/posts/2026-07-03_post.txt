@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · audit : “le coût a été calculé” n’est pas une preuve.
+En banque, un calcul n’existe vraiment que s’il peut être expliqué et défendu.
+
+La vraie question n’est pas seulement “combien a été prélevé ?”.
+La vraie question, c’est : sur quelle base, avec quelle convention, à quelle date, avec quel taux, et avec quel résultat final.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque frais ou intérêt laisse une preuve claire, retrouvable, et compréhensible.
+Une Definition of Done qui impose “audit-ready fee calculation”.
+
+🛠️ En tant que Developer, je veux :
+Un audit trail complet : donnée source → paramètres → convention → calcul → résultat → impact final.
+Des logs corrélables qui permettent de reconstruire le calcul sans ambiguïté.
+
+🙂 En tant que End User, je veux :
+Être protégé par un système qui sait expliquer pourquoi tel coût a été appliqué.
+Ne pas dépendre d’une interprétation manuelle lorsque la question revient plus tard.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “donnée source → calcul de coût → résultat final → preuve retrouvable”.
+Tester aussi les écarts de paramètre, de date, et de convention.
+Exiger des preuves auditables : paramètres, formule, résultat, impact final, horodatage.
+
+Votre niveau de maturité : voir un coût appliqué… ou prouver pourquoi il est juste ?
+
+📌 Zone technique.
+Audit-ready : prouvable, horodaté, défendable.
+Fee calculation : calcul des frais ou intérêts associés à une opération.
+Preuves : paramètres, convention, formule, résultat, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Fees #Interest #Audit #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

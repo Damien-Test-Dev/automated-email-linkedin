@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · frais : le chiffre affiché ne vaut rien s’il n’est pas celui qui est réellement prélevé.
+L’écran rassure. Le débit, lui, tranche.
+
+En cash management, le coût annoncé au moment de la préparation n’est pas toujours celui qui se retrouve réellement appliqué.
+Le piège : affichage estimatif, grille non mise à jour, règle aval différente, ou recalcul tardif.
+Résultat : un écart de confiance entre ce qui a été annoncé et ce qui a été réellement pris.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les frais affichés sont cohérents avec les frais réellement prélevés, ou clairement présentés comme estimatifs.
+Une Definition of Done qui impose “affichage cohérent avec débit réel”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui distinguent estimation, calcul ferme, et montant réellement appliqué.
+Une traçabilité E2E : frais affichés → recalcul éventuel → prélèvement réel → statut final.
+
+🙂 En tant que End User, je veux :
+Comprendre si le coût affiché est définitif ou susceptible d’évoluer.
+Ne pas subir un écart sans explication entre prévision et réalité.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “frais affichés → exécution → frais réellement prélevés → cohérence ou justification d’écart”.
+Tester les cas d’estimation, de mise à jour tardive, et de règle aval différente.
+Exiger des preuves auditables : coût affiché, coût appliqué, justification, horodatage.
+
+Votre point de rupture : vous validez l’affichage du coût… ou le coût réellement prélevé ?
+
+📌 Zone technique.
+Frais affichés : coût visible à l’écran avant ou pendant l’exécution.
+Frais réellement prélevés : montant effectivement appliqué au débit ou au crédit.
+Preuves : coût affiché, coût final, justification, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Fees #Treasury #Payments
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · arrondis : les petits écarts sont souvent les plus sous-estimés.
+Pas parce qu’ils sont faibles. Parce qu’ils finissent par s’additionner.
+
+En cash management, un arrondi mal géré peut sembler anodin sur une ligne.
+Mais multiplié par des volumes, des jours, des comptes, ou des cycles, il devient une fuite de confiance.
+Le problème n’est pas seulement l’arrondi. Le problème, c’est l’arrondi invisible qui vit trop longtemps.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la règle d’arrondi est explicite, stable, et cohérente sur toute la chaîne.
+Une Definition of Done qui impose “règle d’arrondi testée sur cas limites et effets cumulés”.
+
+🛠️ En tant que Developer, je veux :
+Des calculs côté serveur qui appliquent une seule convention d’arrondi, sans divergence entre services.
+Une traçabilité E2E : valeur source → précision → règle d’arrondi → valeur finale.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi un montant final diffère légèrement d’un calcul brut.
+Ne pas avoir l’impression que le système “grignote” sans explication.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “montant calculé → arrondi appliqué → total consolidé → impact cumulé vérifié”.
+Tester les seuils, les décimales critiques, et les effets de répétition.
+Exiger des preuves auditables : valeur avant arrondi, règle, valeur finale, horodatage.
+
+Votre standard : accepter un petit écart… ou comprendre son effet cumulé réel ?
+
+📌 Zone technique.
+Arrondi : transformation d’une valeur selon une règle de précision.
+Effet cumulé : impact agrégé d’un petit écart répété dans le temps ou en volume.
+Preuves : valeur brute, règle, résultat, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Fees #Interest #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

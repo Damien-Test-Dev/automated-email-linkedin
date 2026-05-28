@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · frais & intérêts : le bug le plus discret n’est pas toujours dans le montant principal.
+Il est souvent dans le coût qui l’accompagne.
+
+En cash management, un paiement peut avoir le bon montant, la bonne date, le bon statut… et pourtant générer un coût faux.
+Le piège classique : tout le monde contrôle le principal, presque personne ne challenge sérieusement les frais et intérêts associés.
+Et c’est précisément pour ça que ce défaut reste longtemps silencieux.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où le coût du flux est traité comme une donnée critique, pas comme un détail annexe.
+Une Definition of Done qui impose “montant principal correct + coût calculé correctement”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui calculent séparément montant principal, frais, intérêts, et total impacté.
+Une traçabilité E2E : montant source → règles de coût → calcul → montant final débité ou crédité.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi le coût appliqué est celui-là.
+Ne pas découvrir un écart alors que le paiement semblait parfaitement juste.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “montant principal correct → règle de coût appliquée → coût faux détecté → correction”.
+Tester les cas où seul le coût est erroné.
+Exiger des preuves auditables : montant de base, règle utilisée, coût calculé, horodatage.
+
+Votre point de rupture : vous testez le montant visible… ou le coût réel du flux ?
+
+📌 Zone technique.
+Frais : coût explicite appliqué à une opération.
+Intérêts : coût ou produit calculé selon une durée, un taux, et une convention.
+Preuves : montant de base, règle de calcul, résultat, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Fees #Interest #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
