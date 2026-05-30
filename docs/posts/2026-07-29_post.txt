@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · contingency funding : le scénario devient critique quand le funding attendu disparaît précisément au moment où tu en as besoin.
+Le risque n’est pas seulement le choc. C’est la disparition de la béquille.
+
+En trésorerie, beaucoup de plans tiennent parce qu’un financement attendu est supposé disponible en cas de tension.
+Mais si cette hypothèse casse au pire moment, toute la logique de couverture peut tomber avec elle.
+Le problème n’est pas seulement le manque de cash. Le problème, c’est le manque de cash combiné à la rupture de la solution prévue.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les hypothèses de funding de secours sont testées comme des hypothèses faillibles, pas comme des certitudes.
+Une Definition of Done qui impose “contingency funding testé en échec partiel ou total”.
+
+🛠️ En tant que Developer, je veux :
+Des règles serveur capables de recalculer la position sans le funding supposé disponible.
+Une traçabilité E2E : besoin de liquidité → funding attendu → hypothèse cassée → recalcul → plan alternatif.
+
+🙂 En tant que End User, je veux :
+Comprendre ce qui se passe si le financement de secours n’arrive pas.
+Ne pas découvrir pendant la crise que le plan de secours dépendait d’une hypothèse fragile.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “stress de liquidité + funding indisponible → recalcul → arbitrage ou escalade”.
+Tester les cas où le funding arrive trop tard, partiellement, ou pas du tout.
+Exiger des preuves auditables : hypothèse initiale, rupture simulée, décision alternative, horodatage.
+
+Votre angle mort : vous testez le plan prévu… ou le plan quand le plan prévu casse ?
+
+📌 Zone technique.
+Contingency funding : financement de secours prévu pour absorber une tension.
+Hypothèse cassée : condition supposée vraie dans le plan, mais absente dans le scénario stressé.
+Preuves : hypothèse, rupture, recalcul, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Funding #StressTesting #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

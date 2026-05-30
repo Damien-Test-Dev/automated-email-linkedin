@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · stress testing : le vrai danger n’est pas la prévision stressée.
+C’est la prévision rassurante qui ne survit pas au premier choc sérieux.
+
+En cash management, un forecast propre en scénario nominal peut donner une impression de maîtrise.
+Mais dès qu’un retard majeur, un rejet de flux critique, une sortie imprévue ou un funding non reçu frappe la chaîne, la projection peut s’effondrer.
+Le problème n’est pas seulement de prévoir. Le problème, c’est de savoir si la prévision tient encore quand les hypothèses cassent.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement scénario nominal, scénario dégradé, et scénario de stress sévère.
+Une Definition of Done qui impose “forecast testé sous stress réaliste et explicable”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur capables de recalculer la position de liquidité selon des hypothèses de stress documentées.
+Une traçabilité E2E : forecast nominal → hypothèse de stress → recalcul → impact liquidité → décision.
+
+🙂 En tant que End User, je veux :
+Comprendre si la situation reste tenable quand les hypothèses favorables disparaissent.
+Ne pas piloter sur un forecast qui n’existe que dans un monde sans friction.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “forecast au vert → choc de liquidité injecté → recalcul stress → alerte ou action”.
+Tester les hypothèses qui cassent vraiment le scénario, pas seulement les variantes confortables.
+Exiger des preuves auditables : hypothèse de stress, position recalculée, seuils, horodatage.
+
+Votre point de rupture : vous validez une prévision nominale… ou sa capacité à survivre au stress ?
+
+📌 Zone technique.
+Stress scenario : scénario dégradé simulant une rupture ou une tension de liquidité.
+Forecast nominal : prévision construite sans choc exceptionnel.
+Preuves : hypothèses, recalcul, seuils, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #StressTesting #Liquidity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

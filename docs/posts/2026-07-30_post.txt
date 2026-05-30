@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · multi-entity stress : le danger n’est pas toujours le choc global.
+C’est souvent la tension locale qui remonte et contamine tout le dispositif.
+
+En cash management, une entité, une devise, un compte, ou une zone géographique peut entrer en stress avant les autres.
+Le piège : une vue consolidée reste encore acceptable pendant qu’un foyer local de tension est déjà actif.
+Résultat : on croit gérer un global stable alors qu’une contamination est en cours.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où le stress local reste visible et n’est jamais masqué par la consolidation globale.
+Une Definition of Done qui impose “stress local + impact global” comme scénario critique.
+
+🛠️ En tant que Developer, je veux :
+Une logique côté serveur qui distingue choc local, propagation, et impact consolidé.
+Une traçabilité E2E : entité locale sous stress → propagation potentielle → agrégation → décision groupe.
+
+🙂 En tant que End User, je veux :
+Comprendre comment une tension locale peut dégrader la posture globale.
+Ne pas me laisser rassurer par une consolidation qui gomme la fragilité réelle.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “stress local significatif → effet de contamination → vision consolidée prudente”.
+Tester les scénarios multi-entités, multi-comptes, multi-devises.
+Exiger des preuves auditables : périmètre local touché, règle de propagation, impact global, horodatage.
+
+Vous testez quoi : le stress global théorique… ou la propagation réelle d’un choc local ?
+
+📌 Zone technique.
+Stress local : tension affectant un sous-périmètre spécifique.
+Propagation : transmission d’un choc local vers une vue plus globale.
+Preuves : périmètre touché, propagation, impact consolidé, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #StressTesting #MultiEntity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
