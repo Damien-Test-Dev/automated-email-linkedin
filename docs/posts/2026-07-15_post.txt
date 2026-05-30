@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · forecasting : le doublon en prévision est plus dangereux qu’en exécution.
+Parce qu’il gonfle la confiance avant même de gonfler le cash.
+
+En cash management, un même flux peut réapparaître via plusieurs sources : prévision opérationnelle, reporting bancaire, projection métier, import manuel, moteur aval.
+Le problème n’est pas seulement le doublon technique.
+Le problème, c’est le faux confort créé par un cash prévu deux fois.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où un flux prévu ne peut pas renforcer artificiellement la projection par duplication silencieuse.
+Une Definition of Done qui impose “déduplication forecast” sur les sources critiques.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur capables d’identifier les doublons logiques entre sources différentes.
+Une traçabilité E2E : flux source A → flux source B → détection de correspondance → forecast consolidé unique.
+
+🙂 En tant que End User, je veux :
+Pouvoir faire confiance à une prévision qui n’est pas artificiellement gonflée par plusieurs vues du même flux.
+Ne pas découvrir trop tard qu’un excédent de trésorerie était une illusion.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “même flux issu de deux sources → tentative de double comptage → consolidation correcte”.
+Tester les cas de doublons partiels, décalés, ou presque identiques.
+Exiger des preuves auditables : sources comparées, logique de rapprochement, résultat consolidé, horodatage.
+
+Votre angle mort : vous additionnez des sources… ou vous prouvez l’unicité des flux prévus ?
+
+📌 Zone technique.
+Déduplication : suppression du double comptage d’un même événement ou flux.
+Doublon logique : même flux représenté différemment dans plusieurs sources.
+Preuves : sources, matching, résultat consolidé, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #CashForecasting #Reconciliation #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

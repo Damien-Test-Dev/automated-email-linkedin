@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · multi-sources : le futur devient flou quand chaque système annonce le sien.
+Une prévision n’est pas fiable parce qu’elle est détaillée. Elle l’est parce qu’elle est cohérente.
+
+En cash management, la projection de cash peut venir de la trésorerie, du moteur de paiements, du nostro, du funding, du reporting, du métier.
+Le piège n’est pas d’avoir plusieurs sources.
+Le piège, c’est de les additionner sans hiérarchie claire, sans source d’autorité, et sans lecture des contradictions.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque source de prévision a un rôle clair, un niveau de confiance, et une priorité de référence.
+Une Definition of Done qui impose “forecast multi-sources gouverné”.
+
+🛠️ En tant que Developer, je veux :
+Une logique serveur qui distingue source d’autorité, source contributrice, et source informative.
+Une traçabilité E2E : source A → source B → arbitrage de priorité → forecast consolidé.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi deux systèmes projettent des futurs différents sans conclure trop vite que l’un est faux.
+Savoir quelle prévision fait foi pour la décision du jour.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “deux prévisions divergentes → règle de priorité → forecast final cohérent et explicable”.
+Tester les contradictions de date, de montant, et de niveau de confiance.
+Exiger des preuves auditables : sources, hiérarchie, arbitrage, résultat final, horodatage.
+
+Vous testez quoi : la somme des prévisions… ou la gouvernance réelle de leurs contradictions ?
+
+📌 Zone technique.
+Source d’autorité : source qui fait foi pour un type de donnée ou de projection.
+Forecast consolidé : prévision finale obtenue après arbitrage des sources.
+Preuves : sources, priorités, arbitrage, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #CashForecasting #MultiApps #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
