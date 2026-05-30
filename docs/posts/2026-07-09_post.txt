@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · multi-systèmes : le mouvement peut être unique, mais ses dates peuvent raconter plusieurs histoires.
+Et c’est comme ça qu’un flux “aligné” devient en réalité incohérent.
+
+En cash management, la date comptable peut venir d’un système, la date de valeur d’un autre, la date de disponibilité d’un troisième.
+Le piège : chaque outil semble cohérent localement, mais la chaîne complète ne raconte pas la même temporalité du cash.
+Résultat : les équipes comparent des dates qui ne jouent pas le même rôle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les dates critiques sont harmonisées, nommées clairement, et comparées sur la bonne base.
+Une Definition of Done qui impose “cohérence multi-systèmes des dates de référence”.
+
+🛠️ En tant que Developer, je veux :
+Une logique serveur qui distingue les types de dates et évite les rapprochements trompeurs.
+Une traçabilité E2E : date source A → date source B → règle de référence → date utilisée dans la décision.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi deux outils montrent des dates différentes sans conclure trop vite à une anomalie.
+Savoir quelle date fait réellement foi pour la décision cash.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “même mouvement → dates différentes par système → décision correcte basée sur la bonne référence”.
+Tester les faux alignements et les comparaisons de dates non équivalentes.
+Exiger des preuves auditables : source de chaque date, règle de priorité, décision finale, horodatage.
+
+Vous testez quoi : les dates affichées… ou leur rôle réel dans chaque système ?
+
+📌 Zone technique.
+Date de référence : date qui fait foi pour une décision donnée.
+Faux alignement : impression de cohérence alors que les dates comparées n’ont pas la même signification.
+Preuves : dates sources, règle de référence, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #ValueDate #MultiApps #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

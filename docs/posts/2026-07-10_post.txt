@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · audit : “c’est la date de valeur” n’est pas une preuve.
+En banque, une date n’existe vraiment que si elle peut être expliquée, justifiée, et retrouvée.
+
+La vraie question n’est pas seulement “quelle date a été utilisée ?”.
+La vraie question, c’est : pourquoi cette date, sur quelle règle, dans quel contexte, et avec quel impact réel sur le cash ou le coût.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque date de valeur laisse une justification claire, lisible, et défendable.
+Une Definition of Done qui impose “audit-ready value date”.
+
+🛠️ En tant que Developer, je veux :
+Un audit trail complet : mouvement source → règle de date → date retenue → impact liquidité ou intérêts → décision finale.
+Des logs corrélables qui permettent de reconstruire la logique sans ambiguïté.
+
+🙂 En tant que End User, je veux :
+Être protégé par un système qui sait expliquer quand et pourquoi l’effet du cash commence réellement.
+Ne pas dépendre d’une interprétation manuelle lorsque le sujet revient plus tard.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “mouvement enregistré → date de valeur calculée → impact réel → preuve retrouvable”.
+Tester aussi les changements de règle, les jours non ouvrés, et les cas limites.
+Exiger des preuves auditables : règle appliquée, date retenue, impact final, horodatage.
+
+Votre niveau de maturité : voir une date dans un écran… ou prouver pourquoi c’est la bonne date de valeur ?
+
+📌 Zone technique.
+Audit-ready : prouvable, horodaté, défendable.
+Value date : date à partir de laquelle le flux produit son effet financier réel.
+Preuves : règle, date retenue, impact, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #ValueDate #Audit #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

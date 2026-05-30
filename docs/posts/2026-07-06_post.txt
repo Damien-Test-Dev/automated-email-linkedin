@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · date de valeur : le montant peut être juste, et le cash pourtant faux au mauvais moment.
+Parce qu’en trésorerie, la vraie question n’est pas seulement “combien”, mais aussi “à partir de quand”.
+
+En cash management, beaucoup d’équipes regardent d’abord la date comptable.
+Mais la date qui change réellement l’effet du cash, c’est la date de valeur.
+Le piège classique : un mouvement est bien visible, bien enregistré, bien réconcilié… mais il ne produit pas encore — ou ne produit plus — l’effet attendu sur la liquidité réelle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement date comptable, date d’exécution, et date de valeur.
+Une Definition of Done qui impose “date de valeur visible et exploitable” sur les flux cash critiques.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui séparent correctement l’enregistrement du mouvement et son effet réel sur le cash.
+Une traçabilité E2E : mouvement créé → date comptable → date de valeur → impact liquidité.
+
+🙂 En tant que End User, je veux :
+Comprendre à partir de quand le cash devient réellement utilisable ou impactant.
+Ne pas confondre “visible dans l’outil” et “effectif en trésorerie”.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “mouvement affiché → date comptable renseignée → date de valeur différente → impact cash correct”.
+Tester les cas où les dates semblent proches mais changent la décision.
+Exiger des preuves auditables : date comptable, date de valeur, règle appliquée, horodatage.
+
+Votre point de rupture : vous pilotez la date visible… ou la date qui fait réellement foi sur le cash ?
+
+📌 Zone technique.
+Date comptable : date d’enregistrement du mouvement dans le système.
+Date de valeur : date à partir de laquelle le mouvement produit son effet financier réel.
+Preuves : dates, règle, impact liquidité, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #ValueDate #Treasury #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

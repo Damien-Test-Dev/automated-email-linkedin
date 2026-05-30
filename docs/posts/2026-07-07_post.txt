@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · value dating : le cash peut apparaître aujourd’hui sans être réellement disponible aujourd’hui.
+Et c’est exactement là que naissent les mauvaises décisions.
+
+En cash management, un flux peut être confirmé, affiché, consolidé, puis interprété comme “disponible”.
+Le piège : la date de valeur place l’effet réel au lendemain, ou à une autre fenêtre opérationnelle.
+Résultat : la trésorerie croit pouvoir arbitrer maintenant, alors que le cash n’est pas encore réellement mobilisable.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui indique clairement quand un mouvement est visible, et quand il devient réellement effectif.
+Une Definition of Done qui impose “cash visible ≠ cash disponible sans vérification de date de valeur”.
+
+🛠️ En tant que Developer, je veux :
+Des règles serveur qui empêchent de considérer comme mobilisable un cash dont la date de valeur n’est pas atteinte.
+Une traçabilité E2E : mouvement affiché → date de valeur future → disponibilité réelle → décision.
+
+🙂 En tant que End User, je veux :
+Savoir si je peux utiliser ce cash maintenant, plus tard dans la journée, ou seulement demain.
+Ne pas prendre une décision sur une illusion de disponibilité.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “cash visible aujourd’hui → date de valeur demain → décision de financement ou de paiement correctement bloquée”.
+Tester les écarts entre affichage, consolidation, et disponibilité réelle.
+Exiger des preuves auditables : date de valeur, statut de disponibilité, décision serveur, horodatage.
+
+Votre standard : voir un cash affiché… ou vérifier quand il devient réellement exploitable ?
+
+📌 Zone technique.
+Cash visible : mouvement ou montant présent dans l’outil.
+Cash disponible : montant réellement mobilisable à l’instant considéré.
+Preuves : affichage, date de valeur, disponibilité, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #ValueDate #Liquidity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
