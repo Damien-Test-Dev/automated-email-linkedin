@@ -1,15 +1,15 @@
 # Rapport de renommage & alignement
-Généré le Sun May 24 12:27:23 CEST 2026
+Généré le Sat May 30 12:04:25 CEST 2026
 
 ## Contexte
-- Run: 2026-05-24T12:27:23+02:00
+- Run: 2026-05-30T12:04:25+02:00
 
 ## 1) Conversion images → PNG (si besoin)
 - ✅ aucune conversion nécessaire
 
 ## 2) Diagnostic
-- 📝 posts datés: 82
-- 🖼️ images datées: 82
+- 📝 posts datés: 97
+- 🖼️ images datées: 97
 - 🧩 dates post sans image: 0
 - 📦 images non assignées (non datées): 0
 
