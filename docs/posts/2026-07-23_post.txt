@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · multi-entity reserve : une réserve confortable sur un périmètre ne garantit rien sur l’ensemble.
+Le buffer devient trompeur quand la consolidation masque les fragilités locales.
+
+En cash management, une vue consolidée peut afficher un niveau de réserve correct alors qu’une entité, un compte, ou une devise locale est déjà sous tension.
+Le piège n’est pas la consolidation.
+Le piège, c’est la consolidation qui rassure alors qu’un point faible est déjà actif dans le périmètre.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la vue consolidée n’efface jamais l’état réel des buffers locaux.
+Une Definition of Done qui impose “lecture locale + lecture consolidée cohérentes”.
+
+🛠️ En tant que Developer, je veux :
+Une logique côté serveur qui distingue buffer global, buffer local, et zones de fragilité par entité ou compte.
+Une traçabilité E2E : buffer local → buffer par entité → consolidation → décision globale.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi le global semble sain alors qu’un périmètre local est déjà fragile.
+Pouvoir localiser la tension sans perdre la vision consolidée.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “global au vert / entité locale sous seuil → consolidation prudente → alerte claire”.
+Tester multi-entités, multi-comptes, multi-devises.
+Exiger des preuves auditables : niveaux locaux, niveau global, règle de consolidation, horodatage.
+
+Vous testez quoi : le buffer global… ou la solidité réelle des buffers qui le composent ?
+
+📌 Zone technique.
+Consolidation : agrégation de plusieurs réserves dans une vue globale.
+Fragilité locale : faiblesse sur un périmètre spécifique masquée par le total consolidé.
+Preuves : niveaux locaux, niveau global, arbitrage, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #LiquidityBuffer #MultiEntity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

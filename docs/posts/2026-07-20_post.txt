@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · liquidity buffers : le chiffre le plus rassurant est parfois le plus trompeur.
+Un buffer affiché ne vaut rien s’il n’est pas réellement mobilisable.
+
+En cash management, un buffer de liquidité est censé protéger.
+Mais entre le montant affiché, les réserves déjà engagées, les contraintes réglementaires, et les usages interdits, le buffer visible peut être très différent du buffer réellement utilisable.
+Le piège : croire que la réserve existe pleinement, alors qu’une partie ne peut pas être touchée.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement buffer affiché, buffer protégé, et buffer réellement mobilisable.
+Une Definition of Done qui impose “vision réelle du buffer disponible” sur les écrans critiques.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui calculent la part réellement mobilisable de la réserve.
+Une traçabilité E2E : buffer brut → contraintes → part protégée → part utilisable → décision.
+
+🙂 En tant que End User, je veux :
+Savoir ce que je peux réellement utiliser sans fragiliser la réserve.
+Ne pas prendre une décision sur un chiffre qui surévalue ma marge de sécurité.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “buffer affiché confortable → contraintes actives → buffer mobilisable réduit → décision correcte”.
+Tester les écarts entre visibilité écran et réserve réellement exploitable.
+Exiger des preuves auditables : buffer source, contraintes appliquées, part protégée, part mobilisable, horodatage.
+
+Votre point de rupture : vous pilotez le buffer affiché… ou le buffer réellement utilisable ?
+
+📌 Zone technique.
+Liquidity buffer : réserve de liquidité destinée à absorber une tension ou protéger une position.
+Buffer mobilisable : part du buffer qui peut réellement être utilisée sans casser les règles de sécurité.
+Preuves : montant brut, contraintes, calcul, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #LiquidityBuffer #ReserveManagement #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

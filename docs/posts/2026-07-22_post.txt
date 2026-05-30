@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · reserve management : le cash le plus dangereux n’est pas forcément celui qui manque.
+C’est celui qui semble disponible… mais qui ne doit pas être utilisé.
+
+En cash management, un montant peut apparaître libre dans un outil alors qu’il constitue en réalité une réserve de sécurité, un buffer réglementaire, ou une protection opérationnelle.
+Le piège : traiter comme “cash libre” un montant qui doit rester intact.
+Et là, tu ne finances pas seulement un besoin. Tu détruis un garde-fou.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue cash libre, cash protégé, et cash strictement non mobilisable.
+Une Definition of Done qui impose “réserve non consommable clairement identifiée”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui empêchent l’usage d’une réserve protégée dans les décisions de financement ou de paiement.
+Une traçabilité E2E : cash affiché → classification → tentative d’usage → décision → statut final.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi un montant visible ne peut pas être utilisé.
+Ne pas considérer comme exploitable un cash qui est en réalité un filet de sécurité.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “cash visible → réserve protégée → tentative de mobilisation → blocage clair”.
+Tester les cas où la frontière entre disponible et protégé est floue à l’écran.
+Exiger des preuves auditables : classification, décision serveur, statut d’usage, horodatage.
+
+Votre angle mort : vous voyez un cash disponible… ou vous vérifiez s’il a le droit d’être touché ?
+
+📌 Zone technique.
+Cash protégé : montant qui doit rester en réserve pour sécuriser une position ou respecter une contrainte.
+Non mobilisable : qui ne peut pas être utilisé pour une décision opérationnelle ordinaire.
+Preuves : classification, règle, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #ReserveManagement #Liquidity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
