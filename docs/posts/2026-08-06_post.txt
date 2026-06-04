@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · multi-entity warning : le risque global commence souvent par un signal local sous-estimé.
+Une tension mineure ici peut devenir une crise consolidée demain.
+
+En cash management, une entité, un compte, une devise, ou un périmètre local peut commencer à dériver sans dégrader immédiatement la vision groupe.
+Le piège : la consolidation reste encore “bonne”, donc le signal local paraît secondaire.
+Mais en pratique, c’est souvent là que commence la contamination.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où un signal faible local reste visible même quand le global est encore rassurant.
+Une Definition of Done qui impose “warning local + lecture consolidée cohérente”.
+
+🛠️ En tant que Developer, je veux :
+Une logique côté serveur qui distingue signal local, propagation potentielle, et impact consolidé.
+Une traçabilité E2E : alerte locale → seuil local → consolidation → escalade groupe éventuelle.
+
+🙂 En tant que End User, je veux :
+Comprendre comment un signal faible sur une zone limitée peut justifier une vigilance plus large.
+Ne pas être rassuré à tort par un global encore au vert.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “signal local significatif → global encore stable → warning maintenu → préparation de l’escalade”.
+Tester multi-entités, multi-comptes, multi-devises.
+Exiger des preuves auditables : périmètre local, seuils, règle de propagation, niveau consolidé, horodatage.
+
+Vous testez quoi : la vue globale rassurante… ou la capacité du système à ne pas écraser le signal local ?
+
+📌 Zone technique.
+Signal local : alerte limitée à un sous-périmètre précis.
+Impact consolidé : effet agrégé sur la vision globale.
+Preuves : périmètre touché, seuils, niveau consolidé, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #EarlyWarning #MultiEntity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

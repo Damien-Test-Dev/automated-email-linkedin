@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · early warning : le vrai danger n’est pas toujours l’alerte rouge.
+C’est souvent le signal jaune qu’on a vu… puis laissé vivre trop longtemps.
+
+En cash management, une crise de liquidité n’arrive pas toujours d’un coup.
+Elle commence souvent par un signal faible : retard inhabituel, buffer qui s’érode, funding moins certain, forecast moins fiable, tension locale qui remonte.
+Le piège classique : considérer ce signal comme “pas encore critique”, jusqu’au moment où il n’est plus pilotable.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les signaux précoces sont visibles, compris, et traités avant le point de rupture.
+Une Definition of Done qui impose “early warning lisible + actionnable” sur les flux critiques de liquidité.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui distinguent signal faible, alerte sérieuse, et incident ouvert.
+Une traçabilité E2E : signal détecté → seuil évalué → niveau d’alerte → action ou escalade.
+
+🙂 En tant que End User, je veux :
+Comprendre quand un signal doit déclencher de l’attention, même s’il n’est pas encore au rouge.
+Ne pas découvrir trop tard qu’un avertissement exploitable a été ignoré.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “indicateur au jaune → absence de traitement → aggravation → passage au rouge”.
+Tester les signaux faibles répétés, pas seulement les ruptures franches.
+Exiger des preuves auditables : indicateur, seuil, niveau d’alerte, décision, horodatage.
+
+Votre point de rupture : vous surveillez le rouge… ou vous traitez le jaune avant qu’il devienne rouge ?
+
+📌 Zone technique.
+Early warning indicator : signal précoce annonçant une tension ou une dérive potentielle.
+Seuil d’alerte : niveau à partir duquel un signal change de statut.
+Preuves : valeur mesurée, seuil, niveau, action, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #EarlyWarning #Liquidity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · alerting : le problème n’est pas seulement l’absence d’alerte.
+C’est aussi le bruit qui rend l’alerte utile invisible.
+
+En cash management, une organisation saturée de notifications finit par traiter l’important comme du bruit de fond.
+Le piège : tout signaler, tout remonter, tout colorer, jusqu’à détruire la hiérarchie des urgences.
+Et quand le vrai signal arrive, il ressemble à tous les autres.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les alertes sont priorisées, hiérarchisées, et proportionnées au risque réel.
+Une Definition of Done qui impose “signal utile visible malgré le bruit”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui distinguent notification informative, alerte utile, et incident nécessitant action immédiate.
+Une traçabilité E2E : événement détecté → qualification → priorité → affichage ou escalade.
+
+🙂 En tant que End User, je veux :
+Recevoir moins d’alertes inutiles et mieux voir celles qui comptent vraiment.
+Ne pas passer à côté d’un signal critique noyé dans le bruit.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “multiples signaux faibles + un signal critique → hiérarchisation correcte → signal utile visible”.
+Tester la saturation, les doublons d’alerte, et les priorités incohérentes.
+Exiger des preuves auditables : événement source, niveau de priorité, mode d’affichage, horodatage.
+
+Votre angle mort : vous produisez plus d’alertes… ou de meilleures alertes ?
+
+📌 Zone technique.
+Alert fatigue : perte d’attention provoquée par un excès de notifications.
+Priorisation : classement des alertes selon leur impact réel.
+Preuves : événement, priorité, décision d’affichage, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Alerting #RiskControl #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
