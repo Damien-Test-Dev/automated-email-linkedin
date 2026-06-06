@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · escalation governance : une crise n’attend pas qu’on clarifie les responsabilités.
+Quand les rôles sont flous, la liquidité paie le prix du temps perdu.
+
+En cash management, l’escalade peut être correctement déclenchée… puis ralentir immédiatement faute de clarté sur les responsabilités.
+Qui coordonne ? Qui décide ? Qui informe ? Qui exécute ? Qui arbitre ?
+Le piège : croire qu’une escalade suffit, alors qu’en réalité, sans gouvernance nette, elle ne fait qu’ouvrir une zone de confusion.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque étape de crise a un propriétaire explicite, visible, et assumé.
+Une Definition of Done qui impose “escalade + rôles non ambigus”.
+
+🛠️ En tant que Developer, je veux :
+Des workflows qui associent clairement acteur, étape, responsabilité, et délai attendu.
+Une traçabilité E2E : alerte critique → escalade → assignation des rôles → décision → action.
+
+🙂 En tant que End User, je veux :
+Savoir immédiatement qui prend la main sur quoi.
+Ne pas perdre du temps à chercher le bon interlocuteur pendant une tension de liquidité.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “escalade ouverte → rôles assignés ou non → délai de prise en charge → impact opérationnel”.
+Tester les trous de responsabilité, les doublons de rôle, et les relais mal définis.
+Exiger des preuves auditables : rôle attribué, étape traitée, décision, horodatage.
+
+Votre standard : déclencher une escalade… ou garantir une gouvernance qui accélère réellement la réponse ?
+
+📌 Zone technique.
+Escalation governance : organisation des rôles et décisions après le déclenchement d’une escalade.
+Propriétaire d’étape : acteur responsable d’une action ou décision précise.
+Preuves : assignation, étape, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Escalation #Governance #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
