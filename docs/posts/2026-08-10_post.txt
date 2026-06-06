@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · liquidity limits : un seuil visible ne protège rien à lui seul.
+Une limite ne devient utile que quand elle change réellement la décision.
+
+En cash management, beaucoup d’équipes savent afficher un seuil.
+Beaucoup moins savent prouver ce qui se passe quand on s’en approche, quand on le touche, et surtout quand on le dépasse.
+Le piège : croire qu’un indicateur surveillé équivaut à une gouvernance active. En réalité, un seuil sans action associée reste un simple décor de pilotage.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque limite de liquidité a une conséquence métier explicite selon son niveau de franchissement.
+Une Definition of Done qui impose “limite surveillée + règle d’action associée”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui distinguent approche du seuil, atteinte du seuil, et dépassement effectif.
+Une traçabilité E2E : niveau de liquidité → comparaison à la limite → qualification → action ou blocage.
+
+🙂 En tant que End User, je veux :
+Comprendre ce qu’un seuil change concrètement dans mon pilotage.
+Ne pas voir une limite affichée sans savoir si elle déclenche une vigilance, un frein, ou un stop.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “niveau proche de la limite → seuil atteint → comportement attendu différent selon l’état”.
+Tester les transitions entre zone normale, zone de vigilance et breach réel.
+Exiger des preuves auditables : limite configurée, niveau observé, règle appliquée, décision, horodatage.
+
+Votre point de rupture : vous surveillez un chiffre… ou vous gouvernez une vraie frontière de décision ?
+
+📌 Zone technique.
+Liquidity limit : seuil formel de liquidité à ne pas franchir sans traitement spécifique.
+Breach : dépassement d’une limite définie.
+Preuves : limite, niveau mesuré, statut, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #LiquidityLimits #RiskControl #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · multi-entity limits : une limite respectée sur un périmètre ne garantit rien sur l’ensemble.
+Le risque devient trompeur quand la vue globale masque les breaches locaux.
+
+En cash management, une entité peut rester sous sa limite tandis qu’une autre la dépasse déjà.
+Le piège : la consolidation rassure parce qu’elle dilue le dépassement dans un total encore acceptable.
+Résultat : le groupe croit être en contrôle alors qu’un foyer de tension est déjà sorti du cadre.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les breaches locaux restent visibles même lorsque le global paraît encore maîtrisé.
+Une Definition of Done qui impose “lecture locale + lecture consolidée cohérentes sur les limites”.
+
+🛠️ En tant que Developer, je veux :
+Une logique côté serveur qui distingue limite locale, limite consolidée, et règles de propagation du breach.
+Une traçabilité E2E : niveau local → comparaison à la limite locale → consolidation → impact groupe.
+
+🙂 En tant que End User, je veux :
+Comprendre comment une dérive locale peut exiger une réaction plus large même si le total reste encore au vert.
+Ne pas être rassuré à tort par une vision groupe trop lisse.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “entité A conforme / entité B en breach → vue groupe encore stable → alerte locale maintenue”.
+Tester multi-entités, multi-comptes, multi-devises, multi-seuils.
+Exiger des preuves auditables : niveaux locaux, limites locales, règle de consolidation, impact groupe, horodatage.
+
+Vous testez quoi : la conformité globale… ou la capacité du système à ne pas écraser les breaches locaux ?
+
+📌 Zone technique.
+Limite locale : seuil appliqué à un sous-périmètre donné.
+Propagation : impact d’un breach local sur la gouvernance consolidée.
+Preuves : niveaux, limites, consolidation, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #LiquidityLimits #MultiEntity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
