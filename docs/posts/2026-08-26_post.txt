@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · FX liquidity concentration : le cash total peut être bon, alors que la vraie tension est déjà en train de monter ailleurs.
+Le problème n’est pas seulement combien tu as. C’est dans quelle devise tu l’as.
+
+En cash management, une organisation peut afficher une position globale confortable tout en étant fragilisée sur une devise précise.
+Le piège : la consolidation multi-devises rassure, mais elle ne protège pas une exposition locale qui devient critique.
+Le cash existe, oui. Mais pas forcément là où le besoin immédiat surgit.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement liquidité globale et concentration ou fragilité par devise.
+Une Definition of Done qui impose “lecture de concentration par devise dans le pilotage de liquidité”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui calculent l’exposition, la dépendance et la concentration par devise.
+Une traçabilité E2E : liquidité disponible → ventilation par devise → concentration → risque local.
+
+🙂 En tant que End User, je veux :
+Savoir si la liquidité que je vois est réellement disponible dans la devise où la tension augmente.
+Ne pas piloter sur une vision agrégée qui masque un manque local.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “global au vert → concentration excessive sur une devise critique → alerte correcte”.
+Tester les cas où la vue consolidée masque la fragilité d’une poche de liquidité.
+Exiger des preuves auditables : répartition par devise, seuils, décision, horodatage.
+
+Votre angle mort : vous regardez la liquidité totale… ou sa capacité à répondre dans la bonne devise ?
+
+📌 Zone technique.
+Concentration par devise : dépendance excessive à une poche de liquidité libellée dans une devise donnée.
+Fragilité locale : tension limitée à un périmètre précis, masquée par la vue globale.
+Preuves : montants par devise, seuils, alertes, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #FXLiquidity #ConcentrationRisk #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · counterparty risk : le danger n’apparaît pas seulement quand une contrepartie est faible.
+Il apparaît aussi quand une contrepartie jugée “forte” devient trop centrale.
+
+En cash management, une banque ou une contrepartie réputée fiable peut progressivement absorber une part croissante de la liquidité : soldes, flux, buffers, financements, placements, accès opérationnels.
+Le piège : la confiance réduit la vigilance.
+Et quand un acteur devient trop incontournable, sa solidité perçue se transforme en fragilité structurelle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui met en évidence le poids réel d’une contrepartie dans le dispositif de liquidité.
+Une Definition of Done qui impose “surveillance de dépendance à la contrepartie dominante”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui mesurent l’exposition relative à chaque contrepartie et détectent les concentrations excessives.
+Une traçabilité E2E : source de liquidité → contrepartie associée → part relative → alerte de dépendance.
+
+🙂 En tant que End User, je veux :
+Savoir quand une relation de confiance devient un point de dépendance trop fort.
+Ne pas découvrir trop tard qu’un acteur unique porte une part excessive du dispositif.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “contrepartie réputée solide → montée progressive de l’exposition → seuil de dépendance franchi → alerte visible”.
+Tester les cas où le risque n’est pas la qualité de l’acteur, mais son poids excessif.
+Exiger des preuves auditables : exposition par contrepartie, seuil, décision, horodatage.
+
+Votre standard : évaluer la qualité d’une contrepartie… ou aussi sa place réelle dans votre équilibre de liquidité ?
+
+📌 Zone technique.
+Counterparty risk on liquidity : risque que la dépendance à une contrepartie affecte la disponibilité ou la continuité de la liquidité.
+Dépendance excessive : situation où la part d’un acteur devient trop importante dans le dispositif global.
+Preuves : expositions, seuils, alertes, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #CounterpartyRisk #Liquidity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
