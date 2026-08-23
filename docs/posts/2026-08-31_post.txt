@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · exception management : ouvrir un cas ne veut pas dire maîtriser un incident.
+Le vrai piège, c’est l’alerte créée qui donne une illusion de prise en charge.
+
+En cash management, une exception de liquidité peut être détectée, journalisée, visible dans l’outil… et pourtant rester sans traitement réel.
+Le problème n’est pas seulement la détection.
+Le problème, c’est le moment où l’organisation confond cas créé et incident effectivement pris en main.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où l’ouverture d’un cas n’est jamais confondue avec son traitement effectif.
+Une Definition of Done qui impose “case opened ≠ case owned ≠ case handled”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui distinguent clairement création, assignation, prise en charge, escalade et clôture.
+Une traçabilité E2E : alerte détectée → case créée → propriétaire assigné → action engagée → statut réel.
+
+🙂 En tant que End User, je veux :
+Savoir si une exception est seulement enregistrée ou réellement traitée.
+Ne pas être rassuré par un ticket ouvert qui n’a encore produit aucune action utile.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “exception détectée → case créée → absence de prise en charge → statut non trompeur”.
+Tester les cas où le workflow s’arrête dès l’ouverture.
+Exiger des preuves auditables : identifiant du cas, propriétaire, statut de prise en charge, horodatage.
+
+Votre point de rupture : vous suivez des cases ouvertes… ou des exceptions réellement prises en charge ?
+
+📌 Zone technique.
+Case management : gestion structurée d’un incident ou d’une exception dans l’application.
+Prise en charge : moment où un acteur responsable agit réellement sur le cas.
+Preuves : case ID, statut, assignation, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #ExceptionManagement #Workflow #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

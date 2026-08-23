@@ -1,0 +1,36 @@
+✨Test end-to-end · Cash Management · SLA : le statut le plus dangereux n’est pas toujours “bloqué”.
+C’est souvent “en cours” alors que le délai critique est déjà dépassé.
+
+En cash management, une exception peut sembler sous contrôle parce qu’elle reste dans un statut acceptable à l’écran.
+Mais si le délai maximal de traitement est franchi sans requalification claire, le pilotage devient trompeur.
+Le problème n’est pas seulement le retard.
+Le problème, c’est le retard invisible derrière un statut rassurant.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où le SLA réel prime sur la cosmétique du statut.
+Une Definition of Done qui impose “SLA breach visible, même si le cas reste officiellement open/in progress”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui recalculent l’état réel du cas selon le temps écoulé, pas seulement selon le statut saisi.
+Une traçabilité E2E : ouverture → délai cible → dépassement SLA → alerte ou escalade.
+
+🙂 En tant que End User, je veux :
+Savoir qu’un cas est en retard même s’il n’est pas encore fermé ou bloqué.
+Ne pas être trompé par un statut “vivant” qui cache un défaut de réactivité.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “case in progress → délai dépassé → signalement SLA breach → gouvernance adaptée”.
+Tester les cas où le temps réel contredit le ressenti donné par le statut.
+Exiger des preuves auditables : heure d’ouverture, SLA cible, dépassement, statut affiché, horodatage.
+
+Votre angle mort : vous regardez le statut courant… ou le temps réel de traitement ?
+
+📌 Zone technique.
+SLA : délai cible de traitement ou de réponse.
+SLA breach : dépassement du délai prévu.
+Preuves : date d’ouverture, seuil SLA, dépassement, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #SLA #ExceptionManagement #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

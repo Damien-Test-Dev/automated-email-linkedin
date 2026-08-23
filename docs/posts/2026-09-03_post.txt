@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · routing : une exception locale mal orientée peut devenir un défaut groupe sans bruit.
+Le risque ne vient pas toujours du volume. Il vient parfois du mauvais routage.
+
+En cash management, une anomalie née dans une entité, une devise, un compte ou un périmètre local peut devoir être traitée localement, escaladée centralement, ou les deux.
+Le piège : un case routing trop simple, trop rigide, ou trop générique, qui envoie le cas au mauvais niveau.
+Résultat : l’incident existe, mais l’organisation regarde ailleurs.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où le routage d’exception respecte la réalité locale sans perdre la visibilité groupe.
+Une Definition of Done qui impose “local routing + central visibility” sur les cas critiques.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui orientent chaque case selon entité, criticité, devise, périmètre et type d’exception.
+Une traçabilité E2E : exception locale → règle de routage → équipe cible → visibilité consolidée.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi une exception part vers une équipe locale, centrale, ou mixte.
+Ne pas perdre un incident parce qu’il a été routé comme un cas standard.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “exception locale critique → routage correct → suivi local + visibilité groupe”.
+Tester les mauvais routages, les angles morts, et les pertes de responsabilité entre niveaux.
+Exiger des preuves auditables : règle de routage, équipe destinataire, niveau de visibilité, horodatage.
+
+Vous testez quoi : la création du cas… ou sa trajectoire réelle jusqu’à la bonne équipe ?
+
+📌 Zone technique.
+Routing : orientation automatique ou pilotée d’un cas vers la bonne équipe.
+Angle mort groupe : incident local non visible ou mal interprété au niveau consolidé.
+Preuves : règle, destination, visibilité, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #CaseRouting #MultiEntity #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
