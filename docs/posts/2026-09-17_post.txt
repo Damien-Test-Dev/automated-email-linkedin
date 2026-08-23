@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · post-close adjustment : rouvrir une position clôturée n’est pas une simple correction.
+C’est une opération sensible sur une vérité déjà officialisée.
+
+En cash management, il peut être nécessaire de corriger une position après clôture : flux tardif critique, erreur de source, exception validée, correction de rapprochement.
+Mais une réouverture mal contrôlée détruit la fiabilité du processus.
+Le piège : modifier une position certifiée sans distinguer correction, nouvelle version, justification et impact.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où toute réouverture post-clôture est exceptionnelle, justifiée, validée et versionnée.
+Une Definition of Done qui impose “post-close adjustment requires controlled reopen and full traceability”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui empêchent la modification directe d’une position certifiée sans workflow de réouverture.
+Une traçabilité E2E : position certifiée → demande de réouverture → justification → validation → nouvelle version.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi une position clôturée a été rouverte.
+Ne pas perdre la version officielle précédente ni l’explication de l’écart.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “position clôturée → correction post-close → workflow de réouverture → version V2 certifiée”.
+Tester les modifications directes, les réouvertures sans justification et les versions écrasées.
+Exiger des preuves auditables : version initiale, motif, approbation, nouvelle version, horodatage.
+
+Votre niveau de contrôle : vous autorisez une correction post-clôture… ou vous protégez l’historique officiel complet ?
+
+📌 Zone technique.
+Post-close adjustment : correction réalisée après clôture ou certification.
+Versioning : conservation des différentes versions d’une position officielle.
+Preuves : V1, justification, validation, V2, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #PostClose #AuditTrail #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

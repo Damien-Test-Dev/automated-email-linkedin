@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · end-of-day close : clôturer vite n’est pas clôturer juste.
+Le vrai risque, c’est une fin de journée validée alors que les contrôles critiques sont incomplets.
+
+En cash management, la clôture de journée dépend de plusieurs signaux : flux reçus, statuts finalisés, cutoffs atteints, rapprochements effectués, exceptions traitées ou assumées.
+Le piège : permettre une certification EOD alors que certains prérequis ne sont pas terminés.
+La position devient officielle, mais sa qualité reste incertaine.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la clôture EOD dépend de prérequis explicites et contrôlables.
+Une Definition of Done qui impose “no EOD certification while critical controls are incomplete”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui vérifient les dépendances de clôture avant certification.
+Une traçabilité E2E : contrôles attendus → contrôles exécutés → exceptions restantes → décision de clôture.
+
+🙂 En tant que End User, je veux :
+Savoir si tous les contrôles nécessaires sont terminés avant de certifier la position.
+Ne pas clôturer une journée sur une confiance implicite.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “contrôle critique incomplet → tentative de certification EOD → blocage ou validation sous réserve explicite”.
+Tester les clôtures trop rapides, les dépendances manquantes et les contrôles ignorés.
+Exiger des preuves auditables : checklist EOD, état des contrôles, exceptions ouvertes, horodatage.
+
+Votre angle mort : vous testez le bouton de clôture… ou les conditions réelles qui autorisent la clôture ?
+
+📌 Zone technique.
+End-of-day close : processus de clôture opérationnelle de la position cash en fin de journée.
+Prérequis de clôture : contrôles nécessaires avant certification.
+Preuves : checklist, contrôles, exceptions, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #EndOfDay #Controls #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

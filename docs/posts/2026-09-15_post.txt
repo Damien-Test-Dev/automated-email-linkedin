@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · snapshot freeze : figer une position cash ne sert à rien si les données bougent encore derrière.
+Le snapshot devient dangereux quand il donne une illusion de stabilité.
+
+En cash management, le snapshot de fin de journée doit représenter une référence figée.
+Mais si des flux tardifs, des corrections, des statuts ou des réconciliations continuent d’impacter la position après le freeze, la clôture devient instable.
+Le piège : croire que le snapshot est immuable alors que ses fondations restent mouvantes.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où le freeze de position verrouille clairement le périmètre, l’heure de référence et les données incluses.
+Une Definition of Done qui impose “snapshot frozen only when source perimeter is controlled”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui identifient les données incluses dans le snapshot et isolent les changements post-freeze.
+Une traçabilité E2E : cutoff → collecte des données → snapshot → freeze → changement post-freeze isolé.
+
+🙂 En tant que End User, je veux :
+Comprendre exactement ce qui est inclus dans la position figée.
+Ne pas voir une position officielle changer sans explication claire.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “snapshot figé → arrivée d’un flux tardif → position officielle inchangée → écart tracé séparément”.
+Tester les cas où une donnée post-freeze modifie silencieusement la clôture.
+Exiger des preuves auditables : heure de freeze, périmètre inclus, données exclues, horodatage.
+
+Votre standard : créer un snapshot… ou garantir qu’il ne bouge plus après certification ?
+
+📌 Zone technique.
+Snapshot freeze : gel d’une position cash à un instant de référence.
+Post-freeze change : changement reçu après le gel de la position.
+Preuves : heure de freeze, périmètre, données incluses, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Snapshot #Freeze #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

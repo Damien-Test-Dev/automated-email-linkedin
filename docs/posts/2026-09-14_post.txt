@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · cash position certification : voir une position cash ne veut pas dire qu’elle est officielle.
+Le vrai piège, c’est la position affichée qui ressemble à une vérité… sans être certifiée.
+
+En cash management, une position peut être calculée, affichée, exportée, utilisée en comité ou partagée avec une équipe.
+Mais tant qu’elle n’est pas certifiée, elle reste une photographie technique, pas une référence officielle.
+Le problème commence quand l’organisation traite une position “visible” comme une position “validée”.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement position calculée, position revue, position certifiée et position clôturée.
+Une Definition of Done qui impose “visible cash position ≠ certified cash position”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui empêchent d’utiliser une position non certifiée comme référence officielle.
+Une traçabilité E2E : données sources → calcul de position → revue → certification → publication officielle.
+
+🙂 En tant que End User, je veux :
+Savoir si la position que je consulte est provisoire, en revue, ou officiellement certifiée.
+Ne pas prendre une décision sur une donnée qui n’a pas encore été validée.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “position calculée → statut provisoire → certification manquante → usage officiel bloqué ou signalé”.
+Tester les cas où une donnée non certifiée est affichée comme trop fiable.
+Exiger des preuves auditables : statut de position, source, acteur, validation, horodatage.
+
+Votre point de rupture : vous affichez une position cash… ou vous prouvez qu’elle est officiellement certifiée ?
+
+📌 Zone technique.
+Cash position certification : validation formelle d’une position cash comme référence officielle.
+Position provisoire : position calculée mais non encore validée.
+Preuves : source, statut, valideur, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #CashPosition #Certification #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
