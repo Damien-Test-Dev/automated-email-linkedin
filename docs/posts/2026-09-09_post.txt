@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · four-eyes on adjustments : le plus grand risque d’un ajustement sensible, c’est souvent d’être valide tout seul.
+Quand une seule personne modifie et valide, le contrôle s’effondre en silence.
+
+En cash management, certains ajustements ne devraient jamais dépendre d’un acteur unique : changement de montant, date, classification, statut, réserve, limite, exception de traitement.
+Le piège : l’application permet bien une validation, mais sans séparation réelle des rôles.
+Et là, le process a l’air contrôlé, alors qu’il reste unitaire.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où les ajustements sensibles exigent une vraie logique de double regard.
+Une Definition of Done qui impose “sensitive adjustments require independent validation”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui empêchent un même acteur de créer, approuver et clôturer seul une modification critique.
+Une traçabilité E2E : ajustement initié → validation indépendante → application → journalisation.
+
+🙂 En tant que End User, je veux :
+Comprendre quels ajustements nécessitent une seconde validation et pourquoi.
+Ne pas croire qu’un contrôle existe alors qu’il peut être auto-validé.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “ajustement sensible initié → tentative d’auto-validation → refus → validation par second acteur”.
+Tester les contournements de séparation des rôles, directs ou indirects.
+Exiger des preuves auditables : initiateur, valideur, règle de séparation, horodatage.
+
+Votre angle mort : vous voyez une validation… ou vous vérifiez qu’elle vient vraiment d’un second regard ?
+
+📌 Zone technique.
+Double validation : validation indépendante par un second acteur autorisé.
+Risque unitaire : risque créé lorsqu’une action sensible repose sur une seule personne.
+Preuves : initiateur, valideur, règle, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #FourEyes #ManualAdjustment #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

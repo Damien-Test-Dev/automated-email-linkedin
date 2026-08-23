@@ -1,0 +1,34 @@
+✨Test end-to-end · Cash Management · audit : “la valeur a été ajustée” n’est pas une preuve.
+En banque, une modification critique n’existe vraiment que si son film complet est retrouvable.
+
+La vraie question n’est pas seulement “qu’est-ce qui a été changé ?”.
+La vraie question, c’est : qui a demandé l’ajustement, sur quelle base, qui l’a validé, quelle règle a été contournée, quelle donnée a changé, et à quel moment exact.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque ajustement manuel ou override laisse une preuve claire, défendable et retrouvable.
+Une Definition of Done qui impose “audit-ready manual change control”.
+
+🛠️ En tant que Developer, je veux :
+Un audit trail complet : état initial → demande de changement → justification → validation → changement appliqué → état final.
+Des logs corrélables qui permettent de rejouer le changement sans ambiguïté.
+
+🙂 En tant que End User, je veux :
+Être protégé par un système qui sait expliquer pourquoi une exception a été accordée ou une donnée corrigée.
+Ne pas dépendre d’une reconstruction humaine fragile après coup.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “modification critique → override ou adjustment → validation → preuve complète retrouvable”.
+Tester aussi les non-traces, les validations fantômes et les changements sans justification exploitable.
+Exiger des preuves auditables : acteur, règle, justification, avant/après, validation, horodatage.
+
+Votre niveau de maturité : voir un champ modifié… ou prouver tout le contrôle autour du changement ?
+
+📌 Zone technique.
+Audit-ready : prouvable, horodaté, défendable.
+Manual change control : cadre de contrôle appliqué aux modifications manuelles sensibles.
+Preuves : demande, justification, validation, changement, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #Audit #Override #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

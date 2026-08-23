@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · change traceability : modifier une donnée sans garder la différence avant/après, ce n’est pas corriger.
+C’est effacer la scène du contrôle.
+
+En cash management, une correction peut être légitime, validée, urgente et même bien intentionnée.
+Mais si l’application ne conserve pas clairement la valeur initiale, la valeur finale et l’écart exact, personne ne peut rejouer la logique du changement.
+Le piège : ne journaliser que “modifié”, sans journaliser ce qui a changé.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque ajustement sensible conserve le avant/après de manière lisible et exploitable.
+Une Definition of Done qui impose “before/after trace mandatory on critical changes”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui enregistrent valeur initiale, valeur nouvelle, champ concerné, motif et contexte du changement.
+Une traçabilité E2E : état initial → ajustement demandé → validation → état final → diff exploitable.
+
+🙂 En tant que End User, je veux :
+Pouvoir comprendre précisément ce qui a été modifié.
+Ne pas dépendre d’un simple message “updated successfully” pour un changement critique.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “ajustement critique → journal before/after complet → preuve retrouvable”.
+Tester les cas où la modification est appliquée mais où la différence réelle n’est plus reconstructible.
+Exiger des preuves auditables : valeur avant, valeur après, champ modifié, motif, horodatage.
+
+Vous testez quoi : qu’un changement a eu lieu… ou la preuve exacte de ce qui a changé ?
+
+📌 Zone technique.
+Before/after trace : conservation explicite de la valeur précédente et de la valeur nouvelle.
+Diff exploitable : écart compréhensible et utilisable pour le contrôle ou l’audit.
+Preuves : avant, après, champ, motif, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Traceability #Override #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

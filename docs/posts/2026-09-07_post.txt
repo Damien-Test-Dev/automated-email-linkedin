@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · manual adjustment : un champ modifié à la main n’est pas un contrôle.
+C’est parfois juste un risque habillé en flexibilité.
+
+En cash management, certaines corrections manuelles sont nécessaires : valeur mal alimentée, exception opérationnelle, rattrapage encadré, donnée à corriger avant clôture.
+Le piège commence quand l’application permet l’ajustement… sans prouver qu’il était légitime.
+Le problème n’est pas seulement la modification. Le problème, c’est la modification acceptable en apparence, injustifiable en contrôle.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où chaque ajustement manuel sensible repose sur une règle claire, un motif explicite et un cadre d’usage défini.
+Une Definition of Done qui impose “manual adjustment allowed only if justified and traceable”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui distinguent correction autorisée, correction sensible, et correction interdite.
+Une traçabilité E2E : valeur initiale → demande d’ajustement → justification → validation → valeur modifiée.
+
+🙂 En tant que End User, je veux :
+Comprendre quand je peux corriger une donnée et dans quelles limites.
+Ne pas dépendre d’un champ libre qui me laisse faire quelque chose d’opérationnellement dangereux.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “donnée sensible → ajustement manuel demandé → contrôle de légitimité → acceptation ou refus”.
+Tester les cas où l’ajustement est techniquement possible mais métier non légitime.
+Exiger des preuves auditables : valeur d’origine, motif, acteur, décision, horodatage.
+
+Votre point de rupture : vous autorisez un changement manuel… ou vous prouvez pourquoi il avait le droit d’exister ?
+
+📌 Zone technique.
+Manual adjustment : modification manuelle d’une donnée ou d’un état dans l’application.
+Légitimité : conformité de l’ajustement avec les règles métier et de contrôle.
+Preuves : valeur avant, motif, acteur, décision, horodatage.
+
+#SlashingDefectsWithAQualitySword #ISTQB #Agile #Scrum #E2E #CashManagement #ManualAdjustment #Controls #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,35 @@
+✨Test end-to-end · Cash Management · override : l’override n’est pas le problème.
+Le vrai problème, c’est l’override qui passe sans justification exploitable.
+
+En cash management, il peut être nécessaire de contourner ponctuellement une règle : urgence de traitement, faux positif, incident technique, correction encadrée.
+Le piège : transformer l’exception en raccourci permanent.
+À partir du moment où l’application accepte “override” sans raison précise, le contrôle devient décoratif.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où aucun override sensible ne peut être déclenché sans justification structurée.
+Une Definition of Done qui impose “no override without actionable reason”.
+
+🛠️ En tant que Developer, je veux :
+Des règles côté serveur qui rendent obligatoire un motif qualifié, non vide, exploitable et cohérent avec le contexte.
+Une traçabilité E2E : règle bloquante → demande d’override → justification → validation → exécution.
+
+🙂 En tant que End User, je veux :
+Savoir pourquoi je dois justifier l’exception et ce qui est attendu comme motif valable.
+Ne pas pouvoir contourner une règle critique avec une justification vide ou cosmétique.
+
+🛡️ En tant que QA, j’interviens afin de :
+Définir un E2E “blocage métier → demande d’override → justification insuffisante → refus”.
+Tester les motifs vides, génériques, copiés-collés, ou incohérents avec le cas.
+Exiger des preuves auditables : règle contournée, motif, acteur, décision, horodatage.
+
+Votre standard : autoriser l’exception… ou garantir qu’elle reste défendable ?
+
+📌 Zone technique.
+Override : contournement exceptionnel d’une règle ou d’un blocage.
+Justification exploitable : motif assez précis pour être contrôlé, compris et audité.
+Preuves : règle, motif, validation, horodatage.
+
+#SlashingDefectsWithAQualitySword #QualitéLogicielle #ISTQB #E2E #CashManagement #Override #Governance #Treasury
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
