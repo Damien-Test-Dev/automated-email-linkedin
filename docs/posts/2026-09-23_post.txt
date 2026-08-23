@@ -1,0 +1,42 @@
+✨ Test end-to-end · Cash Management · Cash Forecasting : le problème n’est pas toujours une mauvaise formule.
+C’est parfois une bonne formule alimentée par une hypothèse morte depuis trois mois.
+
+Un cash forecast repose rarement uniquement sur des flux certains.
+
+Il embarque aussi des hypothèses : comportement client, dates attendues, récurrences, profils de décaissement, règles saisonnières.
+
+Vu en production : la formule est correcte, les données sont propres, le calcul passe tous les contrôles.
+
+Mais personne n’a remis en question l’hypothèse qui pilote le résultat.
+
+Le système calcule parfaitement… une réalité qui n’existe plus.
+
+🎯 En tant que Product Owner, je veux :
+Des hypothèses visibles, documentées et associées à un propriétaire métier.
+Une Definition of Done qui prévoit leur revue, leur durée de validité et leur impact.
+
+🛠️ En tant que Developer, je veux :
+Du versioning sur les paramètres structurants du forecast.
+Une traçabilité permettant de savoir quelle hypothèse a produit quelle prévision.
+
+🙂 En tant que End User, je veux :
+Identifier les hypothèses derrière un chiffre avant de prendre une décision.
+Voir immédiatement lorsqu’une hypothèse est ancienne, modifiée ou contestée.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “hypothèse active → modification → recalcul → comparaison des positions”.
+Couvrir le risque d’une règle techniquement valide mais métier obsolète.
+Exiger les preuves : version, auteur, date d’effet, ancienne valeur, nouvelle valeur et résultat.
+
+Vous testez quoi : l’exactitude du calcul… ou la validité de ce qu’on lui demande de calculer ?
+
+📌 Zone technique.
+Forecast assumption : hypothèse métier utilisée pour construire une prévision.
+Versioning : conservation des différentes versions d’une règle ou d’un paramètre.
+Date d’effet : moment à partir duquel une nouvelle hypothèse devient applicable.
+Backtesting : comparaison d’une prévision passée avec la réalité observée.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashForecasting #Treasury #RiskCoverage #DataQuality
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

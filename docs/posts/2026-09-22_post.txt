@@ -1,0 +1,43 @@
+✨ Test end-to-end · Cash Management · Cash Forecasting : le cash le plus dangereux est parfois celui qu’on attend.
+Parce qu’on commence à le dépenser avant même qu’il soit arrivé.
+
+En trésorerie, un encaissement attendu peut alimenter une prévision, soutenir un paiement futur ou réduire artificiellement un besoin de funding.
+
+Le piège classique : le flux reste dans le forecast alors que son statut réel s’est dégradé.
+
+Paiement retardé.
+Settlement repoussé.
+Contrepartie en attente.
+Cutoff manqué.
+
+Mais le cash, lui, continue d’exister dans la projection.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où un changement de statut métier remet immédiatement en question la prévision.
+Une Definition of Done qui impose la cohérence entre événement réel et forecast.
+
+🛠️ En tant que Developer, je veux :
+Une propagation server-side fiable des changements affectant les flux prévisionnels.
+Une corrélation entre l’événement source, le flux attendu et la nouvelle position calculée.
+
+🙂 En tant que End User, je veux :
+Voir qu’un encaissement attendu devient incertain, retardé ou exclu.
+Ne pas piloter la liquidité sur un cash qui n’existe encore que dans le système.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “encaissement prévu → événement retardé → requalification → recalcul du forecast”.
+Couvrir le risque d’un flux devenu incertain mais toujours comptabilisé comme disponible.
+Exiger les preuves : ancien statut, nouveau statut, recalcul, position avant/après et horodatage.
+
+Votre point de rupture : vous testez que le flux existe dans le forecast… ou qu’il en sort quand la réalité change ?
+
+📌 Zone technique.
+Expected inflow : encaissement anticipé intégré à une projection de trésorerie.
+Requalification : changement du niveau de confiance ou du statut d’un flux.
+Forecast recalculation : recalcul de la position après modification d’une donnée source.
+Funding impact : effet de la prévision sur le besoin réel de financement.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashForecasting #Treasury #Funding #Liquidity
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

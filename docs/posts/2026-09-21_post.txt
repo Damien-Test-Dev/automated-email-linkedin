@@ -1,0 +1,39 @@
+✨ Test end-to-end · Cash Management · Cash Forecasting : un forecast précis peut être complètement faux.
+Le danger n’est pas toujours le calcul. C’est la confiance qu’on lui accorde.
+
+En cash management, un forecast peut afficher une position confortable pour demain matin.
+
+Mais entre un encaissement attendu, un paiement retardé, une réservation de liquidité et une opération encore incertaine, le chiffre affiché ne représente pas forcément le cash réellement mobilisable.
+
+Vu en production : le forecast est considéré comme fiable parce qu’il est alimenté automatiquement.
+Le problème ? Une donnée automatisée peut être parfaitement fausse… à grande échelle.
+
+🎯 En tant que Product Owner, je veux :
+Un forecast qui distingue clairement le cash certain, attendu et incertain.
+Une Definition of Done qui impose une lecture métier explicite de chaque composante de la prévision.
+
+🛠️ En tant que Developer, je veux :
+Des règles serveur capables de qualifier l’origine et le niveau de confiance de chaque flux.
+Une traçabilité E2E : source → classification → calcul → position prévisionnelle.
+
+🙂 En tant que End User, je veux :
+Comprendre immédiatement ce qui compose la position prévue.
+Savoir quelle part du cash peut réellement soutenir une décision de trésorerie.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “flux attendu → intégration forecast → changement du flux → recalcul de position”.
+Couvrir le risque d’une prévision correcte techniquement mais fausse économiquement.
+Exiger les preuves : source, montant, niveau de confiance, version et recalcul.
+
+Votre standard : un forecast qui donne un chiffre… ou un forecast qui explique pourquoi ce chiffre mérite d’être cru ?
+
+📌 Zone technique.
+Cash forecast : projection des entrées, sorties et positions de trésorerie futures.
+Cash certain : flux dont l’occurrence et le montant sont considérés comme suffisamment fiables.
+Cash attendu : flux probable mais encore soumis à une incertitude opérationnelle.
+Forecast position : position cash projetée à un instant futur.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashForecasting #Treasury #Liquidity #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

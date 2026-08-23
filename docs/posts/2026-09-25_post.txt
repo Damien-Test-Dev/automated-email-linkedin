@@ -1,0 +1,43 @@
+✨ Test end-to-end · Cash Management · Cash Forecasting : afficher 98 % de précision ne prouve presque rien.
+La vraie question est : où sont les 2 % qui manquent ?
+
+Un cash forecast doit forcément rencontrer la réalité.
+
+À un moment donné, la projection devient une position observée.
+
+Et c’est là que commence le vrai contrôle : comparer ce qui était prévu avec ce qui s’est réellement produit.
+
+Le piège classique consiste à mesurer l’écart global sans expliquer son origine.
+
+Un forecast peut sembler performant tout en masquant :
+un flux manquant, un montant erroné, une date décalée ou une hypothèse devenue fausse.
+
+🎯 En tant que Product Owner, je veux :
+Une mesure de qualité du forecast qui soit compréhensible et actionnable.
+Une Definition of Done intégrant l’analyse des écarts, pas seulement leur calcul.
+
+🛠️ En tant que Developer, je veux :
+Une comparaison déterministe entre forecast versionné et cash réellement observé.
+Une traçabilité permettant de rattacher chaque écart à sa cause.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi la prévision a été juste ou fausse.
+Transformer chaque écart significatif en information utile pour la prochaine décision.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “forecast figé → réalisation réelle → comparaison → classification de l’écart”.
+Couvrir les écarts de montant, date, absence de flux et mauvaise qualification.
+Exiger les preuves : forecast initial, réalisation, delta, cause et action corrective.
+
+Votre standard : mesurer l’erreur du forecast… ou être capable de l’expliquer ?
+
+📌 Zone technique.
+Forecast accuracy : mesure de l’écart entre une prévision et la réalité observée.
+Variance : différence entre la valeur prévue et la valeur réalisée.
+Backtesting : analyse rétrospective de la qualité des prévisions.
+Root cause : cause identifiée expliquant un écart significatif.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashForecasting #Treasury #ForecastAccuracy #RiskCoverage #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

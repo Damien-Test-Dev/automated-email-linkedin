@@ -1,0 +1,41 @@
+✨ Test end-to-end · Cash Management · Cash Forecasting : quatre systèmes peuvent être à jour… et prévoir quatre positions différentes.
+Le vrai risque commence quand chacun possède sa propre version du futur.
+
+En cash management, le forecast peut agréger des données venant du TMS, des paiements, des comptes bancaires, du settlement ou d’autres applications internes.
+
+Chaque système peut être cohérent localement.
+
+Mais si les horaires de mise à jour, les règles de qualification ou les versions divergent, la vision consolidée devient fragile.
+
+Vu en production : aucun système n’est “en panne”.
+Ils ne racontent simplement pas la même minute.
+
+🎯 En tant que Product Owner, je veux :
+Une source de vérité clairement définie pour chaque catégorie de flux.
+Une Definition of Done qui couvre les règles de priorité en cas de divergence.
+
+🛠️ En tant que Developer, je veux :
+Des correlation IDs et timestamps exploitables entre systèmes.
+Une logique serveur capable d’identifier la source, la fraîcheur et la version de chaque donnée intégrée.
+
+🙂 En tant que End User, je veux :
+Savoir quand la position a été calculée et sur quelles données.
+Être alerté lorsqu’une source est stale, absente ou incohérente.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “même flux → plusieurs systèmes → décalage de mise à jour → consolidation finale”.
+Couvrir la divergence temporelle et les conflits de sources.
+Exiger les preuves : source, timestamp, version, règle de priorité et valeur retenue.
+
+Votre niveau de maturité : plusieurs systèmes disponibles… ou une seule vérité reconstruisible ?
+
+📌 Zone technique.
+Source of truth : source considérée comme autoritative pour une donnée donnée.
+Stale data : donnée techniquement disponible mais devenue trop ancienne pour être fiable.
+Correlation ID : identifiant permettant de suivre un même événement entre plusieurs systèmes.
+Timestamp : horodatage utilisé pour établir la séquence réelle des événements.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashForecasting #Treasury #Observability #DataQuality #Liquidity
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
