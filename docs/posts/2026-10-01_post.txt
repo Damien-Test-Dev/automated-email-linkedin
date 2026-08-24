@@ -1,0 +1,44 @@
+✨ Test end-to-end · Cash Management · Value Dating : “1er octobre” n’a pas la même signification partout.
+Une date valide dans l’écran peut être invalide pour le cash.
+
+En trésorerie, une date de valeur dépend rarement du calendrier civil seul.
+
+Devise.
+Pays.
+Jour férié.
+Cutoff.
+Banque correspondante.
+
+Une opération saisie un jeudi peut prendre valeur vendredi… ou lundi.
+
+Le piège classique : tester que la date existe dans le calendrier sans tester qu’elle est ouvrée pour la chaîne réellement utilisée.
+
+🎯 En tant que Product Owner, je veux :
+Des règles de calendrier lisibles selon devise, marché et type de flux.
+Une Definition of Done qui couvre jours non ouvrés, cutoffs et règles de report.
+
+🛠️ En tant que Developer, je veux :
+Des calendriers de référence versionnés et appliqués côté serveur.
+Une règle déterministe permettant d’expliquer pourquoi la date demandée devient une autre date de valeur.
+
+🙂 En tant que End User, je veux :
+Voir immédiatement lorsqu’une date sera décalée et pourquoi.
+Connaître la date réellement retenue avant de valider l’opération.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “date demandée → devise/calendrier → cutoff → règle de report → date de valeur finale”.
+Couvrir jours fériés, week-ends, calendriers divergents et passage de fin de mois.
+Exiger les preuves : calendrier utilisé, cutoff, règle appliquée, date initiale et date finale.
+
+Votre standard : tester que la date est valide… ou qu’elle est réellement ouvrée pour le cash concerné ?
+
+📌 Zone technique.
+Business day : jour considéré comme ouvré selon le calendrier applicable.
+Holiday calendar : référentiel des jours non ouvrés d’un marché, pays ou système.
+Roll convention : règle utilisée pour déplacer une date non ouvrée.
+Cutoff : heure limite pouvant modifier la date de traitement ou de valeur.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #ValueDating #Treasury #Cutoff #Payments #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

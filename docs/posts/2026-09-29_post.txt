@@ -1,0 +1,46 @@
+✨ Test end-to-end · Cash Management · Value Dating : un paiement peut être juste à 100 %… et fausser quand même la trésorerie.
+Il suffit que le bon montant tombe sur la mauvaise date.
+
+En cash management, on cherche naturellement les erreurs de montant.
+
+Mais une erreur de date de valeur peut être plus silencieuse.
+
+10 millions aujourd’hui et 10 millions demain restent 10 millions.
+
+Pour la liquidité intraday, le funding ou les intérêts, ce n’est pourtant pas la même décision.
+
+Vu en production : le paiement est accepté, le montant est exact, les contrôles passent.
+
+La seule anomalie est temporelle.
+
+Et c’est précisément celle qui déforme la position cash.
+
+🎯 En tant que Product Owner, je veux :
+Une règle métier explicite sur la date de valeur attendue pour chaque type de mouvement.
+Une Definition of Done qui couvre l’impact de cette date sur la liquidité et les positions.
+
+🛠️ En tant que Developer, je veux :
+Un calcul côté serveur indépendant de ce que l’interface laisse saisir ou afficher.
+Une propagation cohérente de la date retenue vers les systèmes consommateurs.
+
+🙂 En tant que End User, je veux :
+Voir immédiatement si un mouvement porte la date attendue.
+Comprendre l’impact d’un décalage avant de prendre une décision de trésorerie.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “montant correct → date erronée → calcul de position → impact liquidité”.
+Couvrir les décalages J, J+1 et dates inattendues autour des périodes sensibles.
+Exiger les preuves : montant, date attendue, date appliquée, position avant/après et décision serveur.
+
+Vous testez quoi : que le montant est juste… ou que le cash est juste au bon moment ?
+
+📌 Zone technique.
+J / J+1 : jour courant et jour ouvré suivant selon les règles applicables.
+Liquidity impact : effet d’un mouvement sur la liquidité disponible.
+Value date mismatch : écart entre la date de valeur attendue et celle réellement appliquée.
+Position cash : vision du cash à un instant et pour une date de valeur donnés.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #ValueDating #Treasury #CashPosition #Liquidity
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,44 @@
+✨ Test end-to-end · Cash Management · Value Dating : modifier une date ne corrige pas seulement un champ.
+Cela peut réécrire l’histoire économique du cash.
+
+Une correction rétroactive paraît parfois anodine.
+
+Le montant ne change pas.
+Le compte ne change pas.
+Le mouvement reste le même.
+
+Mais déplacer sa date de valeur peut modifier une position passée, une réconciliation, un calcul d’intérêt ou l’explication d’un écart.
+
+Le vrai risque n’est donc pas le bouton “modifier”.
+
+C’est tout ce que cette modification redéclenche derrière.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui rende visible l’impact d’un changement rétroactif ou futur de date.
+Une Definition of Done qui couvre recalcul, justification et historique avant/après.
+
+🛠️ En tant que Developer, je veux :
+Des contrôles server-side sur les dates modifiables, les périodes fermées et les droits nécessaires.
+Une propagation maîtrisée vers positions, rapprochements et calculs dépendants.
+
+🙂 En tant que End User, je veux :
+Savoir ce qui sera recalculé avant de confirmer une modification.
+Pouvoir distinguer la valeur originale de la valeur corrigée.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “date initiale → backdating → recalcul → propagation → nouvelle position”.
+Couvrir les modifications sur période ouverte, clôturée ou déjà rapprochée.
+Exiger les preuves : ancienne date, nouvelle date, auteur, justification, recalculs et horodatage.
+
+Votre point de rupture : vous testez la modification du champ… ou tout ce qu’elle réécrit derrière ?
+
+📌 Zone technique.
+Backdating : application rétroactive d’une date antérieure.
+Future dating : application d’une date de valeur future.
+Recalculation : nouveau calcul déclenché par la modification d’une donnée structurante.
+Audit trail : historique permettant de retrouver qui a changé quoi, quand et pourquoi.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #ValueDating #Treasury #AuditTrail #RiskCoverage
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

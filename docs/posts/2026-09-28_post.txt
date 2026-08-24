@@ -1,0 +1,42 @@
+✨ Test end-to-end · Cash Management · Value Dating : voir le cash aujourd’hui ne veut pas dire qu’il vaut aujourd’hui.
+Une date affichée peut rassurer l’écran… et tromper la trésorerie.
+
+En cash management, un mouvement peut être enregistré aujourd’hui tout en portant une date de valeur différente.
+
+Le piège classique : considérer la date comptable comme la vérité économique du cash.
+
+Le mouvement existe.
+Le montant est correct.
+Le statut est vert.
+
+Mais son impact réel sur la position de trésorerie commence à une autre date.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement date d’opération, date comptable et date de valeur.
+Une Definition of Done qui impose un impact cash cohérent avec la date réellement appliquée.
+
+🛠️ En tant que Developer, je veux :
+Une règle server-side déterministe pour calculer et appliquer la date de valeur.
+Une traçabilité E2E : événement → règle → date calculée → impact sur la position cash.
+
+🙂 En tant que End User, je veux :
+Comprendre immédiatement quand un mouvement commence réellement à impacter ma trésorerie.
+Ne pas confondre une écriture visible avec du cash économiquement disponible.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “mouvement enregistré → date comptable → calcul de date de valeur → position cash”.
+Couvrir le risque d’un statut correct associé à une mauvaise lecture économique du cash.
+Exiger les preuves : événement, règle appliquée, dates calculées, montant et position résultante.
+
+Votre standard : vérifier que le mouvement est enregistré… ou vérifier quand il commence réellement à compter ?
+
+📌 Zone technique.
+Date d’opération : date à laquelle l’événement est initié ou exécuté.
+Date comptable : date d’enregistrement du mouvement dans le système comptable.
+Date de valeur : date à partir de laquelle le mouvement produit son effet économique.
+Value dating : règles déterminant la date de valeur applicable à un mouvement.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #ValueDating #Treasury #Liquidity #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

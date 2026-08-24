@@ -1,0 +1,46 @@
+✨ Test end-to-end · Cash Management · Value Dating : la bonne date ne suffit pas.
+Il faut pouvoir expliquer pourquoi le système l’a choisie.
+
+En cash management, une date de valeur peut dépendre d’une succession de décisions :
+
+type de mouvement, devise, calendrier, cutoff, convention de report, correction éventuelle.
+
+À la fin, l’écran affiche une date.
+
+Mais en cas d’incident, d’écart ou d’audit, la vraie question n’est pas :
+
+“Quelle date avons-nous ?”
+
+C’est :
+
+“Comment sommes-nous arrivés à cette date ?”
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où la date finale reste explicable à partir des règles métier appliquées.
+Une Definition of Done qui impose une preuve complète de la décision de value dating.
+
+🛠️ En tant que Developer, je veux :
+Une traçabilité E2E de chaque composante ayant participé au calcul.
+Des décisions serveur reproductibles à partir des mêmes données et mêmes règles.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi une date demandée a été acceptée, modifiée ou rejetée.
+Pouvoir retrouver cette explication sans reconstruire manuellement cinq systèmes.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “événement → règles → calendrier → cutoff → date de valeur → impact cash”.
+Couvrir les divergences entre date affichée et décision réellement appliquée.
+Exiger les preuves : inputs, règles, versions, calendrier, horodatage et résultat final.
+
+Votre niveau de maturité : afficher la bonne date… ou pouvoir la défendre plusieurs mois plus tard ?
+
+📌 Zone technique.
+Decision trace : éléments permettant de reconstruire une décision système.
+Rule version : version exacte de la règle utilisée lors du calcul.
+Audit-ready : capacité à fournir une preuve complète, cohérente et exploitable.
+Value date evidence : ensemble des données permettant de justifier la date de valeur retenue.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #ValueDating #Treasury #AuditTrail #RiskCoverage #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
