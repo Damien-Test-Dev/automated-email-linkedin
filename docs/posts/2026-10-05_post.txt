@@ -1,0 +1,45 @@
+✨ Test end-to-end · Cash Management · Liquidity Buffers : un buffer visible n’est pas forcément un buffer utilisable.
+Le vrai risque commence quand le chiffre rassure… mais que le cash ne peut pas bouger.
+
+En cash management, un liquidity buffer sert à absorber un besoin imprévu sans mettre en danger la continuité des paiements.
+
+Mais tout ce qui apparaît dans la réserve n’est pas nécessairement mobilisable immédiatement.
+
+Cash réservé.
+Montants soumis à une contrainte interne.
+Liquidité attachée à une entité.
+Fonds disponibles uniquement après une certaine heure.
+
+Vu en production : le dashboard affiche un buffer confortable.
+
+Au moment de financer un besoin urgent, une partie du montant n’est pas réellement utilisable.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours qui distingue clairement buffer total, buffer réservé et buffer mobilisable.
+Une Definition of Done qui impose une lecture métier unique de chaque niveau de réserve.
+
+🛠️ En tant que Developer, je veux :
+Des règles server-side capables de qualifier la disponibilité réelle de chaque composante.
+Une traçabilité E2E : position → contrainte → montant mobilisable → décision finale.
+
+🙂 En tant que End User, je veux :
+Voir immédiatement ce que je peux réellement utiliser.
+Ne pas découvrir sous stress qu’une partie du buffer était seulement visible.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “buffer affiché → contraintes appliquées → montant mobilisable → décision de financement”.
+Couvrir le risque d’une réserve techniquement présente mais opérationnellement indisponible.
+Exiger les preuves : position, contraintes, montant réservé, montant mobilisable et horodatage.
+
+Votre standard : afficher une réserve… ou prouver ce qui est réellement mobilisable ?
+
+📌 Zone technique.
+Liquidity buffer : réserve de liquidité destinée à absorber des besoins imprévus.
+Mobilisable : portion du cash réellement utilisable au moment de la décision.
+Reserved cash : cash présent mais protégé ou affecté à un usage spécifique.
+Available liquidity : liquidité effectivement disponible après application des contraintes.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #LiquidityBuffer #Treasury #Liquidity #RiskCoverage
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

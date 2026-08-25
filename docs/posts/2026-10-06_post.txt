@@ -1,0 +1,45 @@
+✨ Test end-to-end · Cash Management · Reserve Management : disponible ne veut pas dire consommable.
+Une réserve existe précisément pour ne pas être utilisée trop facilement.
+
+En trésorerie, certaines portions de cash doivent rester protégées.
+
+Pas parce qu’elles sont indisponibles.
+
+Parce qu’elles servent de garde-fou contre :
+un paiement imprévu, un appel de marge, un décalage d’encaissement ou une tension intraday.
+
+Le piège classique : le système autorise la consommation du cash simplement parce que le solde est positif.
+
+Le cash passe.
+
+Mais la protection disparaît.
+
+🎯 En tant que Product Owner, je veux :
+Des règles explicites sur ce qui peut être consommé et ce qui doit rester protégé.
+Une Definition of Done qui couvre l’impact d’une consommation sur le buffer résiduel.
+
+🛠️ En tant que Developer, je veux :
+Des contrôles server-side empêchant une consommation qui ferait tomber la réserve sous le seuil autorisé.
+Une décision traçable : montant demandé → réserve requise → disponible net → autorisation ou blocage.
+
+🙂 En tant que End User, je veux :
+Comprendre immédiatement pourquoi un montant pourtant disponible ne peut pas être utilisé.
+Voir le buffer restant avant de confirmer une action.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “cash disponible → demande de consommation → contrôle réserve → autorisation ou blocage”.
+Couvrir les montants juste au-dessus, juste en dessous et exactement au seuil de protection.
+Exiger les preuves : disponible initial, réserve minimale, demande, décision serveur et buffer final.
+
+Vous testez quoi : que le cash est disponible… ou qu’il reste suffisamment de cash après son utilisation ?
+
+📌 Zone technique.
+Reserve requirement : niveau de liquidité devant rester protégé.
+Residual buffer : réserve restante après consommation d’une partie du cash.
+Hard limit : seuil qui ne peut pas être franchi.
+Soft limit : seuil pouvant déclencher une alerte ou une validation complémentaire.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #ReserveManagement #Treasury #LiquidityRisk #Controls
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

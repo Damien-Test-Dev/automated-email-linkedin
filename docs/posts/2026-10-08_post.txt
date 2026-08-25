@@ -1,0 +1,48 @@
+✨ Test end-to-end · Cash Management · Reserve Management : le problème n’est pas toujours un seuil trop bas.
+C’est parfois un seuil dont personne ne partage la même définition.
+
+En cash management, un seuil de réserve peut vouloir dire plusieurs choses selon l’équipe :
+
+niveau minimum absolu,
+seuil d’alerte,
+niveau cible,
+niveau déclenchant une validation,
+ou limite de blocage.
+
+Vu en production : le métier croit qu’en dessous de 20 millions, le système bloque.
+
+Le moteur, lui, considère 20 millions comme un simple niveau d’alerte.
+
+Le paiement passe.
+
+Et la réserve tombe sous le niveau que la trésorerie pensait protégé.
+
+🎯 En tant que Product Owner, je veux :
+Une définition unique de chaque seuil : cible, alerte, validation ou blocage.
+Une Definition of Done qui impose la même compréhension côté métier et système.
+
+🛠️ En tant que Developer, je veux :
+Une règle server-side non ambiguë pour chaque niveau de contrôle.
+Une traçabilité : buffer observé → seuil appliqué → type de contrôle → décision.
+
+🙂 En tant que End User, je veux :
+Savoir ce qui se passe lorsque la réserve approche ou franchit un seuil.
+Ne pas devoir interpréter une couleur ou une alerte pour comprendre la décision.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “buffer proche du seuil → franchissement → règle serveur → décision métier”.
+Couvrir seuil atteint, dépassé, juste avant et modification du seuil en cours de journée.
+Exiger les preuves : valeur observée, seuil, type de règle, décision et horodatage.
+
+Votre point de rupture : vous testez la valeur du seuil… ou la signification réelle de ce seuil ?
+
+📌 Zone technique.
+Target buffer : niveau de réserve recherché en situation normale.
+Alert threshold : niveau déclenchant une alerte.
+Hard floor : niveau minimal qui ne doit pas être franchi.
+Escalation threshold : niveau déclenchant une validation ou une escalade supplémentaire.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #ReserveManagement #Treasury #Controls #LiquidityRisk
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
