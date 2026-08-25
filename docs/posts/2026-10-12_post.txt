@@ -1,0 +1,42 @@
+✨ Test end-to-end · Cash Management · Cash Concentration : une position consolidée ne prouve pas que le cash a réellement bougé.
+Le dashboard peut être juste… alors que la concentration est fausse.
+
+En cash management, une vue consolidée peut agréger plusieurs soldes avant même que les mouvements de concentration soient réellement exécutés.
+
+Le piège classique : confondre cash visible au niveau groupe et cash réellement transféré vers le compte cible.
+
+Le total semble correct.
+Le dashboard est vert.
+La trésorerie pense disposer du montant.
+
+Mais certains sweeps sont encore en attente, rejetés ou simplement non exécutés.
+
+🎯 En tant que Product Owner, je veux :
+Une distinction claire entre cash agrégé, cash en cours de concentration et cash réellement centralisé.
+Une Definition of Done qui impose une cohérence entre position affichée et mouvements exécutés.
+
+🛠️ En tant que Developer, je veux :
+Une position consolidée construite à partir de statuts serveur fiables.
+Une traçabilité E2E : compte source → règle → sweep → compte cible → position finale.
+
+🙂 En tant que End User, je veux :
+Savoir immédiatement quelle partie du cash est réellement arrivée sur le compte central.
+Ne pas prendre une décision de trésorerie sur une concentration seulement théorique.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “solde source → déclenchement → sweep → confirmation → position centralisée”.
+Couvrir le risque d’un dashboard consolidé alors qu’un mouvement reste incomplet.
+Exiger les preuves : solde initial, ordre de sweep, statut, montant reçu et horodatage.
+
+Votre standard : voir une position consolidée… ou vérifier que le cash a réellement rejoint sa destination ?
+
+📌 Zone technique.
+Cash concentration : centralisation de liquidités provenant de plusieurs comptes.
+Source account : compte dont le cash doit être transféré.
+Target account : compte recevant la liquidité centralisée.
+Sweep : mouvement automatisé utilisé pour transférer le cash.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashConcentration #Treasury #Liquidity #CashPooling
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

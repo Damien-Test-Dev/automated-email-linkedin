@@ -1,0 +1,43 @@
+✨ Test end-to-end · Cash Management · Cash Concentration : le cash peut appartenir au groupe… sans être transférable dans le groupe.
+La consolidation économique ne supprime pas les frontières juridiques.
+
+Dans une organisation multi-entités, plusieurs comptes peuvent afficher une liquidité confortable.
+
+Mais centraliser ce cash peut dépendre de :
+l’entité juridique, la devise, la juridiction, les accords intercompany ou des contraintes réglementaires.
+
+Le piège classique : appliquer une logique groupe à un cash qui reste juridiquement local.
+
+Le montant existe.
+
+Mais le transfert ne doit pas partir.
+
+🎯 En tant que Product Owner, je veux :
+Des règles de concentration compatibles avec les contraintes de chaque entité.
+Une Definition of Done qui couvre explicitement les transferts autorisés et interdits.
+
+🛠️ En tant que Developer, je veux :
+Des contrôles server-side avant tout mouvement inter-entités.
+Une décision traçable : source → entité → règle → autorisation ou blocage.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi un cash visible au niveau groupe reste localement immobilisé.
+Ne pas devoir découvrir une restriction au moment du sweep.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “compte source → entité → règle d’éligibilité → tentative de transfert → décision”.
+Couvrir transferts intra-entité, inter-entités, devises et juridictions différentes.
+Exiger les preuves : entités, règle appliquée, décision serveur, montant et statut final.
+
+Vous testez quoi : que le groupe possède le cash… ou qu’il a réellement le droit de le déplacer ?
+
+📌 Zone technique.
+Legal entity : entité juridique propriétaire du compte ou du cash.
+Intercompany transfer : mouvement de fonds entre deux entités d’un même groupe.
+Transfer restriction : contrainte empêchant ou limitant un transfert.
+Trapped cash : cash disponible localement mais difficile ou impossible à transférer.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashConcentration #Treasury #Liquidity #RiskControls #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

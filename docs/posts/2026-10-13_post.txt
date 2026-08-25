@@ -1,0 +1,44 @@
+✨ Test end-to-end · Cash Management · Cash Concentration : le cash le plus difficile à centraliser est parfois celui que personne ne sait qu’il existe.
+Un compte oublié suffit à rendre une concentration incomplète.
+
+En trésorerie, le périmètre évolue.
+
+Nouveau compte.
+Nouvelle entité.
+Nouvelle devise.
+Migration bancaire.
+Ancien compte toujours actif.
+
+Le piège classique : la mécanique de concentration fonctionne parfaitement… sur un périmètre incomplet.
+
+Résultat : du cash reste dormant hors du dispositif central.
+
+🎯 En tant que Product Owner, je veux :
+Un périmètre de concentration explicitement défini et contrôlable.
+Une Definition of Done qui couvre l’ajout, le retrait et la modification d’un compte.
+
+🛠️ En tant que Developer, je veux :
+Des règles server-side empêchant qu’un compte éligible reste silencieusement hors périmètre.
+Une traçabilité entre référentiel compte, éligibilité et cycle de concentration.
+
+🙂 En tant que End User, je veux :
+Voir quels comptes participent réellement à la concentration.
+Identifier immédiatement un compte exclu, nouveau ou non configuré.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “création compte → éligibilité → inclusion → premier cycle de concentration”.
+Couvrir comptes nouvellement ouverts, désactivés, réactivés ou mal référencés.
+Exiger les preuves : compte, statut, règle d’éligibilité, cycle attendu et résultat.
+
+Votre point de rupture : vous testez que la concentration fonctionne… ou que tous les comptes qui doivent y participer sont réellement dedans ?
+
+📌 Zone technique.
+Concentration perimeter : ensemble des comptes inclus dans le dispositif de concentration.
+Eligibility rule : règle déterminant si un compte peut participer.
+Dormant cash : liquidité présente mais non utilisée ou non centralisée.
+Account onboarding : intégration d’un nouveau compte dans le dispositif.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashConcentration #Treasury #ReferenceData #Liquidity
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

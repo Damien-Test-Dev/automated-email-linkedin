@@ -1,0 +1,47 @@
+✨ Test end-to-end · Cash Management · Cash Concentration : une exception locale n’est pas dangereuse.
+Une exception que personne ne sait encore expliquer six mois plus tard, oui.
+
+Une structure de cash concentration n’est pas toujours uniforme.
+
+Certains comptes peuvent être exclus pour des raisons :
+réglementaires, contractuelles, opérationnelles ou fiscales.
+
+Le problème commence lorsque l’exception devient simplement :
+
+“ce compte ne sweep pas.”
+
+Sans raison visible.
+Sans date d’expiration.
+Sans propriétaire.
+
+L’exception temporaire devient une règle permanente par accident.
+
+🎯 En tant que Product Owner, je veux :
+Une exception documentée avec motif, propriétaire et durée de validité.
+Une Definition of Done qui impose son comportement attendu dans la concentration.
+
+🛠️ En tant que Developer, je veux :
+Des exceptions versionnées et appliquées côté serveur.
+Une date d’effet, une expiration éventuelle et une trace de chaque changement.
+
+🙂 En tant que End User, je veux :
+Comprendre immédiatement pourquoi un compte n’est pas concentré.
+Savoir si l’exclusion est normale, temporaire ou à investiguer.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “compte éligible → exception → exclusion du sweep → expiration → retour au parcours nominal”.
+Couvrir exceptions expirées, modifiées ou contradictoires.
+Exiger les preuves : motif, auteur, dates, règle appliquée et comportement observé.
+
+Votre standard : tester l’exception… ou tester qu’elle cesse aussi d’exister quand elle n’est plus justifiée ?
+
+📌 Zone technique.
+Exception rule : règle dérogeant au fonctionnement nominal.
+Effective date : date à partir de laquelle l’exception s’applique.
+Expiry date : date à laquelle elle doit cesser de s’appliquer.
+Nominal flow : parcours standard attendu en l’absence d’exception.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #CashConcentration #Treasury #Controls #AuditTrail
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
