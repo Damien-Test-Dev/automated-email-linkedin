@@ -1,0 +1,47 @@
+✨ Test end-to-end · Cash Management · High Value Payments : écrire “urgent” sur un paiement ne devrait jamais suffire à le faire passer devant les autres.
+L’urgence est une information. La priorité est une décision métier.
+
+En cash management, certains paiements doivent effectivement passer vite.
+
+Settlement critique.
+Appel de marge.
+Obligation réglementaire.
+Paiement client sensible.
+
+Le piège classique : transformer un simple indicateur “urgent” en passe-droit opérationnel.
+
+Vu en production : le paiement reçoit le flag urgent.
+
+Il remonte immédiatement dans la file.
+
+Mais personne ne vérifie si son urgence est réellement supérieure à celle des flux déjà présents.
+
+🎯 En tant que Product Owner, je veux :
+Une distinction explicite entre urgence déclarée et priorité réellement accordée.
+Une Definition of Done qui impose des critères métier pour toute priorisation.
+
+🛠️ En tant que Developer, je veux :
+Une logique server-side déterministe pour calculer la priorité réelle.
+Une traçabilité : paiement → motif d’urgence → règle → priorité → décision.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi un paiement passe avant un autre.
+Ne pas dépendre d’un simple flag dont chacun pourrait interpréter différemment la portée.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “paiement déclaré urgent → qualification → priorisation → ordre d’exécution”.
+Couvrir plusieurs paiements urgents simultanés et les changements de priorité.
+Exiger les preuves : motif, règle appliquée, priorité calculée, décision et horodatage.
+
+Votre standard : tester que le flag “urgent” fonctionne… ou que la vraie priorité métier est respectée ?
+
+📌 Zone technique.
+Urgent payment : paiement nécessitant un traitement accéléré.
+Priority rule : règle déterminant l’ordre réel de traitement.
+Queue : file dans laquelle les paiements attendent leur exécution.
+Priority override : modification exceptionnelle de la priorité standard.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #HighValuePayments #Treasury #Payments #RiskCoverage
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
