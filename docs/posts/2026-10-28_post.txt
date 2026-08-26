@@ -1,0 +1,50 @@
+✨ Test end-to-end · Cash Management · Payment Channels : empêcher le double clic ne suffit pas si le même paiement peut revenir par l’API.
+L’unicité doit protéger le paiement, pas seulement le canal.
+
+Un utilisateur envoie une instruction depuis le portail.
+
+Le statut tarde.
+
+Sous pression, la même opération est transmise via fichier.
+
+Pendant ce temps, un système externe déclenche aussi un retry API.
+
+Trois demandes.
+
+Une seule intention métier.
+
+Le piège classique : chaque canal possède sa propre protection contre les doublons.
+
+Individuellement, tout fonctionne.
+
+Globalement, trois paiements peuvent partir.
+
+🎯 En tant que Product Owner, je veux :
+Une définition de l’unicité valable sur l’ensemble des canaux.
+Une Definition of Done qui couvre explicitement les collisions portail/API/fichier.
+
+🛠️ En tant que Developer, je veux :
+Une détection server-side des doublons indépendante du point d’entrée.
+Une corrélation permettant de rattacher plusieurs soumissions à une même intention métier.
+
+🙂 En tant que End User, je veux :
+Pouvoir reprendre une opération incertaine sans créer un deuxième paiement.
+Comprendre lorsque le système identifie une instruction déjà connue.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “soumission portail → absence de réponse → retry API/fichier → décision d’unicité”.
+Couvrir simultanéité, latence et différences mineures de payload entre canaux.
+Exiger les preuves : références, timestamps, clés d’unicité, décisions et paiement réellement exécuté.
+
+Vous testez quoi : les doublons dans chaque canal… ou le doublon métier à travers tous les canaux ?
+
+📌 Zone technique.
+Idempotence : capacité à répéter une demande sans répéter son effet métier.
+Deduplication : détection et gestion d’instructions identiques ou équivalentes.
+Business key : ensemble de données permettant d’identifier une intention métier unique.
+Retry : nouvelle tentative après absence ou incertitude de réponse.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #PaymentChannels #Idempotence #Payments #Treasury #API
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

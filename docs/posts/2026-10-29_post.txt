@@ -1,0 +1,50 @@
+✨ Test end-to-end · Cash Management · Payment Channels : un paiement ne devrait pas avoir un statut différent selon l’écran qui le regarde.
+Le canal d’entrée ne doit pas devenir une frontière de vérité.
+
+Un paiement est envoyé via API.
+
+L’API retourne “Accepted”.
+
+Quelques secondes plus tard, l’utilisateur ouvre le portail.
+
+Aucune opération.
+
+Ou pire :
+
+un ancien statut.
+
+Dans un autre système, le fichier de reporting indique encore “Pending”.
+
+Le problème n’est plus seulement la latence.
+
+C’est l’absence de vérité commune.
+
+🎯 En tant que Product Owner, je veux :
+Une représentation métier cohérente du paiement quel que soit le canal utilisé pour le consulter.
+Une Definition of Done qui couvre propagation, fraîcheur et statut final cross-channel.
+
+🛠️ En tant que Developer, je veux :
+Une source de vérité serveur pour l’état du paiement.
+Des correlation IDs permettant de retrouver la même instruction dans tous les parcours.
+
+🙂 En tant que End User, je veux :
+Retrouver mon paiement indépendamment de son canal d’origine.
+Comprendre si l’information affichée est courante, retardée ou encore en propagation.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “création API → traitement → consultation portail → reporting fichier → statut final”.
+Couvrir les retards de propagation et les statuts contradictoires.
+Exiger les preuves : correlation ID, événements, timestamps, statuts intermédiaires et état final.
+
+Votre niveau de maturité : chaque canal connaît son statut… ou tous les canaux racontent le même paiement ?
+
+📌 Zone technique.
+Status propagation : diffusion d’un changement d’état entre différents systèmes.
+Source of truth : source autoritative du statut métier.
+Correlation ID : identifiant permettant de relier un même paiement à travers plusieurs composants.
+Stale status : statut encore visible mais devenu obsolète.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #PaymentChannels #PaymentStatus #API #Treasury #Observability
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
