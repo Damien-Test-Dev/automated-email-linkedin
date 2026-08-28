@@ -42,7 +42,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          KEEP=300
+          KEEP=30000
           POSTS_DIR="docs/posts"
           IMAGES_DIR="docs/images"
           PAYLOAD_DIR="docs/payload"
