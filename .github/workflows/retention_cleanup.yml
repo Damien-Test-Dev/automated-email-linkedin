@@ -1,4 +1,4 @@
-name: Retention - keep last 30000 complete posts (weekend)
+name: Retention - keep last 300 complete posts (weekend)
 
 on:
   schedule:
@@ -38,11 +38,11 @@ jobs:
             exit 0
           fi
 
-      - name: Apply retention (keep last 30000 complete pairs)
+      - name: Apply retention (keep last 300 complete pairs)
         run: |
           set -euo pipefail
 
-          KEEP=30000
+          KEEP=300
           POSTS_DIR="docs/posts"
           IMAGES_DIR="docs/images"
           PAYLOAD_DIR="docs/payload"
@@ -95,7 +95,7 @@ jobs:
 
           if git status --porcelain | grep -q .; then
             git add docs/posts docs/images docs/payload docs/history.json
-            git commit -m "chore: retention keep last 30000 complete posts"
+            git commit -m "chore: retention keep last 300 complete posts"
             git push
           else
             echo "No changes to commit."
