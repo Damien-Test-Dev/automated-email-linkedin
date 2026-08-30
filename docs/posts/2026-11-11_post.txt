@@ -1,0 +1,53 @@
+✨ Test end-to-end · Cash Management · Observabilité : dans un incident distribué, l’ordre des événements peut devenir plus important que les événements eux-mêmes.
+Encore faut-il pouvoir reconstruire cet ordre.
+
+Un paiement est créé à 10:01:02.
+
+Un système indique réception à 10:01:01.
+
+Un autre écrit validation à 10:01:04.
+
+Un troisième affiche rejet à 10:00:59.
+
+Impossible ?
+
+Pas forcément.
+
+Horloges désynchronisées.
+Fuseaux différents.
+Timestamp applicatif vs timestamp serveur.
+Événement produit avant d’être consommé.
+
+Chaque donnée paraît plausible.
+
+La chronologie globale ne l’est plus.
+
+🎯 En tant que Product Owner, je veux :
+Une chronologie suffisamment fiable pour expliquer les décisions critiques.
+Une Definition of Done qui précise la référence temporelle utilisée dans le parcours.
+
+🛠️ En tant que Developer, je veux :
+Des timestamps normalisés et une référence temporelle commune.
+Une traçabilité distinguant création, émission, réception et traitement d’un événement.
+
+🙂 En tant que End User, je veux :
+Comprendre ce qui s’est réellement produit avant ou après un cutoff, une validation ou un rejet.
+Ne pas devoir arbitrer entre plusieurs heures contradictoires.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “instruction → événements multi-systèmes → reconstruction chronologique”.
+Couvrir latence, file d’attente, retard de consommation et désynchronisation d’horloge.
+Exiger les preuves : timestamps source, timestamps serveur, ordre des événements et décision finale.
+
+Votre point de rupture : vous testez chaque timestamp séparément… ou votre capacité à reconstruire l’ordre réel des décisions ?
+
+📌 Zone technique.
+Timestamp : date et heure associées à un événement.
+Clock skew : différence entre les horloges de plusieurs systèmes.
+Event time : heure à laquelle l’événement métier s’est produit.
+Processing time : heure à laquelle un système a effectivement traité cet événement.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Observability #Timestamps #Payments #Treasury #DistributedSystems
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

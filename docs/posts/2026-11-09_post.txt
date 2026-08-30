@@ -1,0 +1,60 @@
+✨ Test end-to-end · Cash Management · Observabilité : un paiement peut traverser cinq systèmes en quelques secondes.
+Sans identifiant transverse, le retrouver peut prendre des heures.
+
+Une instruction part du portail.
+
+Elle traverse ensuite :
+
+API.
+Moteur de paiement.
+Contrôles.
+Orchestrateur.
+Système externe.
+
+Chaque composant possède son propre identifiant.
+
+Techniquement, tout est tracé.
+
+Opérationnellement, personne ne sait relier les traces.
+
+Le paiement devient alors :
+
+REQ-83492 ici.
+TX-55601 ailleurs.
+MSG-9987 plus loin.
+
+Trois équipes.
+
+Trois recherches.
+
+Une seule instruction métier.
+
+🎯 En tant que Product Owner, je veux :
+Un paiement identifiable de son initiation jusqu’à son résultat final.
+Une Definition of Done qui impose une corrélation transverse sur tout le parcours critique.
+
+🛠️ En tant que Developer, je veux :
+Un correlation ID propagé dans tous les composants participant au traitement.
+Une correspondance traçable entre identifiants techniques et référence métier.
+
+🙂 En tant que End User, je veux :
+Pouvoir fournir une référence et retrouver immédiatement l’état réel de mon paiement.
+Ne pas dépendre de plusieurs équipes pour reconstruire son parcours.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “création → propagation → contrôles → exécution → restitution” en suivant le même identifiant transverse.
+Couvrir perte, remplacement ou non-propagation du correlation ID.
+Exiger les preuves : référence métier, correlation ID, systèmes traversés, timestamps et statut final.
+
+Votre standard : avoir des identifiants partout… ou pouvoir suivre réellement la même instruction partout ?
+
+📌 Zone technique.
+Correlation ID : identifiant transverse reliant les traitements d’une même opération.
+Business reference : référence métier permettant d’identifier une instruction.
+Trace context : informations propagées entre composants pour conserver le contexte d’exécution.
+End-to-end tracking : suivi complet d’une instruction à travers plusieurs systèmes.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Observability #CorrelationID #Payments #Treasury #Tracking
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

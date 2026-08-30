@@ -1,0 +1,54 @@
+✨ Test end-to-end · Cash Management · Observabilité : les incidents les plus dangereux ne rendent pas toujours l’application rouge.
+Parfois, 90 % du parcours fonctionne parfaitement.
+
+Le portail répond.
+
+L’API répond.
+
+Les contrôles passent.
+
+L’instruction avance.
+
+Puis une dépendance ralentit.
+
+Quelques paiements restent bloqués.
+
+D’autres passent.
+
+Le monitoring global reste vert.
+
+C’est le scénario parfait pour un incident silencieux :
+
+service disponible,
+parcours partiellement cassé,
+statut utilisateur ambigu.
+
+🎯 En tant que Product Owner, je veux :
+Une visibilité sur le parcours métier, pas seulement sur la disponibilité technique des composants.
+Une Definition of Done couvrant les dégradations partielles et les étapes critiques.
+
+🛠️ En tant que Developer, je veux :
+Des métriques et événements permettant de localiser précisément l’étape où le flux ralentit ou s’arrête.
+Une corrélation entre latence, statut et population réellement impactée.
+
+🙂 En tant que End User, je veux :
+Savoir si mon paiement est réellement en cours ou simplement bloqué quelque part.
+Recevoir un statut fiable plutôt qu’un “processing” indéfini.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E avec panne partielle “instruction → dépendance dégradée → timeout/retry → récupération ou blocage”.
+Couvrir impact sélectif sur certaines instructions plutôt qu’une indisponibilité totale.
+Exiger les preuves : étape impactée, latence, retry, statut, correlation ID et résultat final.
+
+Votre supervision voit-elle seulement quand un service tombe… ou aussi quand le parcours métier commence silencieusement à se casser ?
+
+📌 Zone technique.
+Partial outage : dégradation n’affectant qu’une partie des flux ou fonctionnalités.
+Latency : temps nécessaire à l’exécution ou à la propagation d’une opération.
+Timeout : expiration du délai autorisé pour recevoir une réponse.
+Golden signal : métrique critique permettant de détecter la santé réelle d’un service ou parcours.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Observability #Resilience #Payments #Treasury #IncidentManagement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
