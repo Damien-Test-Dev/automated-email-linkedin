@@ -1,0 +1,49 @@
+✨ Test end-to-end · Cash Management · Frais & intérêts : un chiffre financier n’est maîtrisé que s’il est reproductible.
+Sinon, c’est juste un résultat affiché.
+
+En trésorerie, un montant de frais ou d’intérêts peut dépendre de nombreuses données :
+
+principal,
+taux,
+dates,
+devise,
+convention,
+arrondi,
+tarif,
+version de règle.
+
+Le système affiche le résultat final.
+
+Mais en cas d’écart, de réclamation ou d’audit, la vraie question devient :
+
+“Pouvez-vous refaire exactement le calcul qui a produit ce montant ?”
+
+🎯 En tant que Product Owner, je veux :
+Un calcul financier explicable à partir des règles réellement actives au moment de l’opération.
+Une Definition of Done qui impose une preuve complète du résultat.
+
+🛠️ En tant que Developer, je veux :
+Des règles versionnées et des inputs conservés pour reproduire le calcul.
+Une traçabilité E2E : données d’entrée → règles → calcul intermédiaire → arrondi → résultat final.
+
+🙂 En tant que End User, je veux :
+Comprendre d’où vient un frais ou un intérêt contesté.
+Pouvoir obtenir une explication exploitable sans reconstruire le calcul manuellement.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “inputs → règles → calcul → arrondi → comptabilisation → résultat final”.
+Couvrir changement de tarif, règle versionnée et recalcul rétroactif.
+Exiger les preuves : inputs, versions, formule, étapes intermédiaires, arrondi et montant final.
+
+Votre niveau de maturité : afficher le bon chiffre… ou pouvoir le recalculer exactement plusieurs mois plus tard ?
+
+📌 Zone technique.
+Calculation trace : ensemble des étapes permettant de reconstruire un calcul financier.
+Rule version : version exacte d’une règle utilisée au moment du calcul.
+Recalculation : nouvelle exécution du calcul à partir des données et règles applicables.
+Audit-ready calculation : calcul dont le résultat peut être justifié et reproduit.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Fees #Interest #Treasury #AuditTrail #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,49 @@
+✨ Test end-to-end · Cash Management · Frais & intérêts : un paiement peut être parfaitement exécuté… et quand même coûter faux.
+Le montant principal est juste. Les frais, eux, racontent une autre histoire.
+
+En cash management, les équipes vérifient naturellement le montant du paiement.
+
+10 millions envoyés.
+10 millions reçus.
+Statut exécuté.
+
+Tout semble propre.
+
+Mais derrière peuvent s’ajouter des frais de traitement, frais bancaires, frais correspondants ou commissions.
+
+Vu en production : le paiement est correct au centime près.
+
+L’erreur se trouve dans les frais.
+
+Petite sur une opération.
+Beaucoup moins petite sur plusieurs milliers.
+
+🎯 En tant que Product Owner, je veux :
+Un parcours où le montant principal et les frais associés sont clairement distingués.
+Une Definition of Done qui impose une règle explicite pour chaque type de frais.
+
+🛠️ En tant que Developer, je veux :
+Un calcul server-side déterministe des frais selon les règles réellement applicables.
+Une traçabilité E2E : paiement → règle tarifaire → frais calculés → montant final.
+
+🙂 En tant que End User, je veux :
+Comprendre immédiatement ce que le paiement coûte réellement.
+Pouvoir distinguer montant envoyé, frais prélevés et montant finalement reçu.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “paiement → règle de frais → calcul → débit final → montant reçu”.
+Couvrir frais absents, doubles, incorrects ou appliqués au mauvais acteur.
+Exiger les preuves : montant, règle, frais calculés, débit réel et statut final.
+
+Votre standard : vérifier que le paiement est correct… ou vérifier aussi combien il a réellement coûté ?
+
+📌 Zone technique.
+Fee : coût appliqué à une opération ou à un service.
+Principal amount : montant principal de l’opération, hors frais.
+Net amount : montant obtenu après application des frais.
+Fee rule : règle déterminant le montant ou le mode de calcul des frais.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Payments #Fees #Treasury #RiskCoverage
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

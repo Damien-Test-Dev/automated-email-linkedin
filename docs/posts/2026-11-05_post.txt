@@ -1,0 +1,50 @@
+✨ Test end-to-end · Cash Management · Frais : le montant envoyé peut être exact et le montant reçu inférieur sans qu’aucun paiement n’ait “échoué”.
+Entre les deux, plusieurs banques peuvent avoir prélevé leur part.
+
+En cross-border payments, les frais peuvent être supportés selon différentes modalités.
+
+Émetteur.
+Bénéficiaire.
+Partage.
+
+Et entre les deux, une ou plusieurs banques correspondantes peuvent intervenir.
+
+Le piège classique : contrôler uniquement l’instruction initiale.
+
+Le système prévoit 1 million.
+
+Le bénéficiaire reçoit moins.
+
+Techniquement, le paiement est exécuté.
+
+Métierment, l’écart doit être expliqué.
+
+🎯 En tant que Product Owner, je veux :
+Une règle claire sur la répartition attendue des frais.
+Une Definition of Done qui couvre le montant réellement reçu, pas uniquement le montant envoyé.
+
+🛠️ En tant que Developer, je veux :
+Une propagation fiable des informations de frais à travers la chaîne de paiement.
+Une traçabilité permettant d’expliquer l’écart entre montant émis, frais et montant crédité.
+
+🙂 En tant que End User, je veux :
+Comprendre qui supporte les frais et pourquoi le bénéficiaire reçoit éventuellement moins.
+Identifier rapidement un prélèvement inattendu.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “montant envoyé → option de frais → correspondants → montant reçu”.
+Couvrir frais partagés, devise différente et prélèvements intermédiaires.
+Exiger les preuves : instruction initiale, option de frais, déductions, montants et statuts.
+
+Votre standard : vérifier ce qui est parti… ou vérifier aussi ce qui est réellement arrivé après les frais ?
+
+📌 Zone technique.
+OUR : frais principalement supportés par l’émetteur selon le schéma applicable.
+SHA : frais répartis entre émetteur et bénéficiaire selon les règles du paiement.
+BEN : frais principalement supportés par le bénéficiaire selon le schéma applicable.
+Correspondent fee : frais prélevés par une banque intervenant dans la chaîne de paiement.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Fees #CrossBorderPayments #Treasury #Payments #BanqueDInvestissement
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,48 @@
+✨ Test end-to-end · Cash Management · Intérêts : une formule correcte peut produire un mauvais résultat.
+Il suffit de lui donner la mauvaise convention.
+
+En finance, le calcul d’intérêt ne dépend pas uniquement du taux.
+
+Il dépend aussi de la période, du nombre de jours et de la convention utilisée.
+
+Actual/360.
+Actual/365.
+30/360.
+
+Même montant.
+Même taux.
+Même période apparente.
+
+Mais pas forcément le même intérêt.
+
+Le piège classique : tester la formule mathématique sans tester la règle métier qui décide quelle convention doit s’appliquer.
+
+🎯 En tant que Product Owner, je veux :
+Une convention de calcul explicitement associée au produit, au compte ou au contrat.
+Une Definition of Done qui impose son application correcte sur toute la période.
+
+🛠️ En tant que Developer, je veux :
+Une sélection server-side de la convention applicable, sans ambiguïté.
+Une traçabilité : principal → taux → période → convention → intérêt calculé.
+
+🙂 En tant que End User, je veux :
+Comprendre pourquoi l’intérêt calculé correspond au montant affiché.
+Pouvoir identifier la convention utilisée sans connaître l’implémentation technique.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “principal → taux → dates → convention → intérêt final”.
+Couvrir changement d’année, février, périodes partielles et conventions différentes.
+Exiger les preuves : base, taux, jours, convention, formule et résultat.
+
+Votre point de rupture : vous testez la formule… ou la règle qui décide quelle formule doit réellement être utilisée ?
+
+📌 Zone technique.
+Day-count convention : méthode utilisée pour calculer la fraction d’année d’une période.
+Actual/360 : jours réels de la période rapportés à une base de 360 jours.
+Actual/365 : jours réels rapportés à une base de 365 jours.
+Accrued interest : intérêt accumulé sur une période donnée.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Interest #Treasury #Finance #RiskCoverage
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

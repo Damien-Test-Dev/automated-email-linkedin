@@ -1,0 +1,51 @@
+✨ Test end-to-end · Cash Management · Frais & intérêts : quelques centimes d’écart ne sont pas toujours “juste un arrondi”.
+Répétés à grande échelle, ils deviennent un défaut métier.
+
+En trésorerie, beaucoup de calculs produisent plus de décimales que le montant réellement comptabilisé.
+
+Taux.
+Prorata.
+Conversion.
+Commission.
+Intérêt.
+
+Il faut donc arrondir.
+
+Le piège classique : chaque système utilise sa propre règle.
+
+L’un arrondit à chaque étape.
+L’autre uniquement à la fin.
+
+Les deux calculs semblent raisonnables.
+
+Les résultats diffèrent pourtant.
+
+🎯 En tant que Product Owner, je veux :
+Une convention d’arrondi explicite pour chaque calcul financier.
+Une Definition of Done qui couvre les écarts cumulés, pas uniquement un exemple isolé.
+
+🛠️ En tant que Developer, je veux :
+Une règle d’arrondi unique, centralisée et reproductible.
+Une traçabilité permettant de distinguer valeur brute, valeur arrondie et montant comptabilisé.
+
+🙂 En tant que End User, je veux :
+Comprendre l’origine d’un écart de quelques centimes.
+Ne pas devoir classer automatiquement chaque différence comme “tolérance”.
+
+🛡️ En tant que QA, j’interviens afin de :
+Tester un E2E “valeur brute → arrondi → agrégation → montant final”.
+Couvrir seuils de décimales, valeurs limites, signes négatifs et calculs répétés.
+Exiger les preuves : valeur initiale, précision, règle d’arrondi et résultat final.
+
+Vous testez quoi : un montant isolé… ou l’effet cumulé de votre règle d’arrondi ?
+
+📌 Zone technique.
+Rounding rule : règle déterminant comment une valeur décimale est arrondie.
+Precision : nombre de décimales conservées dans un calcul.
+Cumulative difference : écart qui s’accumule au fil de plusieurs opérations.
+Tolerance : écart maximal accepté selon une règle métier définie.
+
+#SlashingDefectsWithAQualitySword #ISTQB #E2E #CashManagement #Fees #Interest #Treasury #DataQuality
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
