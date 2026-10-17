@@ -1,8 +1,8 @@
 # Rapport de renommage & alignement
-Généré le Sat Oct 17 14:02:55 CEST 2026
+Généré le Sat Oct 17 14:37:27 CEST 2026
 
 ## Contexte
-- Run: 2026-10-17T14:02:55+02:00
+- Run: 2026-10-17T14:37:27+02:00
 
 ## 1) Conversion images → PNG (si besoin)
 - ✅ aucune conversion nécessaire
