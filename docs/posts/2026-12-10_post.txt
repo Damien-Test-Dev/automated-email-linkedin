@@ -1,0 +1,62 @@
+✨ Test end-to-end · Cash Management · Resilience & Recovery : redémarrer les composants ne signifie pas que les transactions ont retrouvé un parcours cohérent.
+
+Un incident interrompt le traitement.
+
+Le service revient.
+
+Les composants répondent à nouveau.
+
+Les health checks repassent au vert.
+
+Techniquement, la plateforme semble rétablie.
+
+Mais les transactions présentes au moment de l’incident constituent une autre histoire.
+
+Certaines peuvent avoir franchi plusieurs étapes.
+
+D’autres peuvent être restées avant un checkpoint.
+
+Certaines peuvent avoir un état connu dans un composant mais pas encore propagé dans un autre.
+
+La reprise du service et la reprise du parcours ne sont donc pas exactement le même test.
+
+Pour démontrer la recovery, il faut suivre ce qui existait avant l’incident jusqu’à un état cohérent après le retour du système.
+
+Ma règle est simple : la disponibilité prouve que le système répond de nouveau. La recovery doit prouver ce qu’il est advenu de ce qui était déjà en cours.
+
+🎯 En tant que Product Owner :
+
+« Après un incident, les instructions déjà engagées doivent retrouver un résultat compréhensible et cohérent dans le parcours. »
+
+🛠️ En tant que Developer :
+
+« Je dois pouvoir reprendre ou reconstruire le traitement à partir d’un état identifiable plutôt que dépendre uniquement du redémarrage technique des composants. »
+
+🙂 En tant que End User :
+
+« Le retour du service doit aussi me permettre de retrouver une situation claire pour les paiements que j’avais déjà initiés. »
+
+🛡️ En tant que QA :
+
+« Je dois injecter l’incident pendant le traitement puis suivre les transactions en cours avant, pendant et après la reprise afin de vérifier leur continuité E2E. »
+
+🧭 En tant que Test Manager :
+
+« Une stratégie de recovery est incomplète si elle valide le retour des services mais ne couvre pas le devenir des transactions qui étaient en vol au moment de l’incident. »
+
+Votre test de recovery prouve-t-il seulement que les systèmes redémarrent, ou que les transactions interrompues retrouvent réellement un état cohérent de bout en bout ?
+
+📌 Zone technique.
+
+Recovery : restauration du traitement après un incident.
+
+Checkpoint : point de reprise enregistré dans un traitement.
+
+In-Flight Transaction : transaction encore en cours au moment d’un événement ou incident.
+
+State Consistency : cohérence des états observés entre les composants du parcours.
+
+#SlashingDefectsWithAQualitySword #CashManagement #RecoveryTesting #E2E #QualityEngineering
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

@@ -1,0 +1,68 @@
+✨ Test end-to-end · Cash Management · Resilience & Recovery : un retry qui finit par réussir peut rendre le test vert… tout en faisant disparaître la preuve de l’incident initial.
+
+Première tentative.
+
+Pas de réponse exploitable.
+
+Deuxième tentative.
+
+Succès.
+
+Le parcours finit correctement.
+
+Le scénario automatisé pourrait donc passer au vert.
+
+Mais cette réussite finale ne raconte pas tout.
+
+Quelle tentative a réellement produit le résultat observé.
+
+Quel état a laissé la première.
+
+Pourquoi la seconde était nécessaire.
+
+Et surtout, sommes-nous encore capables de reconstruire les deux tentatives séparément.
+
+Dans un système résilient, le retry ne doit pas seulement restaurer le service.
+
+Il doit rester observable.
+
+Sinon, une mécanique conçue pour absorber les incidents peut également les rendre beaucoup plus difficiles à comprendre.
+
+Pour moi, un retry réussi n’efface jamais la nécessité de comprendre la tentative qui l’a précédé.
+
+🎯 En tant que Product Owner :
+
+« Le mécanisme de reprise doit permettre au parcours de continuer sans rendre son résultat incompréhensible pour l’utilisateur. »
+
+🛠️ En tant que Developer :
+
+« Je dois distinguer et tracer chaque tentative tout en conservant un lien stable avec l’instruction métier d’origine. »
+
+🙂 En tant que End User :
+
+« Peu importe le nombre de tentatives techniques nécessaires, je dois obtenir un résultat final cohérent pour une seule instruction. »
+
+🛡️ En tant que QA :
+
+« Je dois vérifier séparément les différentes tentatives, leurs traces et leur résultat afin de démontrer comment le système est passé de l’incident au succès final. »
+
+🧭 En tant que Test Manager :
+
+« Si un retry transforme un incident observable en simple succès final, la couverture manque une partie essentielle de la preuve de résilience. »
+
+Votre test considère-t-il le retry comme réussi dès que la dernière tentative passe, ou conserve-t-il la preuve de tout ce qui s’est réellement produit avant elle ?
+
+📌 Zone technique.
+
+Retry : nouvelle tentative après un échec ou une absence de réponse.
+
+Attempt : occurrence individuelle d’une même tentative de traitement.
+
+Business Reference : référence stable permettant d’identifier l’instruction métier.
+
+Traceability : capacité à reconstruire les événements ayant conduit au résultat final.
+
+#SlashingDefectsWithAQualitySword #CashManagement #Retry #QualityEngineering #E2ETesting
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.

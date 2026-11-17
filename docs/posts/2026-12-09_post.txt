@@ -1,0 +1,68 @@
+✨ Test end-to-end · Cash Management · Resilience & Recovery : rejouer un message ne remet pas le système dans l’état où ce message avait été produit.
+
+Un incident survient.
+
+Un message n’a pas terminé son parcours comme attendu.
+
+Le problème technique est corrigé.
+
+Puis vient la solution apparemment évidente :
+
+replay.
+
+Le message est rejoué.
+
+Mais entre son émission initiale et son replay, le reste du système a pu évoluer.
+
+Un état a changé.
+
+Une autre étape a progressé.
+
+Une donnée a déjà été persistée.
+
+Le replay intervient donc dans un contexte différent.
+
+C’est ce qui le rend intéressant à tester.
+
+Il ne suffit pas de vérifier que le message peut être relu.
+
+Il faut observer ce que cette nouvelle exécution provoque sur l’état actuel du parcours.
+
+À mes yeux, un replay fiable n’est pas la reproduction aveugle du passé. C’est une reprise dont les effets présents restent maîtrisables et démontrables.
+
+🎯 En tant que Product Owner :
+
+« Rejouer une étape ne doit pas modifier de manière inattendue le résultat fonctionnel attendu pour l’instruction. »
+
+🛠️ En tant que Developer :
+
+« Avant et après le replay, je dois pouvoir identifier l’état de la transaction et les effets réellement produits par le message rejoué. »
+
+🙂 En tant que End User :
+
+« Une opération de reprise technique ne doit pas créer un résultat inattendu dans mon parcours de paiement. »
+
+🛡️ En tant que QA :
+
+« Je dois tester le replay à partir de différents états transactionnels et comparer l’état avant et après afin de démontrer exactement quels effets ont été produits. »
+
+🧭 En tant que Test Manager :
+
+« Si le replay n’est testé que dans un environnement propre, nous ne couvrons pas suffisamment le risque créé par des transactions déjà partiellement traitées. »
+
+Votre replay est-il validé parce que le message peut être rejoué, ou parce que ses effets restent maîtrisés quel que soit l’état du parcours au moment de la reprise ?
+
+📌 Zone technique.
+
+Replay : nouvelle exécution d’un message ou événement déjà produit.
+
+Checkpoint : point enregistré permettant de situer l’avancement d’un traitement.
+
+Transaction State : état réel d’une transaction dans le parcours.
+
+Side Effect : modification produite par l’exécution d’une opération.
+
+#SlashingDefectsWithAQualitySword #CashManagement #ReplayTesting #Resilience #SoftwareTesting
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
