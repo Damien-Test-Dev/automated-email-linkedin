@@ -1,0 +1,66 @@
+✨ Test end-to-end · Cash Management · Resilience & Recovery : le vrai risque d’un replay n’est pas de rejouer le passé. C’est d’appliquer une ancienne action à une situation métier qui a changé.
+
+Une instruction a été interrompue.
+
+L’incident est identifié.
+
+La donnée nécessaire au replay existe.
+
+Techniquement, tout semble prêt.
+
+Mais le contexte au moment du replay n’est plus forcément celui du traitement initial.
+
+La transaction a pu évoluer.
+
+Une correction manuelle a pu être effectuée.
+
+Une étape dépendante peut désormais se trouver dans un autre état.
+
+La question devient donc :
+
+le replay reste-t-il encore légitime au moment où nous voulons l’exécuter ?
+
+À intensité métier plus forte, je ne veux pas seulement savoir si nous savons rejouer.
+
+Je veux savoir si nous savons déterminer ce qui doit réellement être rejoué.
+
+Parce qu’une reprise correcte techniquement peut devenir une mauvaise décision si elle ignore l’état métier actuel.
+
+🎯 En tant que Product Owner :
+
+« Le replay ne doit être utilisé que lorsque les conditions actuelles du parcours permettent encore de reproduire l’action attendue sans créer un résultat incohérent. »
+
+🛠️ En tant que Developer :
+
+« Je dois contrôler l’état courant de la transaction avant le replay et tracer les conditions ayant autorisé son exécution. »
+
+🙂 En tant que End User :
+
+« Une intervention technique de reprise ne doit pas modifier de façon inattendue le résultat que je dois finalement retrouver. »
+
+🛡️ En tant que QA :
+
+« Je dois tester le replay après différentes évolutions de l’état transactionnel et vérifier que le système accepte, refuse ou adapte la reprise de manière cohérente. »
+
+🧭 En tant que Test Manager :
+
+« Si un replay peut être exécuté alors que le contexte métier a changé, je considère que le contrôle de précondition fait partie du risque de reprise à couvrir explicitement. »
+
+Votre capacité de replay prouve-t-elle seulement que vous pouvez rejouer une instruction, ou que vous savez encore quand il est légitime de la rejouer ?
+
+📌 Zone technique.
+
+Replay : nouvelle exécution d’un message ou événement déjà traité ou partiellement traité.
+
+Precondition : condition devant être satisfaite avant l’exécution d’une action.
+
+Current State : état réel du système ou de la transaction au moment d’une décision.
+
+Checkpoint : point connu permettant de situer l’avancement du traitement.
+
+Replay Eligibility : capacité à déterminer si une opération peut encore être rejouée de manière cohérente.
+
+#SlashingDefectsWithAQualitySword #CashManagement #ReplayTesting #E2E #OperationalRisk
+
+Test tri-dimension : harmoniser les visions, verrouiller le parcours, sécuriser la release.
+Chaque jour : defect tracking, performance testing, risk coverage | ⚔️ slashing mode.
